@@ -1,31 +1,33 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnItemSelectedListener;
+
 //TODO: Create 3 fragments for the menu content
 public class TopRatedFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
+    private RecyclerView topRatedMovies;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private String mParam1;
-
-    private OnFragmentInteractionListener onFragmentInteractionListener=null;
 
     public TopRatedFragment() {
     }
 
-    public static TopRatedFragment newInstance(String param1,OnFragmentInteractionListener onFragmentInteractionListener) {
+    public static TopRatedFragment newInstance(String param1) {
         TopRatedFragment fragment = new TopRatedFragment();
-        fragment.onFragmentInteractionListener=onFragmentInteractionListener;
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -50,5 +52,16 @@ public class TopRatedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        topRatedMovies=view.findViewById(R.id.top_rated_movies);
+        //GET Data from server
+        MovieItemRecyclerAdapter movieItemRecyclerAdapter=new MovieItemRecyclerAdapter(null, new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(Movie movie) {
+                //TODO: display movie details and booking screen using movie item.
+            }
+        });
+        topRatedMovies.setHasFixedSize(true);
+        topRatedMovies.setAdapter(movieItemRecyclerAdapter);
+        // Implement listener topRatedMovies
     }
 }

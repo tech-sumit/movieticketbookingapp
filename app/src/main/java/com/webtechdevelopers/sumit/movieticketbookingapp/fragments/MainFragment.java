@@ -1,20 +1,17 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
@@ -84,16 +81,16 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
             Log.i("MainFragment","Position:"+position);
             switch (position){
                 case 1:
-                    return TopRatedFragment.newInstance("",MainFragment.this);
+                    return TopRatedFragment.newInstance("");
                 case 2:
-                    return NowPlayingFragment.newInstance("",MainFragment.this);
+                    return NowPlayingFragment.newInstance("");
                 case 3:
-                    return UpcomingFragment.newInstance("",MainFragment.this);
+                    return UpcomingFragment.newInstance("");
                 default:
                     Log.e("MainFragment","Default case in onTabSelected");
 
             }
-            return TopRatedFragment.newInstance("",MainFragment.this);
+            return TopRatedFragment.newInstance("");
         }
 
         @Override
