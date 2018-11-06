@@ -46,6 +46,38 @@ public class JSONPacketParser {
         return  movies;
     }
 
+    public static Movie getMovie(String jsonString){
+        Movie movie = null;
+        try {
+            JSONObject jsonMovie=new JSONObject(jsonString);
+
+            movie=new Movie(
+                    jsonMovie.getInt("vote_count"),
+                    jsonMovie.getInt("id"),
+                    jsonMovie.getBoolean("video"),
+                    jsonMovie.getDouble("vote_average"),
+                    jsonMovie.getString("title"),
+                    jsonMovie.getDouble("popularity"),
+                    jsonMovie.getString("poster_path"),
+                    jsonMovie.getString("original_language"),
+                    jsonMovie.getString("original_title"),
+                    new int[]{1,2},
+                    jsonMovie.getString("backdrop_path"),
+                    jsonMovie.getBoolean("adult"),
+                    jsonMovie.getString("overview"),
+                    jsonMovie.getString("release_date"));
+            JSONArray genreArray=jsonMovie.getJSONArray("genre_ids");
+            int genre[]=new int[genreArray.length()];
+            for(int j=0;j<genreArray.length();j++){
+                genre[j]=genreArray.getInt(j);
+            }
+            movie.setGenre_ids(genre);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return movie;
+    }
+
     public static ArrayList<String> getVideos(String jsonString){
         ArrayList<String> videos=new ArrayList<>();
         try {

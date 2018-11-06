@@ -1,8 +1,12 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,24 +16,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainFragment extends Fragment implements OnFragmentInteractionListener {
     private static final String ARG_PARAM1 = "param1";
-    private TabLayout tabLayout;
-    private ViewPager mViewPager;
-    private ViewPager mCardPager;
-
     private String mParam1;
-    private NowPlayingFragment nowPlayingFragment;
-    private TopRatedFragment topRatedFragment;
-    private UpcomingFragment upcomingFragment;
-
+    private SimpleDraweeView latestMovieImage;
+    private TextView latestMovieName;
+    private TextView latestMovieType;
+    private TextView latestMovieDuration;
 
     public MainFragment() {
     }
@@ -51,32 +57,46 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Fresco.initialize(container.getContext());
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tabLayout=view.findViewById(R.id.tabLayout);
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
-        mCardPager= view.findViewById(R.id.cardPager);
-        SectionsPagerAdapter mSectionsCardPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
-        mCardPager.setAdapter(mSectionsCardPagerAdapter );
-
-        mViewPager = view.findViewById(R.id.viewPager);
+        ViewPager mViewPager = view.findViewById(R.id.viewPager);
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        latestMovieImage=view.findViewById(R.id.latestMovieImage);
+        latestMovieName=view.findViewById(R.id.latestMovieName);
+        latestMovieType=view.findViewById(R.id.latestMovieType);
+        latestMovieDuration=view.findViewById(R.id.latestMovieDuration);
+        ApiConnector apiConnector=new ApiConnector(view.getContext());
+        apiConnector.getLatestMovie(new OnApiResultRecived() {
+            @Override
+            public void onResult(String response) {
+                Log.i("Response Data","Response:\n"+response);
+                Movie movie=JSONPacketParser.getMovie(response);
+                Log.i("Movie","Data: "+movie.toString());
+                Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
+                latestMovieImage.setImageURI(uri);
+                latestMovieName.setText(movie.getTitle());
+                latestMovieDuration.setText(movie.getRelease_date());
+                latestMovieType.setText(Arrays.toString(movie.getGenres()));
+            }
+        });
     }
 
     @Override
     public void onFragmentInteractionResult(int fragmentId, Bundle bundle) {
-
-
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -90,44 +110,24 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
             Log.i("MainFragment","Position:"+position);
             switch (position){
                 case 1:
-                    topRatedFragment=TopRatedFragment.newInstance("");
-                    if(topRatedFragment==null){
+                    TopRatedFragment topRatedFragment = TopRatedFragment.newInstance("");
+                    if(topRatedFragment ==null){
                     }
                     return topRatedFragment;
                 case 2:
-                    nowPlayingFragment=NowPlayingFragment.newInstance("");
-                    if(nowPlayingFragment==null){
+                    NowPlayingFragment nowPlayingFragment = NowPlayingFragment.newInstance("");
+                    if(nowPlayingFragment ==null){
                     }
                     return nowPlayingFragment;
                 case 3:
-                    upcomingFragment=UpcomingFragment.newInstance("");
-                    if(upcomingFragment==null){
+                    UpcomingFragment upcomingFragment = UpcomingFragment.newInstance("");
+                    if(upcomingFragment ==null){
                     }
                     return upcomingFragment;
                 default:
                     Log.e("MainFragment","Default case in onTabSelected");
 
             }
-            return TopRatedFragment.newInstance("");
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    }
-
-    public class CardPagerAdapter extends FragmentPagerAdapter {
-        //TODO: Show the current active movie in the card layout
-        private ArrayList<Movie> movies;
-        public CardPagerAdapter(FragmentManager fm, ArrayList<Movie> movies) {
-            super(fm);
-            this.movies=movies;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Log.i("MainFragment","Position:"+position);
             return TopRatedFragment.newInstance("");
         }
 
