@@ -1,172 +1,209 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
-import androidx.annotation.NonNull;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.GenreParser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.Serializable;
+import java.util.Arrays;
 
-import java.util.ArrayList;
+public class Movie implements Serializable {
 
-public class Movie {
-    private String primaryInfo="";
-    private String alternativeTitles="";
-    private String cast="";
-    private String crew="";
-    private ArrayList<String> images;
-    private String plotKeywords="";
-    private String releaseInformation="";
-    private ArrayList<String> trailers;
-    private String translations="";
-    private String similarMovies ="";
-    private String reviews="";
-    private String belongsToLists="";
-    private String changes="";
+    private int vote_count=0;
+    private int id=0;
+    private boolean video=false;
+    private double vote_average=0;
+    private String title="";
+    private double popularity=0;
+    private String poster_path="";
+    private String original_language="";
+    private String original_title="";
+    private int genre_ids[];
+    private String genres[];
+    private String backdrop_path="";
+    private boolean adult=false;
+    private String overview="";
+    private String release_date="";
 
     public Movie(){
 
     }
-    public Movie(String primaryInfo, String alternativeTitles, String cast, String crew, ArrayList<String> images, String plotKeywords, String releaseInformation, ArrayList<String> trailers, String translations, String similarMovies, String reviews, String belongsToLists, String changes) {
-        this.primaryInfo = primaryInfo;
-        this.alternativeTitles = alternativeTitles;
-        this.cast = cast;
-        this.crew = crew;
-        this.images = images;
-        this.plotKeywords = plotKeywords;
-        this.releaseInformation = releaseInformation;
-        this.trailers = trailers;
-        this.translations = translations;
-        this.similarMovies = similarMovies;
-        this.reviews = reviews;
-        this.belongsToLists = belongsToLists;
-        this.changes = changes;
+
+    public Movie(int vote_count, int id, boolean video, double vote_average, String title, double popularity, String poster_path, String original_language, String original_title, int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_date) {
+        this.vote_count = vote_count;
+        this.id = id;
+        this.video = video;
+        this.vote_average = vote_average;
+        this.title = title;
+        this.popularity = popularity;
+        this.poster_path = poster_path;
+        this.original_language = original_language;
+        this.original_title = original_title;
+        this.genre_ids = genre_ids;
+
+        GenreParser genreParser=new GenreParser();
+        genres=new String[genre_ids.length];
+        for(int i=0;i<genre_ids.length;i++){
+            genres[i]=genreParser.getGenre(genre_ids[i]);
+        }
+
+        this.backdrop_path = backdrop_path;
+        this.adult = adult;
+        this.overview = overview;
+        this.release_date = release_date;
     }
 
-    public String getPrimaryInfo() {
-        return primaryInfo;
+    public int getVote_count() {
+        return vote_count;
     }
 
-    public String getAlternativeTitles() {
-        return alternativeTitles;
+    public Movie setVote_count(int vote_count) {
+        this.vote_count = vote_count;
+        return this;
     }
 
-    public String getCast() {
-        return cast;
+    public int getId() {
+        return id;
     }
 
-    public String getCrew() {
-        return crew;
+    public Movie setId(int id) {
+        this.id = id;
+        return this;
     }
 
-    public ArrayList<String> getImages() {
-        return images;
+    public boolean isVideo() {
+        return video;
     }
 
-    public String getPlotKeywords() {
-        return plotKeywords;
+    public Movie setVideo(boolean video) {
+        this.video = video;
+        return this;
     }
 
-    public String getReleaseInformation() {
-        return releaseInformation;
+    public double getVote_average() {
+        return vote_average;
     }
 
-    public ArrayList<String> getTrailers() {
-        return trailers;
+    public Movie setVote_average(int vote_average) {
+        this.vote_average = vote_average;
+        return this;
     }
 
-    public String getTranslations() {
-        return translations;
+    public String getTitle() {
+        return title;
     }
 
-    public String getSimilarMovies() {
-        return similarMovies;
+    public Movie setTitle(String title) {
+        this.title = title;
+        return this;
     }
 
-    public String getReviews() {
-        return reviews;
+    public double getPopularity() {
+        return popularity;
     }
 
-    public String getBelongsToLists() {
-        return belongsToLists;
+    public Movie setPopularity(float popularity) {
+        this.popularity = popularity;
+        return this;
     }
 
-    public String getChanges() {
-        return changes;
+    public String getPoster_path() {
+        return poster_path;
     }
 
-    public void setPrimaryInfo(String primaryInfo) {
-        this.primaryInfo = primaryInfo;
+    public Movie setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+        return this;
     }
 
-    public void setAlternativeTitles(String alternativeTitles) {
-        this.alternativeTitles = alternativeTitles;
+    public String getOriginal_language() {
+        return original_language;
     }
 
-    public void setCast(String cast) {
-        this.cast = cast;
+    public Movie setOriginal_language(String original_language) {
+        this.original_language = original_language;
+        return this;
     }
 
-    public void setCrew(String crew) {
-        this.crew = crew;
+    public String getOriginal_title() {
+        return original_title;
     }
 
-    public void setImages(ArrayList<String> images) {
-        this.images = images;
+    public Movie setOriginal_title(String original_title) {
+        this.original_title = original_title;
+        return this;
     }
 
-    public void setPlotKeywords(String plotKeywords) {
-        this.plotKeywords = plotKeywords;
+    public int[] getGenre_ids() {
+        return genre_ids;
     }
 
-    public void setReleaseInformation(String releaseInformation) {
-        this.releaseInformation = releaseInformation;
+    public Movie setGenre_ids(int[] genre_ids) {
+        this.genre_ids = genre_ids;
+        GenreParser genreParser=new GenreParser();
+        genres=new String[genre_ids.length];
+        for(int i=0;i<genre_ids.length;i++){
+            this.genres[i]=genreParser.getGenre(genre_ids[i]);
+        }
+        return this;
     }
 
-    public void setTrailers(ArrayList<String> trailers) {
-        this.trailers = trailers;
+    public String[] getGenres() {
+        return genres;
     }
 
-    public void setTranslations(String translations) {
-        this.translations = translations;
+    public String getBackdrop_path() {
+        return backdrop_path;
     }
 
-    public void setSimilarMovies(String similarMovies) {
-        this.similarMovies = similarMovies;
+    public Movie setBackdrop_path(String backdrop_path) {
+        this.backdrop_path = backdrop_path;
+        return this;
     }
 
-    public void setReviews(String reviews) {
-        this.reviews = reviews;
+    public boolean isAdult() {
+        return adult;
     }
 
-    public void setBelongsToLists(String belongsToLists) {
-        this.belongsToLists = belongsToLists;
+    public Movie setAdult(boolean adult) {
+        this.adult = adult;
+        return this;
     }
 
-    public void setChanges(String changes) {
-        this.changes = changes;
+    public String getOverview() {
+        return overview;
     }
 
-    @NonNull
+    public Movie setOverview(String overview) {
+        this.overview = overview;
+        return this;
+    }
+
+    public String getRelease_date() {
+        return release_date;
+    }
+
+    public Movie setRelease_date(String release_date) {
+        this.release_date = release_date;
+        return this;
+    }
+
     @Override
     public String toString() {
-        JSONObject jsonObject=new JSONObject();
-
-        try {
-            jsonObject.put("primaryInfo",getPrimaryInfo());
-            jsonObject.put("alternativeTitles",getAlternativeTitles());
-            jsonObject.put("cast",getCast());
-            jsonObject.put("crew",getCrew());
-            jsonObject.put("images",getImages().toString());
-            jsonObject.put("plotKeywords",getPlotKeywords());
-            jsonObject.put("releaseInformation",getReleaseInformation());
-            jsonObject.put("trailers",getTrailers().toString());
-            jsonObject.put("translation",getTranslations());
-            jsonObject.put("similarMovies",getSimilarMovies());
-            jsonObject.put("reviews",getReviews());
-            jsonObject.put("belongsToLists",getBelongsToLists());
-            jsonObject.put("changes",getChanges());
-            } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject.toString();
+        return "Movie{" +
+                "vote_count=" + vote_count +
+                ", id=" + id +
+                ", video=" + video +
+                ", vote_average=" + vote_average +
+                ", title='" + title + '\'' +
+                ", popularity=" + popularity +
+                ", poster_path='" + poster_path + '\'' +
+                ", original_language='" + original_language + '\'' +
+                ", original_title='" + original_title + '\'' +
+                ", genre_ids=" + Arrays.toString(genre_ids) +
+                ", genres=" + Arrays.toString(genres) +
+                ", backdrop_path='" + backdrop_path + '\'' +
+                ", adult=" + adult +
+                ", overview='" + overview + '\'' +
+                ", release_date='" + release_date + '\'' +
+                '}';
     }
 }

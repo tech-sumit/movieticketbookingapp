@@ -4,15 +4,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnItemSelectedListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
+
+import java.util.ArrayList;
 
 //TODO: Create 3 fragments for the menu content
 public class TopRatedFragment extends Fragment {
@@ -20,6 +29,7 @@ public class TopRatedFragment extends Fragment {
     private RecyclerView topRatedMovies;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<Movie> movieArrayList;
 
     private String mParam1;
 
@@ -50,18 +60,34 @@ public class TopRatedFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         topRatedMovies=view.findViewById(R.id.top_rated_movies);
-        //GET Data from server
-        MovieItemRecyclerAdapter movieItemRecyclerAdapter=new MovieItemRecyclerAdapter(null, new OnItemSelectedListener() {
+
+        ApiConnector apiConnector=new ApiConnector(view.getContext());
+        apiConnector.getUpcomingMovies(1, new OnApiResultRecived() {
             @Override
-            public void onItemSelected(Movie movie) {
-                //TODO: display movie details and booking screen using movie item.
+            public void onResult(String response) {
+                Log.i("Response Data","Response:\n"+response);
+                movieArrayList=JSONPacketParser.getMovies(response);
+
+                final MovieItemRecyclerAdapter movieItemRecyclerAdapter=new MovieItemRecyclerAdapter(movieArrayList, new OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(Movie movie) {
+                        //TODO: display movie details and booking screen using movie item.
+                        Bundle bundle=new Bundle();
+                        bundle.putSerializable("movie",movie);
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult(R.layout.fragment_top_rated,bundle);
+                    }
+                });
+                topRatedMovies.setHasFixedSize(true);
+                topRatedMovies.setAdapter(movieItemRecyclerAdapter);
+                LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext());
+                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                topRatedMovies.setLayoutManager(linearLayoutManager);
+
             }
         });
-        topRatedMovies.setHasFixedSize(true);
-        topRatedMovies.setAdapter(movieItemRecyclerAdapter);
-        // Implement listener topRatedMovies
+
     }
 }

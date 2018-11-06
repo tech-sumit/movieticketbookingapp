@@ -15,22 +15,27 @@ import android.view.ViewGroup;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
+
+import java.util.ArrayList;
 
 public class MainFragment extends Fragment implements OnFragmentInteractionListener {
     private static final String ARG_PARAM1 = "param1";
     private TabLayout tabLayout;
     private ViewPager mViewPager;
-    private OnFragmentInteractionListener onFragmentInteractionListener=null;
+    private ViewPager mCardPager;
 
     private String mParam1;
+    private NowPlayingFragment nowPlayingFragment;
+    private TopRatedFragment topRatedFragment;
+    private UpcomingFragment upcomingFragment;
 
 
     public MainFragment() {
     }
 
-    public static MainFragment newInstance(String param1,OnFragmentInteractionListener onFragmentInteractionListener) {
+    public static MainFragment newInstance(String param1) {
         MainFragment fragment = new MainFragment();
-        fragment.onFragmentInteractionListener=onFragmentInteractionListener;
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -55,10 +60,13 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tabLayout=view.findViewById(R.id.tabLayout);
+
+        mCardPager= view.findViewById(R.id.cardPager);
+        SectionsPagerAdapter mSectionsCardPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
+        mCardPager.setAdapter(mSectionsCardPagerAdapter );
+
         mViewPager = view.findViewById(R.id.viewPager);
-
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
-
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -67,6 +75,7 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
 
     @Override
     public void onFragmentInteractionResult(int fragmentId, Bundle bundle) {
+
 
     }
 
@@ -81,15 +90,44 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
             Log.i("MainFragment","Position:"+position);
             switch (position){
                 case 1:
-                    return TopRatedFragment.newInstance("");
+                    topRatedFragment=TopRatedFragment.newInstance("");
+                    if(topRatedFragment==null){
+                    }
+                    return topRatedFragment;
                 case 2:
-                    return NowPlayingFragment.newInstance("");
+                    nowPlayingFragment=NowPlayingFragment.newInstance("");
+                    if(nowPlayingFragment==null){
+                    }
+                    return nowPlayingFragment;
                 case 3:
-                    return UpcomingFragment.newInstance("");
+                    upcomingFragment=UpcomingFragment.newInstance("");
+                    if(upcomingFragment==null){
+                    }
+                    return upcomingFragment;
                 default:
                     Log.e("MainFragment","Default case in onTabSelected");
 
             }
+            return TopRatedFragment.newInstance("");
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+    }
+
+    public class CardPagerAdapter extends FragmentPagerAdapter {
+        //TODO: Show the current active movie in the card layout
+        private ArrayList<Movie> movies;
+        public CardPagerAdapter(FragmentManager fm, ArrayList<Movie> movies) {
+            super(fm);
+            this.movies=movies;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Log.i("MainFragment","Position:"+position);
             return TopRatedFragment.newInstance("");
         }
 
