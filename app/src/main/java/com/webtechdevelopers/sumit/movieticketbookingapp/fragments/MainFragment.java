@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -80,17 +81,18 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
         latestMovieType=view.findViewById(R.id.latestMovieType);
         latestMovieDuration=view.findViewById(R.id.latestMovieDuration);
         ApiConnector apiConnector=new ApiConnector(view.getContext());
-        apiConnector.getLatestMovie(new OnApiResultRecived() {
+        apiConnector.getPopularMovies(1,new OnApiResultRecived() {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
-                Movie movie=JSONPacketParser.getMovie(response);
+                ArrayList<Movie> movies=JSONPacketParser.getMovies(response);
+                Movie movie=movies.get(0);
                 Log.i("Movie","Data: "+movie.toString());
                 Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
                 latestMovieImage.setImageURI(uri);
                 latestMovieName.setText(movie.getTitle());
-                latestMovieDuration.setText(movie.getRelease_date());
-                latestMovieType.setText(Arrays.toString(movie.getGenres()));
+                latestMovieDuration.setText(""+movie.getVote_average());
+                latestMovieType.setText(movie.getGenres());
             }
         });
     }

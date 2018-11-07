@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 
 import java.util.ArrayList;
@@ -42,10 +46,23 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
         movieItemHolder.movieImage.setImageURI(uri);
 
-        movieItemHolder.movieName.setText(movie.getTitle());
-        movieItemHolder.movieDuration.setText(movie.getRelease_date());
 
-        movieItemHolder.movieType.setText(Arrays.toString(movie.getGenres()));
+        Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
+//        movieItemHolder.movieBackground.setImageURI(backgroundUri);
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(backgroundUri)
+                .setPostprocessor(new IterativeBoxBlurPostProcessor(20))
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(movieItemHolder.movieBackground.getController())
+                .build();
+        movieItemHolder.movieBackground.setController(controller);
+
+
+        movieItemHolder.movieName.setText(movie.getTitle());
+        movieItemHolder.movieDuration.setText(""+movie.getVote_average());
+
+        movieItemHolder.movieType.setText(movie.getGenres());
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -56,6 +73,7 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
 
     public static class MovieItemHolder extends RecyclerView.ViewHolder {
         public SimpleDraweeView movieImage;
+        public SimpleDraweeView movieBackground;
         public TextView movieName;
         public TextView movieType;
         public TextView movieDuration;
@@ -66,6 +84,7 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
             super(itemView);
             this.itemView=itemView;
             movieImage=itemView.findViewById(R.id.movieImage);
+            movieBackground=itemView.findViewById(R.id.movieBackground);
             movieName=itemView.findViewById(R.id.movieName);
             movieType=itemView.findViewById(R.id.movieType);
             movieDuration=itemView.findViewById(R.id.movieDuration);

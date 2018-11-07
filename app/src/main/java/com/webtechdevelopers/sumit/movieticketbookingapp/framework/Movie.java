@@ -146,8 +146,12 @@ public class Movie implements Serializable {
         return this;
     }
 
-    public String[] getGenres() {
-        return genres;
+    public String getGenres() {
+        String genre=genres[0];
+        for(int i=1;i<genres.length;i++){
+            genre+=","+genres[i];
+        }
+        return genre;
     }
 
     public String getBackdrop_path() {
