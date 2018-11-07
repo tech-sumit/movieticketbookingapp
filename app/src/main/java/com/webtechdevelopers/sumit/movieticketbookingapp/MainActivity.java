@@ -7,9 +7,9 @@ import android.widget.Toast;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MainFragment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MovieDetailsFragment;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     int backCount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

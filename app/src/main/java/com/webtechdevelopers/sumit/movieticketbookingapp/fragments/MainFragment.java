@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
@@ -28,7 +27,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONP
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainFragment extends Fragment implements OnFragmentInteractionListener {
     private static final String ARG_PARAM1 = "param1";

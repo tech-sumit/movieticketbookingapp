@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.webtechdevelopers.sumit.movieticketbookingapp.OnFragmentInteractionListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 public class LoginFragment extends Fragment {
 

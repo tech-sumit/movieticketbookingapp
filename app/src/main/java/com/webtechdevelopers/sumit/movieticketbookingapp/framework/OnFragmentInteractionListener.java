@@ -1,4 +1,4 @@
-package com.webtechdevelopers.sumit.movieticketbookingapp;
+package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
 import android.os.Bundle;
 
