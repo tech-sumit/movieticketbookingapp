@@ -22,6 +22,12 @@ public class Movie implements Serializable {
     private boolean adult=false;
     private String overview="";
     private String release_date="";
+    private String belongs_to_collection="";
+    private int budget=0;
+    private String homepage="";
+    private String imdb_id="";
+
+
 
     public Movie(){
 
