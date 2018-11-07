@@ -16,7 +16,6 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +47,7 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
 
 
         Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
-//        movieItemHolder.movieBackground.setImageURI(backgroundUri);
+//        movieItemHolder.movieDetailBackground.setImageURI(backgroundUri);
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(backgroundUri)
                 .setPostprocessor(new IterativeBoxBlurPostProcessor(20))
                 .build();
@@ -60,9 +59,9 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
 
 
         movieItemHolder.movieName.setText(movie.getTitle());
-        movieItemHolder.movieDuration.setText(""+movie.getVote_average());
+        movieItemHolder.movieRating.setText(""+movie.getVote_average());
 
-        movieItemHolder.movieType.setText(movie.getGenres());
+        movieItemHolder.movieGenre.setText(movie.getGenres());
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -75,8 +74,8 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         public SimpleDraweeView movieImage;
         public SimpleDraweeView movieBackground;
         public TextView movieName;
-        public TextView movieType;
-        public TextView movieDuration;
+        public TextView movieGenre;
+        public TextView movieRating;
 
         public View itemView;
 
@@ -86,8 +85,8 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
             movieImage=itemView.findViewById(R.id.movieImage);
             movieBackground=itemView.findViewById(R.id.movieBackground);
             movieName=itemView.findViewById(R.id.movieName);
-            movieType=itemView.findViewById(R.id.movieType);
-            movieDuration=itemView.findViewById(R.id.movieDuration);
+            movieGenre =itemView.findViewById(R.id.movieType);
+            movieRating =itemView.findViewById(R.id.movieDuration);
         }
 
         public void bind(final Movie movie, final OnItemSelectedListener onItemSelectedListener){
