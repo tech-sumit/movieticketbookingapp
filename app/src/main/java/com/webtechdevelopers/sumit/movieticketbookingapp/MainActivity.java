@@ -1,17 +1,15 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MainFragment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MovieDetailsFragment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     int backCount=0;
