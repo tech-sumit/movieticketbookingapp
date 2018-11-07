@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MainFragment;
@@ -69,6 +72,30 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(last_fragment_id==R.layout.fragment_main){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.main_menu, menu);
+            return true;
+        }else{
+            recreate();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.signout:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    */
+
     @Override
     public void onBackPressed() {
         if(last_fragment_id==R.layout.fragment_main){
@@ -80,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             }
         }else{
             super.onBackPressed();
+            backCount=0;
             last_fragment_id=R.layout.fragment_main;
         }
     }

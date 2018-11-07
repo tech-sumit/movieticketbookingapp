@@ -71,7 +71,7 @@
                         android:id="@+id/imageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        fresco:srcCompat="@android:drawable/star_off" />
+                        fresco:srcCompat="@drawable/ic_star_rating" />
 
                     <TextView
                         android:id="@+id/movieDuration"

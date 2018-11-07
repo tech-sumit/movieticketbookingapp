@@ -67,7 +67,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="4dp"
-                            android:layout_weight="1"
                             android:text="Type"
                             android:textColor="@android:color/white"
                             android:textSize="18sp" />
@@ -76,13 +75,12 @@
                             android:id="@+id/imageView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@android:drawable/star_off" />
+                            app:srcCompat="@drawable/ic_star_rating" />
 
                         <TextView
                             android:id="@+id/latestMovieDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:text="Duration"
                             android:textColor="@android:color/white"
                             android:textSize="18sp" />
