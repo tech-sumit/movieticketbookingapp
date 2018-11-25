@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnItemSelectedListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;

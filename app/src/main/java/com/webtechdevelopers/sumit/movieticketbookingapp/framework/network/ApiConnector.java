@@ -116,4 +116,21 @@ public class ApiConnector {
                     }
                 }));
     }
+
+    public void getMovieDetails(int id,final OnApiResultRecived onApiResultRecived) {
+        Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
+                Constants.BASE_URL + "/" + id + "?api_key=" + Constants.API_KEY,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        onApiResultRecived.onResult(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }));
+    }
 }
