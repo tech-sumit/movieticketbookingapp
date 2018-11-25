@@ -25,8 +25,7 @@
                     android:id="@+id/latestMovieImage"
                     android:layout_width="match_parent"
                     android:layout_height="164dp"
-                    android:scaleType="fitCenter"
-                    fresco:placeholderImage="@drawable/ic_launcher_foreground" />
+                    android:scaleType="fitCenter" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
