@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Book Movie Ticket</string>
+    <array name="show_timings">
+        <item>9:05 AM</item>
+        <item>1:25 PM</item>
+        <item>4:50 PM</item>
+        <item>8:30 PM</item>
+        <item>12:30 PM</item>
+    </array>
+    <array name="venue">
+        <item>INOX - Khandesh Central</item>
+        <item>Regal Theatre</item>
+        <item>PVR Cinemas</item>
+        <item>Ashoke Talkies</item>
+        <item>Anant Theatre</item>
+    </array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

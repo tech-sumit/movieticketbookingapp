@@ -65,7 +65,7 @@ public class TopRatedFragment extends Fragment {
         topRatedMovies=view.findViewById(R.id.top_rated_movies);
 
         ApiConnector apiConnector=new ApiConnector(view.getContext());
-        apiConnector.getUpcomingMovies(1, new OnApiResultRecived() {
+        apiConnector.getTopRatedMovies(1, new OnApiResultRecived() {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
@@ -77,7 +77,8 @@ public class TopRatedFragment extends Fragment {
                         //TODO: display movie details and booking screen using movie item.
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult(R.layout.fragment_top_rated,bundle);
+                        bundle.putString("type","top_rated");
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("top_rated",bundle);
                     }
                 });
                 topRatedMovies.setHasFixedSize(true);
@@ -88,6 +89,5 @@ public class TopRatedFragment extends Fragment {
 
             }
         });
-
     }
 }

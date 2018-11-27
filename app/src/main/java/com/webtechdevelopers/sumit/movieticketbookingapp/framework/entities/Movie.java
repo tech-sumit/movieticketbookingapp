@@ -248,11 +248,16 @@ public class Movie implements Serializable {
     }
 
     public String getGenres() {
-        String genre=genres[0];
-        for(int i=1;i<genres.length;i++){
-            genre+=","+genres[i];
+        if(genres!=null){
+            if(genres.length>0){
+                String genre=genres[0];
+                for(int i=1;i<genres.length;i++){
+                    genre+=","+genres[i];
+                }
+                return genre;
+            }
         }
-        return genre;
+        return "N/A";
     }
 
     public String getBackdrop_path() {
@@ -280,9 +285,6 @@ public class Movie implements Serializable {
     }
 
     public String getHomepage() {
-        if(homepage.equals("")){
-            return "N/A";
-        }
         return homepage;
     }
 

@@ -74,7 +74,8 @@ public class UpcomingFragment extends Fragment {
                         //TODO: display movie details and booking screen using movie item.
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult(R.layout.fragment_upcoming,bundle);
+                        bundle.putString("type","upcoming");
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("upcoming",bundle);
                     }
                 });
                 upcomingMovies.setHasFixedSize(true);

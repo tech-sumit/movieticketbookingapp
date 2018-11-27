@@ -28,7 +28,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApi
 
 import java.util.ArrayList;
 
-public class MainFragment extends Fragment implements OnFragmentInteractionListener {
+public class MainFragment extends Fragment{
     private static final String ARG_PARAM1 = "param1";
     private String mParam1;
     private SimpleDraweeView latestMovieImage;
@@ -95,10 +95,6 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
         });
     }
 
-    @Override
-    public void onFragmentInteractionResult(int fragmentId, Bundle bundle) {
-    }
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -109,17 +105,17 @@ public class MainFragment extends Fragment implements OnFragmentInteractionListe
         public Fragment getItem(int position) {
             Log.i("MainFragment","Position:"+position);
             switch (position){
-                case 1:
+                case 0:
                     TopRatedFragment topRatedFragment = TopRatedFragment.newInstance("");
                     if(topRatedFragment ==null){
                     }
                     return topRatedFragment;
-                case 2:
+                case 1:
                     NowPlayingFragment nowPlayingFragment = NowPlayingFragment.newInstance("");
                     if(nowPlayingFragment ==null){
                     }
                     return nowPlayingFragment;
-                case 3:
+                case 2:
                     UpcomingFragment upcomingFragment = UpcomingFragment.newInstance("");
                     if(upcomingFragment ==null){
                     }

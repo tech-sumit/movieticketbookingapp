@@ -1,57 +1,66 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnItemSelectedListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.gridlayout.widget.GridLayout;
+
 public class MovieDetailsFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
     private Movie movie;
+    private String type="";
 
-    public SimpleDraweeView movieDetailImage;
-    public SimpleDraweeView movieDetailBackground;
-    public TextView movieDetailName;
-    public TextView movieDetailGenre;
+    private SimpleDraweeView movieDetailImage;
+    private SimpleDraweeView movieDetailBackground;
+    private TextView movieDetailName;
+    private TextView movieDetailGenre;
 
-    TextView textOverview;
-    TextView textAdult;
-    TextView textReleseDate;
-    TextView textProductionCountries;
-    TextView textTagline;
-    TextView textSpokenLanguages;
-    TextView textVoteAverage;
-    TextView textBudget;
-    TextView textHomepage;
-    TextView textRuntime;
+    private TextView textOverview;
+    private TextView textAdult;
+    private TextView textReleseDate;
+    private TextView textProductionCountries;
+    private TextView textTagline;
+    private TextView textSpokenLanguages;
+    private TextView textVoteAverage;
+    private TextView textBudget;
+    private TextView textHomepage;
+    private TextView textRuntime;
+    private TextView textProductionCompanies;
+
+    private Button bookMovieNow;
 
     public MovieDetailsFragment() {
     }
@@ -67,6 +76,7 @@ public class MovieDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             movie= (Movie) getArguments().getSerializable("movie");
+            type= getArguments().getString("type");
         }
     }
 
@@ -78,14 +88,31 @@ public class MovieDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Fresco.initialize(view.getContext());
         Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
 
         movieDetailImage =view.findViewById(R.id.movieDetailImage);
         movieDetailBackground =view.findViewById(R.id.movieDetailBackground);
         movieDetailName =view.findViewById(R.id.movieDetailName);
         movieDetailGenre =view.findViewById(R.id.movieDetailType);
+        bookMovieNow=view.findViewById(R.id.bookMovieButton);
+
+        Log.i("TYPE",""+type);
+        if(!type.equals("upcoming")){
+            bookMovieNow.setVisibility(View.VISIBLE);
+            bookMovieNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("movie",movie);
+                    ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("booking",bundle);
+                }
+            });
+        }else{
+            bookMovieNow.setVisibility(View.GONE);
+        }
 
         movieDetailImage.setImageURI(uri);
         Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
@@ -112,6 +139,7 @@ public class MovieDetailsFragment extends Fragment {
         textBudget=view.findViewById(R.id.textBudget);
         textHomepage=view.findViewById(R.id.textHomepage);
         textRuntime=view.findViewById(R.id.textRuntime);
+        textProductionCompanies=view.findViewById(R.id.textProductionCompanies);
 
         ApiConnector apiConnector=new ApiConnector(view.getContext());
         apiConnector.getMovieDetails(movie.getId(), new OnApiResultRecived() {
@@ -137,9 +165,35 @@ public class MovieDetailsFragment extends Fragment {
                 }
                 textSpokenLanguages.setText("Languages: "+movie.getSpoken_languages());
                 textVoteAverage.setText("Rating: "+movie.getVote_average());
-                textBudget.setText("Budget: "+movie.getBudget());
-                textHomepage.setText("Website: "+movie.getHomepage());
+                if(movie.getBudget()<=0){
+                    textBudget.setText("Budget: N/A");
+                }else{
+                    textBudget.setText("Budget: $"+movie.getBudget());
+                }
+
+                if(movie.getHomepage().equals("null")){
+                    textHomepage.setVisibility(View.GONE);
+                    TextView textWebsiteTag=view.findViewById(R.id.textWebsiteTag);
+                    textWebsiteTag.setText("Website: N/A");
+                }else{
+                    textHomepage.setText(""+movie.getHomepage());
+                    textHomepage.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(movie.getHomepage())));
+                        }
+                    });
+                }
                 textRuntime.setText("Duration: "+movie.getRuntime()+" minutes");
+                if(movie.getCompanies().size()>0){
+                    String companies="Production Companies: \n"+movie.getCompanies().get(0).getName();
+                    for(int i=1;i<movie.getCompanies().size();i++){
+                        companies+="\n"+movie.getCompanies().get(i).getName();
+                    }
+                    textProductionCompanies.setText(companies);
+                }else{
+                    textProductionCompanies.setVisibility(View.GONE);
+                }
             }
         });
     }

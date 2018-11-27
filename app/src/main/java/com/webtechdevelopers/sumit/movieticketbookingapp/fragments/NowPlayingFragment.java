@@ -73,7 +73,8 @@ public class NowPlayingFragment extends Fragment {
                         //TODO: display movie details and booking screen using movie item.
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult(R.layout.fragment_now_playing,bundle);
+                        bundle.putString("type","now_playing");
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("now_playing",bundle);
                     }
                 });
                 nowPlayingMovies.setHasFixedSize(true);

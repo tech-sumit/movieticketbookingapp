@@ -5,18 +5,23 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.razorpay.Checkout;
+import com.razorpay.PaymentResultListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.BookingFragment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MainFragment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.MovieDetailsFragment;
+import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.PaymentFragment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener ,PaymentResultListener {
     int backCount=0;
     int last_fragment_id=R.layout.fragment_main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Checkout.preload(this);
         setContentView(R.layout.layout_splash_screen);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -31,10 +36,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void onFragmentInteractionResult(int fragmentId, Bundle bundle) {
+    public void onFragmentInteractionResult(String fragmentName, Bundle bundle) {
         MovieDetailsFragment movieDetailsFragment;
-        switch (fragmentId){
-            case R.layout.fragment_now_playing:
+        switch (fragmentName){
+            case "now_playing":
                 last_fragment_id=R.layout.fragment_now_playing;
                 movieDetailsFragment=MovieDetailsFragment.newInstance(bundle);
                 getSupportFragmentManager()
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         .commit();
 
                 break;
-            case R.layout.fragment_top_rated:
+            case "top_rated":
                 last_fragment_id=R.layout.fragment_top_rated;
                 movieDetailsFragment = MovieDetailsFragment.newInstance(bundle);
                 getSupportFragmentManager()
@@ -52,9 +57,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         .replace(R.id.main_container,movieDetailsFragment)
                         .addToBackStack("MovieDetailsFragment")
                         .commit();
-
                 break;
-            case R.layout.fragment_upcoming:
+            case "upcoming":
                 last_fragment_id=R.layout.fragment_upcoming;
                 movieDetailsFragment=MovieDetailsFragment.newInstance(bundle);
                 getSupportFragmentManager()
@@ -62,11 +66,28 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                         .replace(R.id.main_container,movieDetailsFragment)
                         .addToBackStack("MovieDetailsFragment")
                         .commit();
-
+                break;
+            case "booking":
+                last_fragment_id=R.layout.fragment_upcoming;
+                BookingFragment bookingFragment=BookingFragment.newInstance(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_container,bookingFragment)
+                        .addToBackStack("BookingFragment")
+                        .commit();
+                break;
+            case "payment":
+                last_fragment_id=R.layout.fragment_upcoming;
+                PaymentFragment paymentFragment=PaymentFragment.newInstance(bundle);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_container,paymentFragment)
+                        .addToBackStack("PaymentFragment")
+                        .commit();
                 break;
             default:
                 last_fragment_id=R.layout.fragment_main;
-                Log.e("CASE_ERROR","Invalid fragmentId ID:"+fragmentId);
+                Log.e("CASE_ERROR","Invalid fragmentId ID:"+fragmentName);
         }
     }
 
@@ -108,5 +129,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             backCount=0;
             last_fragment_id=R.layout.fragment_main;
         }
+    }
+
+    @Override
+    public void onPaymentSuccess(String s) {
+        Log.i("PAYMENT_RESULT",""+s);
+        Toast.makeText(this,"Data:"+s,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPaymentError(int i, String s) {
+        Log.i("PAYMENT_RESULT","i: "+i+"\n"+s);
+        Toast.makeText(this,"Data:i" +i+" s"+s,Toast.LENGTH_SHORT).show();
     }
 }

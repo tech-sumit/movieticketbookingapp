@@ -69,12 +69,14 @@ public class JSONPacketParser {
                     jsonMovie.getBoolean("adult"),
                     jsonMovie.getString("overview"),
                     jsonMovie.getString("release_date"));
-            JSONArray genreArray=jsonMovie.getJSONArray("genre_ids");
-            int genre[]=new int[genreArray.length()];
-            for(int j=0;j<genreArray.length();j++){
-                genre[j]=genreArray.getInt(j);
+            if(jsonMovie.has("genre_ids")){
+                JSONArray genreArray=jsonMovie.getJSONArray("genre_ids");
+                int genre[]=new int[genreArray.length()];
+                for(int j=0;j<genreArray.length();j++){
+                    genre[j]=genreArray.getInt(j);
+                }
+                movie.setGenre_ids(genre);
             }
-            movie.setGenre_ids(genre);
         } catch (JSONException e) {
             e.printStackTrace();
         }
