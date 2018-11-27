@@ -29,7 +29,7 @@ public class JSONPacketParser {
                         jsonMovie.getString("poster_path"),
                         jsonMovie.getString("original_language"),
                         jsonMovie.getString("original_title"),
-                        new int[]{1,2},
+                        new int[]{1,2},//Added to avoid null pointer exception
                         jsonMovie.getString("backdrop_path"),
                         jsonMovie.getBoolean("adult"),
                         jsonMovie.getString("overview"),
@@ -64,7 +64,7 @@ public class JSONPacketParser {
                     jsonMovie.getString("poster_path"),
                     jsonMovie.getString("original_language"),
                     jsonMovie.getString("original_title"),
-                    new int[]{1,2},
+                    new int[]{1,2},//Added to avoid null pointer exception
                     jsonMovie.getString("backdrop_path"),
                     jsonMovie.getBoolean("adult"),
                     jsonMovie.getString("overview"),
@@ -134,7 +134,7 @@ public class JSONPacketParser {
                     jsonMovie.getString("poster_path"),
                     jsonMovie.getString("original_language"),
                     jsonMovie.getString("original_title"),
-                    new int[]{1,2},
+                    new int[]{1,2},//Added to avoid null pointer exception
                     jsonMovie.getString("backdrop_path"),
                     jsonMovie.getBoolean("adult"),
                     jsonMovie.getString("overview"),

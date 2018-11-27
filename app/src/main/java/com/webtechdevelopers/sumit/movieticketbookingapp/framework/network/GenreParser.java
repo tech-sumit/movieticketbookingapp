@@ -1,7 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.network;
 
 import java.util.HashMap;
-
+//This class is created to translate the genre ids sent by server as genre type
+//If not used then we have to make an api call to TheMovieDB Server to get genre string associated to id passed.
 public class GenreParser {
     private HashMap<Integer, String > genreMap;
     public GenreParser() {

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.webtechdevelopers.sumit.movieticketbookingapp">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-sdk tools:overrideLibrary="com.razorpay"/>
     <application
         android:allowBackup="true"

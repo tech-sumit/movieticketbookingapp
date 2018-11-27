@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.razorpay.Checkout;
+import com.razorpay.ExternalWalletListener;
+import com.razorpay.PaymentData;
+import com.razorpay.PaymentResultWithDataListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 
 import org.json.JSONException;
@@ -67,5 +70,21 @@ public class PaymentFragment extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Checkout.handleActivityResult(getActivity(), 0, 0, null, new PaymentResultWithDataListener() {
+            @Override
+            public void onPaymentSuccess(String s, PaymentData paymentData) {
+
+            }
+
+            @Override
+            public void onPaymentError(int i, String s, PaymentData paymentData) {
+
+            }
+        }, new ExternalWalletListener() {
+            @Override
+            public void onExternalWalletSelected(String s, PaymentData paymentData) {
+
+            }
+        });
     }
 }
