@@ -1,6 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
-public class ProductionCompany {
+import java.io.Serializable;
+
+public class ProductionCompany implements Serializable {
     private int id=0;
     private String logo_path="";
     private String name="";

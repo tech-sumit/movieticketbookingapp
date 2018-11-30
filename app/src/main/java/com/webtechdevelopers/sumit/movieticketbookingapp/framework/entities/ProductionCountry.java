@@ -1,6 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
-public class ProductionCountry {
+import java.io.Serializable;
+
+public class ProductionCountry implements Serializable {
     private String iso_3166_1="";
     private String name="";
 
@@ -38,7 +40,7 @@ public class ProductionCountry {
         if (this == o) return true;
         if (!(o instanceof ProductionCountry)) return false;
         ProductionCountry that = (ProductionCountry) o;
-        return getIso_3166_1() == that.getIso_3166_1() &&
+        return getIso_3166_1().equals(that.getIso_3166_1())&&
                 getName().equals(that.getName());
     }
 }
