@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;

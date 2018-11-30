@@ -4,4 +4,5 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movi
 
 public interface OnItemSelectedListener {
     void onItemSelected(Movie movie);
+
 }

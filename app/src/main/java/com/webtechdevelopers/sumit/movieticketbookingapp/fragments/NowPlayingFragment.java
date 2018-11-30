@@ -15,6 +15,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiCo
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;

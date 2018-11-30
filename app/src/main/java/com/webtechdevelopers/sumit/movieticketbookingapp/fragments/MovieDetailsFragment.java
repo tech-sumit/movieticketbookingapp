@@ -1,6 +1,5 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,18 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
@@ -27,17 +20,13 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.gridlayout.widget.GridLayout;
 
 public class MovieDetailsFragment extends Fragment {
     private Movie movie;

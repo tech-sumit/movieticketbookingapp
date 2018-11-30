@@ -1,22 +1,20 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
 import java.io.Serializable;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Show implements Serializable {
     private Movie movie;
     private String venue = "";
     private String time = "";
-    private int seatCount;
-    private int[] seats;
+    private ArrayList<Seat> seats;
 
     public Show() {
     }
 
-    public Show(Movie movie, String venue, int seatCount, int[] seats) {
+    public Show(Movie movie, String venue, ArrayList<Seat> seats) {
         this.movie = movie;
         this.venue = venue;
-        this.seatCount = seatCount;
         this.seats = seats;
     }
 
@@ -29,10 +27,10 @@ public class Show implements Serializable {
     }
 
     public int getSeatCount() {
-        return seatCount;
+        return seats.size();
     }
 
-    public int[] getSeats() {
+    public ArrayList<Seat> getSeats() {
         return seats;
     }
 
@@ -48,13 +46,8 @@ public class Show implements Serializable {
         this.venue = venue;
     }
 
-    public void setSeatCount(int seatCount) {
-        this.seatCount = seatCount;
-    }
-
-    public void setSeats(int[] seats) {
+    public void setSeats(ArrayList<Seat> seats) {
         this.seats = seats;
-        seatCount = seats.length;
     }
 
     public void setTime(String time) {
@@ -67,8 +60,7 @@ public class Show implements Serializable {
                 "movie=" + movie +
                 ", venue='" + venue + '\'' +
                 ", time='" + time + '\'' +
-                ", seatCount=" + seatCount +
-                ", seats=" + Arrays.toString(seats) +
+                ", seats=" + seats +
                 '}';
     }
 }

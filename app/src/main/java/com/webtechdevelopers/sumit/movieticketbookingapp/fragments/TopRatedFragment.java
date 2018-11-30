@@ -21,6 +21,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiCo
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 //TODO: Create 3 fragments for the menu content
@@ -86,7 +87,6 @@ public class TopRatedFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext());
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
                 topRatedMovies.setLayoutManager(linearLayoutManager);
-
             }
         });
     }
