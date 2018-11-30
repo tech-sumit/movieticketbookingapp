@@ -7,15 +7,19 @@ public class Seat implements Serializable {
     private int row_no=0;
     private int column_no=0;
     private int price=0;
+    private int visiblity;
+    private boolean isBooked =false;
 
     public Seat() {
     }
 
-    public Seat(int seat_no, int row_no, int column_no, int price) {
+    public Seat(int seat_no, int row_no, int column_no, int price, int visiblity, boolean isBooked) {
         this.seat_no = seat_no;
         this.row_no = row_no;
         this.column_no = column_no;
         this.price = price;
+        this.visiblity = visiblity;
+        this.isBooked = isBooked;
     }
 
     public int getSeat_no() {
@@ -34,6 +38,14 @@ public class Seat implements Serializable {
         return price;
     }
 
+    public int getVisiblity() {
+        return visiblity;
+    }
+
+    public boolean isBooked() {
+        return isBooked;
+    }
+
     public void setSeat_no(int seat_no) {
         this.seat_no = seat_no;
     }
@@ -50,6 +62,14 @@ public class Seat implements Serializable {
         this.price = price;
     }
 
+    public void setVisiblity(int visiblity) {
+        this.visiblity = visiblity;
+    }
+
+    public void setBooked(boolean booked) {
+        this.isBooked = booked;
+    }
+
     @Override
     public String toString() {
         return "Seat{" +
@@ -57,6 +77,8 @@ public class Seat implements Serializable {
                 ", row_no=" + row_no +
                 ", column_no=" + column_no +
                 ", price=" + price +
+                ", visiblity=" + visiblity +
+                ", isBooked=" + isBooked +
                 '}';
     }
 }

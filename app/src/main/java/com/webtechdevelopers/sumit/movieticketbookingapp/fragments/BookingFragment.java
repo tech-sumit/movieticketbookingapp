@@ -67,7 +67,14 @@ public class BookingFragment extends Fragment {
 
         seatArrayList=new ArrayList<>();
         for(int i=1;i<250;i++){
-            seatArrayList.add(new Seat(i,i/seatMaxColumnCount,i%seatMaxColumnCount, seatPrice));
+            if(i%2==0)
+                seatArrayList.add(new Seat(i,i/seatMaxColumnCount,(i-1)%seatMaxColumnCount+1, seatPrice,View.GONE,false));
+            else{
+                if(i%5==0)
+                    seatArrayList.add(new Seat(i,i/seatMaxColumnCount,(i-1)%seatMaxColumnCount+1, seatPrice,View.VISIBLE,true));
+                else
+                    seatArrayList.add(new Seat(i,i/seatMaxColumnCount,(i-1)%seatMaxColumnCount+1, seatPrice,View.VISIBLE,false));
+            }
         }
 
         SeatBookingRecyclerAdapter seatBookingRecyclerAdapter =new SeatBookingRecyclerAdapter(seatArrayList, new OnSeatClickActionListener() {

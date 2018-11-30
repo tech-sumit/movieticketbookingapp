@@ -10,6 +10,7 @@ public class Show implements Serializable {
     private ArrayList<Seat> seats;
 
     public Show() {
+        seats=new ArrayList<>();
     }
 
     public Show(Movie movie, String venue, ArrayList<Seat> seats) {
