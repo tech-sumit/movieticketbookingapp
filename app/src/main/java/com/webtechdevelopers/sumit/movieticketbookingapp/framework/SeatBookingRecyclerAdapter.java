@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat;
@@ -20,9 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBookingRecyclerAdapter.SeatHolder> {
 
     private ArrayList<Seat> seatArrayList;
+    private int seatMaxSelectable=0;
+    private int columnCount=0;
+    private int columnIndex=0;
     private OnSeatClickActionListener onSeatClickActionListener;
-    public SeatBookingRecyclerAdapter(ArrayList<Seat> seatArrayList, OnSeatClickActionListener onSeatClickActionListener){
+    private Seat seat;
+    public SeatBookingRecyclerAdapter(ArrayList<Seat> seatArrayList,int setMaxSelectable,int columnCount, OnSeatClickActionListener onSeatClickActionListener){
         this.seatArrayList =seatArrayList;
+        this.seatMaxSelectable=setMaxSelectable;
+        this.columnCount=columnCount;
         this.onSeatClickActionListener =onSeatClickActionListener;
     }
 
@@ -30,20 +37,28 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
     @Override
     public SeatHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_seat,viewGroup,false);
-        return new SeatHolder(view);
+        return new SeatHolder(view,seatMaxSelectable);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SeatHolder seatHolder, int i) {
-        Seat seat= seatArrayList.get(i);
-        if(seat.getVisiblity()==View.VISIBLE){
-            seatHolder.seatLayout.setVisibility(View.VISIBLE);
-            seatHolder.bind(seat, onSeatClickActionListener);
-            seatHolder.seatNumber.setText(""+ seatArrayList.get(i).getColumn_no());
-            if(seat.isBooked()){
-                seatHolder.seatImage.setBackgroundColor(Color.GRAY);
+        seat= seatArrayList.get(i);
+        if(!(seat.getColumn_no() ==0)){
+            if(seat.getVisiblity()==View.VISIBLE){
+                seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+                seatHolder.bind(seat, onSeatClickActionListener);
+                seatHolder.seatNumber.setText(""+ seat.getColumn_no());
+                if(seat.isBooked()){
+                    seatHolder.seatImage.setBackgroundColor(Color.GRAY);
+                }
+                Log.i("MovieDetails","\nData: "+seat.toString());
+            }else {
+                seatHolder.seatLayout.setVisibility(seat.getVisiblity());
             }
-            Log.i("MovieDetails","\nData: "+seat.toString());
+        }else{
+            seatHolder.seatLayout.setVisibility(View.VISIBLE);
+            seatHolder.seatImage.setVisibility(View.INVISIBLE);
+            seatHolder.seatNumber.setText(""+((char)(seat.getRow_no()+65)));
         }
     }
 
@@ -52,33 +67,73 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
         return seatArrayList.size();
     }
 
-    public static class SeatHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onViewRecycled(@NonNull SeatHolder seatHolder) {
+        super.onViewRecycled(seatHolder);
+        if (seat != null) {
+            if (!(seat.getColumn_no() == 0)) {
+                if (seat.getVisiblity() == View.VISIBLE) {
+                    seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+                    seatHolder.bind(seat, onSeatClickActionListener);
+                    seatHolder.seatNumber.setText("" + seat.getColumn_no());
+                    if (seat.isBooked()) {
+                        seatHolder.seatImage.setBackgroundColor(Color.GRAY);
+                    }
+                    Log.i("MovieDetails", "\nData: " + seat.toString());
+                } else {
+                    seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+                }
+            } else {
+                seatHolder.seatLayout.setVisibility(View.VISIBLE);
+                seatHolder.seatImage.setVisibility(View.INVISIBLE);
+                seatHolder.seatNumber.setText(""+((char)(seat.getRow_no()+65)));
+            }
+        }
+    }
+    class SeatHolder extends RecyclerView.ViewHolder {
         public ImageView seatImage;
         public TextView seatNumber;
+        private int seatMaxSelectable;
+        private int seatSelectedCount = 0;
         public View itemView;
         public RelativeLayout seatLayout;
-        private boolean isSelected=false;
+        private boolean isSelected = false;
 
-        public SeatHolder(@NonNull View itemView) {
+        public SeatHolder(@NonNull View itemView, int setMaxSelectable) {
             super(itemView);
-            this.itemView=itemView;
-            seatImage=itemView.findViewById(R.id.seatImage);
-            seatNumber=itemView.findViewById(R.id.seatNumber);
-            seatLayout=itemView.findViewById(R.id.seatLayout);
+            this.itemView = itemView;
+            this.seatMaxSelectable = setMaxSelectable;
+            seatImage = itemView.findViewById(R.id.seatImage);
+            seatNumber = itemView.findViewById(R.id.seatNumber);
+            seatLayout = itemView.findViewById(R.id.seatLayout);
         }
 
-        public void bind(final Seat seat, final OnSeatClickActionListener onSeatClickActionListener){
+        public void bind(final Seat seat, final OnSeatClickActionListener onSeatClickActionListener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!seat.isBooked()){
-                        if(!isSelected){
-                            isSelected=true;
-                            seatImage.setBackgroundColor(Color.GREEN);
-                            onSeatClickActionListener.onSeatSelected(seat);
-                        }else {
-                            isSelected=false;
+                    if (!seat.isBooked()) {
+                        if (!isSelected) {
+                            if (seatSelectedCount < seatMaxSelectable) {
+                                isSelected = true;
+                                seatSelectedCount++;
+                                seatImage.setBackgroundColor(Color.GREEN);
+                                Log.i("OnSeatClickAction", "isBookedL:" + seat.isBooked()
+                                        + "\nisSelected:" + isSelected
+                                        + "\nseatMaxSelectable:" + seatMaxSelectable
+                                        + "\nseatSelectedCount:" + seatSelectedCount);
+                                onSeatClickActionListener.onSeatSelected(seat);
+                            } else {
+                                Toast.makeText(itemView.getContext(), "Only " + seatMaxSelectable + " seats can be booked at a time", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            isSelected = false;
+                            seatSelectedCount--;
                             seatImage.setBackgroundColor(Color.WHITE);
+                            Log.i("OnSeatClickAction", "isBookedL:" + seat.isBooked()
+                                    + "\nisSelected:" + isSelected
+                                    + "\nseatMaxSelectable:" + seatMaxSelectable
+                                    + "\nseatSelectedCount:" + seatSelectedCount);
                             onSeatClickActionListener.onSeatDeselected(seat);
                         }
                     }
@@ -86,4 +141,5 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
             });
         }
     }
+
 }

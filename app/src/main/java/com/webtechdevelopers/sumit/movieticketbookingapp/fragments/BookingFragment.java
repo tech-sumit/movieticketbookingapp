@@ -1,11 +1,14 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.SeatLayoutGenerator;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnSeatClickActionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.SeatBookingRecyclerAdapter;
@@ -26,12 +29,16 @@ public class BookingFragment extends Fragment {
     private Show show;
 
     private int seatPrice =200;
-    private int seatMaxRowCount=10;
-    private int seatMaxColumnCount=25;
+    private int maxSeatCount =350;
+    private int maxSeatRowCount =10;
+    private int maxSeatColumnCount =25;
+    private int seatMaxSelectable=3;
 
     private RecyclerView seatRecyclerView;
     private ArrayList<Seat> seatArrayList;
 
+    private TextView textCalculation;
+    private TextView movieName;
     public BookingFragment() {
         // Required empty public constructor
     }
@@ -39,6 +46,7 @@ public class BookingFragment extends Fragment {
     public static BookingFragment newInstance(Bundle bundle) {
         BookingFragment fragment = new BookingFragment();
         fragment.setArguments(bundle);
+
         return fragment;
     }
 
@@ -63,26 +71,40 @@ public class BookingFragment extends Fragment {
         show=new Show();
         show.setMovie(movie);
 
-        seatRecyclerView=view.findViewById(R.id.seatRecyclerView);
-
+        seatRecyclerView =view.findViewById(R.id.seatRecyclerView);
+        textCalculation=view.findViewById(R.id.textCalculation);
+        movieName=view.findViewById(R.id.movieName);
+        movieName.setText(""+movie.getOriginal_title());
         seatArrayList=new ArrayList<>();
-        for(int i=1;i<250;i++){
-            if(i%2==0)
-                seatArrayList.add(new Seat(i,i/seatMaxColumnCount,(i-1)%seatMaxColumnCount+1, seatPrice,View.GONE,false));
-            else{
-                if(i%5==0)
-                    seatArrayList.add(new Seat(i,i/seatMaxColumnCount,(i-1)%seatMaxColumnCount+1, seatPrice,View.VISIBLE,true));
-                else
-                    seatArrayList.add(new Seat(i,i/seatMaxColumnCount,(i-1)%seatMaxColumnCount+1, seatPrice,View.VISIBLE,false));
+
+        SeatLayoutGenerator seatLayoutGenerator=new SeatLayoutGenerator(maxSeatCount, maxSeatRowCount, maxSeatColumnCount,seatPrice);
+
+        seatLayoutGenerator.removeRow(4);
+        seatLayoutGenerator.removeRow(9);
+        seatLayoutGenerator.removeColumn(5);
+        seatLayoutGenerator.removeColumn(6);
+        seatLayoutGenerator.removeColumn(19);
+        seatLayoutGenerator.removeColumn(20);
+
+        seatArrayList=seatLayoutGenerator.getSeatArrayList();
+        /*
+        for(int i=1;i<351;i++){
+            if(((i-1)%maxSeatColumnCount)==5||((i-1)%maxSeatColumnCount)==6||((i-1)%maxSeatColumnCount)==19||((i-1)%maxSeatColumnCount)==20 ||(i/maxSeatColumnCount)==4||(i/maxSeatColumnCount)==9){
+                seatArrayList.add(new Seat().setVisiblity(View.GONE));
+            }else{
+                seatArrayList.add(new Seat(i-1,i/maxSeatColumnCount,(i-1)%maxSeatColumnCount+1, seatPrice,View.VISIBLE,false));
             }
         }
+        */
 
-        SeatBookingRecyclerAdapter seatBookingRecyclerAdapter =new SeatBookingRecyclerAdapter(seatArrayList, new OnSeatClickActionListener() {
+        SeatBookingRecyclerAdapter seatBookingAdapter =new SeatBookingRecyclerAdapter(seatArrayList,seatMaxSelectable, maxSeatColumnCount, new OnSeatClickActionListener() {
             @Override
             public void onSeatSelected(Seat seat) {
                 ArrayList<Seat> seats=show.getSeats();
                 seats.add(seat);
                 show.setSeats(seats);
+                textCalculation.setText(""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR");
+                Log.i("SeatAction","onSeatSelected: "+show.getSeats().toString());
             }
 
             @Override
@@ -90,12 +112,16 @@ public class BookingFragment extends Fragment {
                 ArrayList<Seat> seats=show.getSeats();
                 seats.remove(seat);
                 show.setSeats(seats);
+                textCalculation.setText(""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR");
+                Log.i("SeatAction","onSeatDeselected"+show.getSeats().toString());
             }
         });
+
         seatRecyclerView.setHasFixedSize(true);
-        seatRecyclerView.setAdapter(seatBookingRecyclerAdapter);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(view.getContext(),seatMaxColumnCount);
+        //seatRecyclerView.getRecycledViewPool().setMaxRecycledViews(0,0);
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(view.getContext(), maxSeatColumnCount);
         seatRecyclerView.setLayoutManager(gridLayoutManager);
+        seatRecyclerView.setAdapter(seatBookingAdapter);
 
         view.findViewById(R.id.bookButton).setOnClickListener(new View.OnClickListener() {
             @Override

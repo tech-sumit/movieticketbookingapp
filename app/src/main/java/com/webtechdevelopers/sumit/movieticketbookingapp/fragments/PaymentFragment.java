@@ -12,6 +12,8 @@ import com.razorpay.ExternalWalletListener;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,8 +23,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class PaymentFragment extends Fragment{
-    TextView calcualationText;
-    Button payButton;
+    private TextView calcualationText;
+    private Button payButton;
+    private Show show;
+    private float price;
     public PaymentFragment() {}
 
     public static PaymentFragment newInstance(Bundle bundle) {
@@ -35,7 +39,7 @@ public class PaymentFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            show= (Show) getArguments().getSerializable("show");
         }
     }
 
@@ -51,6 +55,13 @@ public class PaymentFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         calcualationText=view.findViewById(R.id.calculationText);
         payButton=view.findViewById(R.id.payButton);
+        Movie movie=show.getMovie();
+        price=show.getSeatCount()*show.getSeats().get(0).getPrice();
+        String calculation=""+movie.getOriginal_title();
+        calculation+="\n"+show.getVenue()
+                +"\n"+show.getSeatCount()+" X "+ show.getSeats().get(0).getPrice()+" = "+price+"INR";
+        calcualationText.setText(calculation);
+        payButton.setText("Pay "+price+"INR");
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +69,7 @@ public class PaymentFragment extends Fragment{
             }
         });
     }
+
     private void startPayment(){
         Checkout checkout=new Checkout();
         JSONObject jsonObject=new JSONObject();
@@ -65,7 +77,7 @@ public class PaymentFragment extends Fragment{
             jsonObject.put("name","Movie Ticket Booking App");
             jsonObject.put("description","Ticket count");
             jsonObject.put("currency","INR");
-            jsonObject.put("amount","500");
+            jsonObject.put("amount",""+(price*100));
             checkout.open(getActivity(),jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();

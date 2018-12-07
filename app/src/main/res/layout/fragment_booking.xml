@@ -7,12 +7,37 @@
     tools:context=".fragments.BookingFragment"
     tools:layout_editor_absoluteY="81dp">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select seats"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@android:color/black"
+        android:background="@color/colorAccent"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/spinner"
         tools:layout_editor_absoluteX="0dp">
@@ -53,7 +78,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:background="@android:color/darker_gray"
-            android:text="Booked"
+            android:text="Sold out"
             android:textColor="@android:color/black" />
 
     </LinearLayout>
@@ -63,7 +88,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/bookButton"
+        android:layout_marginBottom="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +104,6 @@
             android:layout_marginBottom="8dp"
             android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical" />
-
     </HorizontalScrollView>
 
     <TextView
@@ -86,12 +112,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Movie Name"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -150,12 +176,24 @@
             tools:layout_editor_absoluteY="367dp" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textCalculation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10 X 120=120"
+            android:text="--"
             tools:layout_editor_absoluteX="84dp"
             tools:layout_editor_absoluteY="481dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="SCREEN THIS WAY"
+        app:layout_constraintBottom_toTopOf="@+id/bookButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
