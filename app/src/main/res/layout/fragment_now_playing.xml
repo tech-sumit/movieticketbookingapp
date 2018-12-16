@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.NowPlayingFragment">
+    tools:context=".fragments.FragmentNowPlaying">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/now_playing_movies"
         android:layout_width="match_parent"

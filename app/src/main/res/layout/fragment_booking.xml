@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.BookingFragment"
+    tools:context=".fragments.FragmentBooking"
     tools:layout_editor_absoluteY="81dp">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -39,8 +39,9 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showTiming">
 
         <TextView
             android:id="@+id/textView4"
@@ -120,7 +121,18 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/showVenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:entries="@array/venue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movieName" />
+
+    <Spinner
+        android:id="@+id/showTiming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -130,18 +142,7 @@
         android:layout_marginRight="8dp"
         android:entries="@array/show_timings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner2"
-        app:layout_constraintTop_toBottomOf="@+id/movieName" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:entries="@array/venue"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/showVenue"
         app:layout_constraintTop_toBottomOf="@+id/movieName" />
 
     <Button

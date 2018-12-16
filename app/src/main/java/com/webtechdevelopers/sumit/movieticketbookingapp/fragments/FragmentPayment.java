@@ -22,15 +22,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class PaymentFragment extends Fragment{
+public class FragmentPayment extends Fragment{
     private TextView calcualationText;
     private Button payButton;
     private Show show;
     private float price;
-    public PaymentFragment() {}
+    public FragmentPayment() {}
 
-    public static PaymentFragment newInstance(Bundle bundle) {
-        PaymentFragment fragment = new PaymentFragment();
+    public static FragmentPayment newInstance(Bundle bundle) {
+        FragmentPayment fragment = new FragmentPayment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,9 +57,11 @@ public class PaymentFragment extends Fragment{
         payButton=view.findViewById(R.id.payButton);
         Movie movie=show.getMovie();
         price=show.getSeatCount()*show.getSeats().get(0).getPrice();
-        String calculation=""+movie.getOriginal_title();
-        calculation+="\n"+show.getVenue()
-                +"\n"+show.getSeatCount()+" X "+ show.getSeats().get(0).getPrice()+" = "+price+"INR";
+        String calculation="Movie: "+movie.getOriginal_title();
+        calculation+="\nVenue: "+show.getVenue()
+                +"\nTotal Seats: "+show.getSeatCount()
+                +"\nSeat rate: "+ show.getSeats().get(0).getPrice()+" INR"
+                +"\nTotal: "+price+" INR";
         calcualationText.setText(calculation);
         payButton.setText("Pay "+price+"INR");
         payButton.setOnClickListener(new View.OnClickListener() {

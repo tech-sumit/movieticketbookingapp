@@ -28,7 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class MovieDetailsFragment extends Fragment {
+public class FragmentMovieDetails extends Fragment {
     private Movie movie;
     private String type="";
 
@@ -51,11 +51,11 @@ public class MovieDetailsFragment extends Fragment {
 
     private Button bookMovieNow;
 
-    public MovieDetailsFragment() {
+    public FragmentMovieDetails() {
     }
 
-    public static MovieDetailsFragment newInstance(Bundle bundle) {
-        MovieDetailsFragment fragment = new MovieDetailsFragment();
+    public static FragmentMovieDetails newInstance(Bundle bundle) {
+        FragmentMovieDetails fragment = new FragmentMovieDetails();
         fragment.setArguments(bundle);
         return fragment;
     }

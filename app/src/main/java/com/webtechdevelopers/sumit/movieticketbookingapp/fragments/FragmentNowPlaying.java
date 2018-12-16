@@ -1,12 +1,6 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,24 +15,27 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiCo
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-//TODO: Create 3 fragments for the menu content
-public class TopRatedFragment extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class FragmentNowPlaying extends Fragment {
     private static final String ARG_PARAM1 = "param1";
-    private RecyclerView topRatedMovies;
+    private String mParam1;
+    private RecyclerView nowPlayingMovies;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Movie> movieArrayList;
 
-    private String mParam1;
-
-    public TopRatedFragment() {
+    public FragmentNowPlaying() {
     }
 
-    public static TopRatedFragment newInstance(String param1) {
-        TopRatedFragment fragment = new TopRatedFragment();
+    public static FragmentNowPlaying newInstance(String param1) {
+        FragmentNowPlaying fragment = new FragmentNowPlaying();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -56,17 +53,15 @@ public class TopRatedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_top_rated, container, false);
+        return inflater.inflate(R.layout.fragment_now_playing, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        topRatedMovies=view.findViewById(R.id.top_rated_movies);
-
+        nowPlayingMovies=view.findViewById(R.id.now_playing_movies);
         ApiConnector apiConnector=new ApiConnector(view.getContext());
-        apiConnector.getTopRatedMovies(1, new OnApiResultRecived() {
+        apiConnector.getNowPlayingMovies(1, new OnApiResultRecived() {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
@@ -78,15 +73,16 @@ public class TopRatedFragment extends Fragment {
                         //TODO: display movie details and booking screen using movie item.
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
-                        bundle.putString("type","top_rated");
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("top_rated",bundle);
+                        bundle.putString("type","now_playing");
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("now_playing",bundle);
                     }
                 });
-                topRatedMovies.setHasFixedSize(true);
-                topRatedMovies.setAdapter(movieItemRecyclerAdapter);
+                nowPlayingMovies.setHasFixedSize(true);
+                nowPlayingMovies.setAdapter(movieItemRecyclerAdapter);
                 LinearLayoutManager linearLayoutManager= new LinearLayoutManager(view.getContext());
                 linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-                topRatedMovies.setLayoutManager(linearLayoutManager);
+                nowPlayingMovies.setLayoutManager(linearLayoutManager);
+
             }
         });
     }

@@ -7,14 +7,13 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat
 
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO: Solve the bugs in dynamic layout generator. This facilitates fast layout creation
 public class SeatLayoutGenerator {
     private int maxSeatCount=0;
     private int maxRowCount=0;
     private int maxColumnCount=0;
     private ArrayList<Seat> seatArrayList;
     private List seatRowList;
-    private int price=0;
 
     public SeatLayoutGenerator(int maxSeatCount, int maxRowCount, int maxColumnCount,int price) {
         this.maxSeatCount = maxSeatCount;
@@ -22,15 +21,17 @@ public class SeatLayoutGenerator {
         this.maxColumnCount = maxColumnCount;
         seatArrayList=new ArrayList<>();
         seatRowList=new ArrayList<>();
-        this.price=price;
+        int price1 = price;
 
         for(int i=0;i<maxSeatCount;i++){
+            int columnNo=(i)%maxColumnCount;
+            char c=(char)((i/maxColumnCount)+65);
             seatArrayList.add(new Seat()
-                    .setSeat_no(i%maxColumnCount)
+                    .setSeat_no(""+c+ (columnNo+1))
                     .setBooked(false)
                     .setVisiblity(View.VISIBLE)
                     .setRow_no(i/maxColumnCount)
-                    .setColumn_no(i%maxColumnCount)
+                    .setColumn_no((i-1)%maxColumnCount+1)
                     .setPrice(price));
         }
 
@@ -40,21 +41,24 @@ public class SeatLayoutGenerator {
     }
 
     public void removeRow(int row){
-        int start=row*maxColumnCount;
-        Log.i("removeColumnRow","start: "+start+"\nrow: "+row+"\ncolumn count: "+maxColumnCount);
-        for(int i=start;i<(start+maxColumnCount);i++){
-            seatArrayList.add(i,seatArrayList.get(i).setVisiblity(View.INVISIBLE));
-            Log.i("removeColumnRow","removeRow seat removed "+seatArrayList.get(i).toString());
+        for(int i=0;i<maxSeatCount;i++){
+            int rowNo=i/maxColumnCount;
+            if(rowNo==row){
+                seatArrayList.add(i+1,seatArrayList.get(i).setVisiblity(View.INVISIBLE));
+                Log.i("removeColumnRow","removeRow seat removed "+seatArrayList.get(i).toString());
+            }
         }
     }
 
     public void removeColumn(int column){
-        int count=column;
-        while (count<=maxSeatCount){
-            seatArrayList.add(count,seatArrayList.get(count).setVisiblity(View.INVISIBLE));
-            Log.i("removeColumnRow","removeColumn seat removed "+seatArrayList.get(count).toString());
-            count+=maxColumnCount;
+        for(int i=0;i<maxSeatCount;i++){
+            int columnNo=(i)%maxColumnCount;
+            if(columnNo==column){
+                seatArrayList.add(i,seatArrayList.get(i).setVisiblity(View.INVISIBLE));
+                Log.i("removeColumnRow","removeColumn seat removed "+seatArrayList.get(i).toString());
+            }
         }
+
         /*
         for(int i=0;i<maxColumnCount;i++){
             if(i/maxSeatCount==column){

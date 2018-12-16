@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/seatLayout"
-    android:layout_width="45dp"
-    android:layout_height="45dp"
-    android:visibility="gone">
+    android:layout_width="50dp"
+    android:layout_height="60dp"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/seatImage"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="NA"
         android:textStyle="bold" />
 

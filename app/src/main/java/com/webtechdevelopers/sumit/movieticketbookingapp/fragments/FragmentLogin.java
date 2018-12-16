@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
-public class LoginFragment extends Fragment {
+public class FragmentLogin extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private OnFragmentInteractionListener onFragmentInteractionListener=null;
 
     private String mParam1;
 
-    public LoginFragment() {
+    public FragmentLogin() {
         // Required empty public constructor
     }
 
-    public static LoginFragment newInstance(String param1,OnFragmentInteractionListener onFragmentInteractionListener) {
-        LoginFragment fragment = new LoginFragment();
+    public static FragmentLogin newInstance(String param1, OnFragmentInteractionListener onFragmentInteractionListener) {
+        FragmentLogin fragment = new FragmentLogin();
         fragment.onFragmentInteractionListener=onFragmentInteractionListener;
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);

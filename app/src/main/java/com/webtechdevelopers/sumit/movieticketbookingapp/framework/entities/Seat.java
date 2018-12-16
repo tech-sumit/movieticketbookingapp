@@ -3,17 +3,16 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 import java.io.Serializable;
 
 public class Seat implements Serializable {
-    private int seat_no=0;
+    private String seat_no="";
     private int row_no=0;
     private int column_no=0;
     private int price=0;
     private int visiblity;
     private boolean isBooked =false;
 
-    public Seat() {
-    }
+    public Seat() { }
 
-    public Seat(int seat_no, int row_no, int column_no, int price, int visiblity, boolean isBooked) {
+    public Seat(String  seat_no, int row_no, int column_no, int price, int visiblity, boolean isBooked) {
         this.seat_no = seat_no;
         this.row_no = row_no;
         this.column_no = column_no;
@@ -22,7 +21,7 @@ public class Seat implements Serializable {
         this.isBooked = isBooked;
     }
 
-    public int getSeat_no() {
+    public String getSeat_no() {
         return seat_no;
     }
 
@@ -46,7 +45,7 @@ public class Seat implements Serializable {
         return isBooked;
     }
 
-    public Seat setSeat_no(int seat_no) {
+    public Seat setSeat_no(String seat_no) {
         this.seat_no = seat_no;
         return this;
     }

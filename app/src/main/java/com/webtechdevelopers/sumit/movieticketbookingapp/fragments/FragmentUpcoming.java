@@ -15,7 +15,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiCo
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class UpcomingFragment extends Fragment {
+public class FragmentUpcoming extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private RecyclerView upcomingMovies;
     private RecyclerView.Adapter adapter;
@@ -33,11 +32,11 @@ public class UpcomingFragment extends Fragment {
 
     private String mParam1;
 
-    public UpcomingFragment() {
+    public FragmentUpcoming() {
     }
 
-    public static UpcomingFragment newInstance(String param1) {
-        UpcomingFragment fragment = new UpcomingFragment();
+    public static FragmentUpcoming newInstance(String param1) {
+        FragmentUpcoming fragment = new FragmentUpcoming();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
