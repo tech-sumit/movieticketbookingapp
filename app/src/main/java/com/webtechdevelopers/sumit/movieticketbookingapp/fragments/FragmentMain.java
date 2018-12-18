@@ -114,11 +114,12 @@ public class FragmentMain extends Fragment{
                             ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
                         }
                     });
-                    LinearLayout booking=dialog.findViewById(R.id.nav_booking);
-                    booking.setOnClickListener(new View.OnClickListener() {
+                    LinearLayout orders=dialog.findViewById(R.id.nav_booking);
+                    orders.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //TODO: Add booking records
+                            dialog.cancel();
+                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("orders",null);
                         }
                     });
                     LinearLayout setting=dialog.findViewById(R.id.nav_settings);

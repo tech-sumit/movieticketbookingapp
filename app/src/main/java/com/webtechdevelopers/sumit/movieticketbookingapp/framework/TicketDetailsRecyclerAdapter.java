@@ -1,6 +1,5 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +22,10 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
 
     private ArrayList<Show> shows;
     private Show show;
-    public TicketDetailsRecyclerAdapter(ArrayList<Show> shows){
+    private OnShowSelectedListener onShowSelectedListener;
+    public TicketDetailsRecyclerAdapter(ArrayList<Show> shows,OnShowSelectedListener onShowSelectedListener){
         this.shows=shows;
+        this.onShowSelectedListener=onShowSelectedListener;
     }
 
     @NonNull
@@ -39,10 +40,12 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
     public void onBindViewHolder(@NonNull TicketHolder holder, int position) {
         show=shows.get(position);
         Movie movie=show.getMovie();
+        holder.bind(show,onShowSelectedListener);
         holder.ticketMovieImage.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));
+        holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
         holder.ticketMovieName.setText(movie.getOriginal_title());
-        holder.tickeSeats.setText(show.getSeatCount());
-        holder.tickeMoneyPaid.setText((show.getSeatCount()*show.getSeats().get(0).getPrice()));
+        holder.ticketSeats.setText(""+show.getSeatCount());
+        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()));
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -50,10 +53,12 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
     public void onViewRecycled(@NonNull TicketHolder holder) {
         super.onViewRecycled(holder);
         Movie movie=show.getMovie();
+        holder.bind(show,onShowSelectedListener);
         holder.ticketMovieImage.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));
+        holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
         holder.ticketMovieName.setText(movie.getOriginal_title());
-        holder.tickeSeats.setText(show.getSeatCount());
-        holder.tickeMoneyPaid.setText((show.getSeatCount()*show.getSeats().get(0).getPrice()));
+        holder.ticketSeats.setText(""+show.getSeatCount());
+        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()));
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -64,15 +69,25 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
 
     public class TicketHolder extends RecyclerView.ViewHolder{
         public SimpleDraweeView ticketMovieImage;
+        public TextView ticketPaymentID;
         public TextView ticketMovieName;
-        public TextView tickeSeats;
-        public TextView tickeMoneyPaid;
+        public TextView ticketSeats;
+        public TextView ticketMoneyPaid;
         public TicketHolder(@NonNull View itemView) {
             super(itemView);
             ticketMovieImage=itemView.findViewById(R.id.ticketMovieImage);
+            ticketPaymentID=itemView.findViewById(R.id.ticketPaymentID);
             ticketMovieName=itemView.findViewById(R.id.ticketMovieName);
-            tickeSeats=itemView.findViewById(R.id.ticketSeats);
+            ticketSeats=itemView.findViewById(R.id.ticketSeats);
+            ticketMoneyPaid=itemView.findViewById(R.id.ticketMoneyPaid);
         }
-
+        public void bind(final Show show, final OnShowSelectedListener onShowSelectedListener){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onShowSelectedListener.onShowSelected(show);
+                }
+            });
+        }
     }
 }

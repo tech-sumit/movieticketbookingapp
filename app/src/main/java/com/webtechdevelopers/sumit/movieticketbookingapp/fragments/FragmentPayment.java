@@ -1,17 +1,21 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.razorpay.Checkout;
 import com.razorpay.ExternalWalletListener;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistantDataStorage;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
@@ -67,12 +71,12 @@ public class FragmentPayment extends Fragment{
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startPayment();
+                startPayment(view);
             }
         });
     }
 
-    private void startPayment(){
+    private void startPayment(final View view){
         Checkout checkout=new Checkout();
         JSONObject jsonObject=new JSONObject();
         try {
@@ -84,15 +88,47 @@ public class FragmentPayment extends Fragment{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        ((ActivityMain)getActivity()).setShow(show);
+
+        Checkout.handleActivityResult(getActivity(), 0, 0, null, (PaymentResultWithDataListener) getActivity(), new ExternalWalletListener() {
+            @Override
+            public void onExternalWalletSelected(String s, PaymentData paymentData) {
+
+            }
+        });
+
+        /*
         Checkout.handleActivityResult(getActivity(), 0, 0, null, new PaymentResultWithDataListener() {
             @Override
             public void onPaymentSuccess(String s, PaymentData paymentData) {
-
+                Log.i("PAYMENT_RESULT",""+s);
+                PersistantDataStorage persistantDataStorage=new PersistantDataStorage(view.getContext());
+                show.setPaymentData(paymentData);
+                persistantDataStorage.addShow(show);
+                Toast.makeText(view.getContext(),"Payment Successful",Toast.LENGTH_SHORT).show();
+                //TODO: Save order details into database. Set booked seats as already booked status in booing fragment
             }
 
             @Override
             public void onPaymentError(int i, String s, PaymentData paymentData) {
-
+                Log.i("PAYMENT_RESULT","i: "+i+"\n"+s);
+                switch (i){
+                    case Checkout.PAYMENT_CANCELED:
+                        Toast.makeText(view.getContext(),"Payment Canceled",Toast.LENGTH_SHORT).show();
+                        break;
+                    case Checkout.NETWORK_ERROR:
+                        Toast.makeText(view.getContext(),"Network Filed",Toast.LENGTH_SHORT).show();
+                        break;
+                    case Checkout.INVALID_OPTIONS:
+                        Toast.makeText(view.getContext(),"Invalid Options",Toast.LENGTH_SHORT).show();
+                        break;
+                    case Checkout.TLS_ERROR:
+                        Toast.makeText(view.getContext(),"TLS Error",Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(view.getContext(),"Unknown error, Try again later",Toast.LENGTH_SHORT).show();
+                }
             }
         }, new ExternalWalletListener() {
             @Override
@@ -100,5 +136,7 @@ public class FragmentPayment extends Fragment{
 
             }
         });
+
+         */
     }
 }

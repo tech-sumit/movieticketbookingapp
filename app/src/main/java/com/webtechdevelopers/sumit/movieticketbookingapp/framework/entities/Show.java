@@ -1,5 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
+import com.google.gson.Gson;
+import com.razorpay.PaymentData;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -8,6 +11,7 @@ public class Show implements Serializable {
     private String venue = "";
     private String time = "";
     private ArrayList<Seat> seats;
+    private PaymentData paymentData;
 
     public Show() {
         seats=new ArrayList<>();
@@ -39,6 +43,14 @@ public class Show implements Serializable {
         return time;
     }
 
+    public PaymentData getPaymentData() {
+        return paymentData;
+    }
+
+    public String getSerializable(){
+        return new Gson().toJson(this);
+    }
+
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
@@ -55,6 +67,14 @@ public class Show implements Serializable {
         this.time = time;
     }
 
+    public void setPaymentData(PaymentData paymentData) {
+        this.paymentData = paymentData;
+    }
+
+    public static Show fromSerializable(String json){
+        return new Gson().fromJson(json,Show.class);
+    }
+
     @Override
     public String toString() {
         return "Show{" +
@@ -62,6 +82,7 @@ public class Show implements Serializable {
                 ", venue='" + venue + '\'' +
                 ", time='" + time + '\'' +
                 ", seats=" + seats +
+                ", paymentData=" + paymentData +
                 '}';
     }
 }

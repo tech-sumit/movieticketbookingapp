@@ -12,14 +12,18 @@ import com.razorpay.PaymentResultWithDataListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails;
+import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentOrders;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistantDataStorage;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ActivityMain extends AppCompatActivity implements OnFragmentInteractionListener ,PaymentResultWithDataListener {
-    int backCount=0;
-    int last_fragment_id=R.layout.fragment_main;
+public class ActivityMain extends AppCompatActivity implements OnFragmentInteractionListener,PaymentResultWithDataListener{
+    private int backCount=0;
+    private int last_fragment_id=R.layout.fragment_main;
+    private Show show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,15 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .addToBackStack("FragmentPayment")
                         .commit();
                 break;
+            case "orders":
+                last_fragment_id=R.layout.fragment_payment;
+                FragmentOrders fragmentOrders=new FragmentOrders();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_container, fragmentOrders)
+                        .addToBackStack("FragmentOrders")
+                        .commit();
+                break;
             default:
                 last_fragment_id=R.layout.fragment_main;
                 Log.e("CASE_ERROR","Invalid fragmentId ID:"+fragmentName);
@@ -127,6 +140,9 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     @Override
     public void onPaymentSuccess(String s, PaymentData paymentData) {
         Log.i("PAYMENT_RESULT",""+s);
+        PersistantDataStorage persistantDataStorage=new PersistantDataStorage(this);
+        show.setPaymentData(paymentData);
+        persistantDataStorage.addShow(show);
         Toast.makeText(this,"Payment Successful",Toast.LENGTH_SHORT).show();
         //TODO: Save order details into database. Set booked seats as already booked status in booing fragment
     }
@@ -150,5 +166,8 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
             default:
                 Toast.makeText(this,"Unknown error, Try again later",Toast.LENGTH_SHORT).show();
         }
+    }
+    public void setShow(Show show){
+        this.show=show;
     }
 }
