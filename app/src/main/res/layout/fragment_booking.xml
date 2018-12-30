@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".fragments.FragmentBooking"
     tools:layout_editor_absoluteY="81dp">
 
@@ -11,6 +12,7 @@
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -90,6 +92,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@android:color/white"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +118,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="Movie Name"
-        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
@@ -152,7 +156,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
         android:text="Book Now"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -171,6 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:text="Total"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="36dp"
@@ -181,6 +188,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="--"
+            android:textColor="@android:color/white"
             tools:layout_editor_absoluteX="84dp"
             tools:layout_editor_absoluteY="481dp" />
     </LinearLayout>
@@ -193,6 +201,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         android:text="SCREEN THIS WAY"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/bookButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

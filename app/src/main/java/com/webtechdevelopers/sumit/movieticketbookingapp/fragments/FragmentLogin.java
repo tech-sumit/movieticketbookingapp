@@ -56,8 +56,8 @@ public class FragmentLogin extends Fragment {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(view.getContext(),gso);
         SignInButton signInButton = view.findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setColorScheme(SignInButton.COLOR_LIGHT);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setColorScheme(SignInButton.COLOR_DARK);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

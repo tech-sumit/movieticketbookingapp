@@ -56,7 +56,6 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
                 .build();
         movieItemHolder.movieBackground.setController(controller);
 
-
         movieItemHolder.movieName.setText(movie.getTitle());
         movieItemHolder.movieRating.setText(""+movie.getVote_average());
 

@@ -5,7 +5,9 @@
     android:id="@+id/linearLayout4"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginBottom="16dp"
     android:orientation="horizontal"
     tools:layout_editor_absoluteY="81dp">
 
@@ -59,7 +61,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="MovieName"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="8dp" />
@@ -71,6 +73,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="Seats"
                     android:textColor="@android:color/white"
+                    android:textSize="18sp"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="41dp" />
 
@@ -81,6 +84,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="Money Paid"
                     android:textColor="@android:color/white"
+                    android:textSize="18sp"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="67dp" />
 

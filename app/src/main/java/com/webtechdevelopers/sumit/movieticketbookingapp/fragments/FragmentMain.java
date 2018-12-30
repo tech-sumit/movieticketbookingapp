@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -58,7 +59,12 @@ public class FragmentMain extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Fresco.initialize(container.getContext());
+
+        if(container!=null){
+            Fresco.initialize(container.getContext());
+        }else {
+            getActivity().finish();
+        }
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
@@ -69,7 +75,7 @@ public class FragmentMain extends Fragment {
         setHasOptionsMenu(true);
 
         final CoordinatorLayout mainCoordinatorLayout=view.findViewById(R.id.mainCoordinatorLayout);
-        final FrameLayout replacableFrameLayout=view.findViewById(R.id.replacableFrameLayout);
+        final ConstraintLayout replaceableConstraintLayout=view.findViewById(R.id.replaceableConstraintLayout);
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
@@ -131,13 +137,13 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            mainCoordinatorLayout.setVisibility(View.GONE);
-                            replacableFrameLayout.setVisibility(View.VISIBLE);
+                            //mainCoordinatorLayout.setVisibility(View.GONE);
+                            //replaceableConstraintLayout.setVisibility(View.VISIBLE);
                             getActivity()
                                     .getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(
-                                            R.id.replacableFrameLayout,
+                                            R.id.replaceableConstraintLayout,
                                             new FragmentOrders())
                                     .addToBackStack("FragmentOrders")
                                     .commit();
@@ -152,13 +158,13 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            mainCoordinatorLayout.setVisibility(View.GONE);
-                            replacableFrameLayout.setVisibility(View.VISIBLE);
+                            //mainCoordinatorLayout.setVisibility(View.GONE);
+                            //replaceableConstraintLayout.setVisibility(View.VISIBLE);
                             getActivity()
                                     .getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(
-                                            R.id.replacableFrameLayout,
+                                            R.id.replaceableConstraintLayout,
                                             new FragmentAboutUs())
                                     .addToBackStack("FragmentAboutUs")
                                     .commit();

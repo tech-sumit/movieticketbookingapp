@@ -23,7 +23,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 
 public class ActivityMain extends AppCompatActivity implements OnFragmentInteractionListener,PaymentResultWithDataListener{
     private int backCount=0;
-    private int last_fragment_id=R.layout.fragment_main;
+    private boolean isDoubleClickAllowed=true;
     private Show show;
 
     @Override
@@ -62,7 +62,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
         FragmentMovieDetails fragmentMovieDetails;
         switch (fragmentName){
             case "login_fragment":
-                last_fragment_id=R.layout.fragment_login;
+                isDoubleClickAllowed=true;
                 FragmentLogin fragmentLogin=new FragmentLogin();
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -70,7 +70,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "main_fragment":
-                last_fragment_id=R.layout.fragment_main;
+                isDoubleClickAllowed=true;
                 FragmentMain fragmentMain =new FragmentMain();
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -78,7 +78,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "now_playing":
-                last_fragment_id=R.layout.fragment_now_playing;
+                isDoubleClickAllowed=false;
                 fragmentMovieDetails =FragmentMovieDetails.newInstance(bundle);
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -87,7 +87,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "top_rated":
-                last_fragment_id=R.layout.fragment_top_rated;
+                isDoubleClickAllowed=false;
                 fragmentMovieDetails = FragmentMovieDetails.newInstance(bundle);
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -96,7 +96,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "upcoming":
-                last_fragment_id=R.layout.fragment_upcoming;
+                isDoubleClickAllowed=false;
                 fragmentMovieDetails =FragmentMovieDetails.newInstance(bundle);
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -105,7 +105,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "booking":
-                last_fragment_id=R.layout.fragment_booking;
+                isDoubleClickAllowed=false;
                 FragmentBooking fragmentBooking =FragmentBooking.newInstance(bundle);
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -114,7 +114,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "payment":
-                last_fragment_id=R.layout.fragment_payment;
+                isDoubleClickAllowed=false;
                 FragmentPayment fragmentPayment =FragmentPayment.newInstance(bundle);
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -123,7 +123,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             case "orders":
-                last_fragment_id=R.layout.fragment_payment;
+                isDoubleClickAllowed=false;
                 FragmentOrders fragmentOrders=new FragmentOrders();
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -132,16 +132,15 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .commit();
                 break;
             default:
-                last_fragment_id=R.layout.fragment_main;
+                isDoubleClickAllowed=false;
                 Log.e("CASE_ERROR","Invalid fragmentId ID:"+fragmentName);
         }
     }
 
     @Override
     public void onBackPressed() {
-        if(last_fragment_id==R.layout.fragment_main){
+        if(isDoubleClickAllowed){
             backCount++;
-            last_fragment_id=R.layout.fragment_main;
             if(backCount>1){
                 super.onBackPressed();
             }else {
@@ -150,7 +149,6 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
         }else{
             super.onBackPressed();
             backCount=0;
-            last_fragment_id=R.layout.fragment_main;
         }
     }
 

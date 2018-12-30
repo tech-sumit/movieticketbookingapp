@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -32,6 +34,8 @@ public class FragmentMovieDetails extends Fragment {
     private Movie movie;
     private String type="";
 
+    private CardView movieDetailsCard;
+
     private SimpleDraweeView movieDetailImage;
     private SimpleDraweeView movieDetailBackground;
     private TextView movieDetailName;
@@ -49,6 +53,7 @@ public class FragmentMovieDetails extends Fragment {
     private TextView textRuntime;
     private TextView textProductionCompanies;
 
+    private ProgressBar movieDetailsProgress;
     private Button bookMovieNow;
 
     public FragmentMovieDetails() {
@@ -87,6 +92,9 @@ public class FragmentMovieDetails extends Fragment {
         movieDetailName =view.findViewById(R.id.movieDetailName);
         movieDetailGenre =view.findViewById(R.id.movieDetailType);
         bookMovieNow=view.findViewById(R.id.bookMovieButton);
+
+        movieDetailsCard=view.findViewById(R.id.movieDetailsCard);
+        movieDetailsProgress=view.findViewById(R.id.movieDetailsProgress);
 
         Log.i("TYPE",""+type);
         if(!type.equals("upcoming")){
@@ -135,6 +143,10 @@ public class FragmentMovieDetails extends Fragment {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
+
+                movieDetailsCard.setVisibility(View.VISIBLE);
+                movieDetailsProgress.setVisibility(View.GONE);
+
                 movie=JSONPacketParser.getDetailMovie(response);
                 textOverview.setText(movie.getOverview());
                 if(movie.isAdult()){

@@ -75,7 +75,7 @@ public class FragmentBooking extends Fragment {
         seatRecyclerView =view.findViewById(R.id.seatRecyclerView);
         textCalculation=view.findViewById(R.id.textCalculation);
         movieName=view.findViewById(R.id.movieName);
-        movieName.setText(""+movie.getOriginal_title());
+        movieName.setText(""+movie.getTitle());
         seatArrayList=new ArrayList<>();
         final Spinner showTiming=view.findViewById(R.id.showTiming);
         showTiming.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
