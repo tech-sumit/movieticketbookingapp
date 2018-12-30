@@ -1,12 +1,21 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -15,8 +24,12 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
@@ -27,16 +40,8 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApi
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-public class FragmentMain extends Fragment{
+public class FragmentMain extends Fragment {
     private SimpleDraweeView latestMovieImage;
     private TextView latestMovieName;
     private TextView latestMovieType;
@@ -79,6 +84,7 @@ public class FragmentMain extends Fragment{
         latestMovieName=view.findViewById(R.id.latestMovieName);
         latestMovieType=view.findViewById(R.id.latestMovieType);
         latestMovieDuration=view.findViewById(R.id.latestMovieDuration);
+
         ApiConnector apiConnector=new ApiConnector(view.getContext());
         apiConnector.getPopularMovies(1,new OnApiResultRecived() {
             @Override
@@ -106,6 +112,12 @@ public class FragmentMain extends Fragment{
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 dialog.show();
                 if(dialog.isShowing()){
+                    SimpleDraweeView profilePic=dialog.findViewById(R.id.profile_pic);
+                    SharedPreferences sharedPreferences=view.getContext().getSharedPreferences("login_pref",Context.MODE_PRIVATE);
+                    String profilePicURL=sharedPreferences.getString(Constants.PROFILE_PIC,"");
+                    profilePic.setImageURI(Uri.parse(profilePicURL));
+                    TextView profileName=dialog.findViewById(R.id.profile_name);
+                    profileName.setText(sharedPreferences.getString(Constants.NAME,""));
                     LinearLayout theatre=dialog.findViewById(R.id.nav_theatre);
                     theatre.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -119,14 +131,20 @@ public class FragmentMain extends Fragment{
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
+                            mainCoordinatorLayout.setVisibility(View.GONE);
+                            replacableFrameLayout.setVisibility(View.VISIBLE);
+                            getActivity()
+                                    .getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(
+                                            R.id.replacableFrameLayout,
+                                            new FragmentOrders())
+                                    .addToBackStack("FragmentOrders")
+                                    .commit();
+                            /*
+                            dialog.cancel();
                             ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("orders",null);
-                        }
-                    });
-                    LinearLayout setting=dialog.findViewById(R.id.nav_settings);
-                    setting.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //TODO:  Add settings
+                            */
                         }
                     });
                     LinearLayout aboutUs=dialog.findViewById(R.id.nav_about_us);
@@ -150,7 +168,23 @@ public class FragmentMain extends Fragment{
                     signOut.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            GoogleSignInAccount googleSignInAccount= GoogleSignIn.getLastSignedInAccount(getContext());
+                            GoogleSignInOptions googleSignInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                    .requestEmail()
+                                    .requestProfile()
+                                    .build();
+                            GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(view.getContext(), googleSignInOptions);
+                            googleSignInClient.signOut()
+                                    .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            dialog.cancel();
+                                            SharedPreferences sharedPreferences1=view.getContext().getSharedPreferences(Constants.LOGIN_PREF,Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor=sharedPreferences1.edit();
+                                            editor.clear();
+                                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("login_fragment",null);
+                                        }
+                                    });
                         }
                     });
                 }
@@ -163,21 +197,6 @@ public class FragmentMain extends Fragment{
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
         */
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.nav_menu,menu);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

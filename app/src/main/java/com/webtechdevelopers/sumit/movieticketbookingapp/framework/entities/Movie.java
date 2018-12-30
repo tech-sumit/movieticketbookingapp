@@ -66,7 +66,6 @@ public class Movie implements Serializable {
         this.spoken_languages = new String[1];
         this.status = "";
         this.tag_line = "";
-
     }
 
     public Movie(int vote_count, int id, boolean video, double vote_average, String title, double popularity, String poster_path, String original_language, String original_title, int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_date, String belongs_to_collection, int budget, String homepage, String imdb_id, ArrayList<ProductionCompany> companies, ArrayList<ProductionCountry> countries, int revenue, int runtime, String[] spoken_languages, String status, String tag_line) {

@@ -1,6 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDetailsRecyclerAdapter.TicketHolder> {
 
@@ -42,10 +47,24 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         Movie movie=show.getMovie();
         holder.bind(show,onShowSelectedListener);
         holder.ticketMovieImage.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));
+        Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(backgroundUri)
+                .setPostprocessor(new IterativeBoxBlurPostProcessor(20))
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(holder.ticketBackground.getController())
+                .build();
+        holder.ticketBackground.setController(controller);
         holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
         holder.ticketMovieName.setText(movie.getOriginal_title());
-        holder.ticketSeats.setText(""+show.getSeatCount());
-        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()));
+        ArrayList<Seat> seats=show.getSeats();
+        String bookedSeats="";
+        for(Seat seat: seats){
+            bookedSeats+=seat.getSeat_no()+" ";
+        }
+        holder.ticketSeats.setText("Seats: "+bookedSeats);
+        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()+" INR"));
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -55,10 +74,24 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         Movie movie=show.getMovie();
         holder.bind(show,onShowSelectedListener);
         holder.ticketMovieImage.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));
+        Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
+        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(backgroundUri)
+                .setPostprocessor(new IterativeBoxBlurPostProcessor(20))
+                .build();
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setImageRequest(request)
+                .setOldController(holder.ticketBackground.getController())
+                .build();
+        holder.ticketBackground.setController(controller);
         holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
         holder.ticketMovieName.setText(movie.getOriginal_title());
-        holder.ticketSeats.setText(""+show.getSeatCount());
-        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()));
+        ArrayList<Seat> seats=show.getSeats();
+        String bookedSeats="";
+        for(Seat seat: seats){
+            bookedSeats+=seat.getSeat_no()+" ";
+        }
+        holder.ticketSeats.setText("Seats: "+bookedSeats);
+        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()+" INR"));
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -69,6 +102,7 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
 
     public class TicketHolder extends RecyclerView.ViewHolder{
         public SimpleDraweeView ticketMovieImage;
+        public SimpleDraweeView ticketBackground;
         public TextView ticketPaymentID;
         public TextView ticketMovieName;
         public TextView ticketSeats;
@@ -76,6 +110,7 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         public TicketHolder(@NonNull View itemView) {
             super(itemView);
             ticketMovieImage=itemView.findViewById(R.id.ticketMovieImage);
+            ticketBackground=itemView.findViewById(R.id.ticketBackground);
             ticketPaymentID=itemView.findViewById(R.id.ticketPaymentID);
             ticketMovieName=itemView.findViewById(R.id.ticketMovieName);
             ticketSeats=itemView.findViewById(R.id.ticketSeats);

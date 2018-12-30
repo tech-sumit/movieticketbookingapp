@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".fragments.FragmentOrders">
 
     <ScrollView
@@ -19,13 +20,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/ticketBookingRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

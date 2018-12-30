@@ -23,7 +23,7 @@
         <item name="colorAccent">@color/darkColorAccent</item>
     </style>
     <style name="AppTheme.Blur" parent="android:style/Theme.Translucent">
-        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>

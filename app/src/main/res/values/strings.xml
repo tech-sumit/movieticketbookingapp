@@ -21,6 +21,5 @@
     <string name="settings">Settings</string>
 
     <string name="about_us_url">http://www.webtechdevelopers.com/aboutus.aspx</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="web_client_id">460739082574-g5d23n2csgkqntrhrp44iuevavsob63k.apps.googleusercontent.com</string>
 </resources>

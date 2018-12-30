@@ -3,6 +3,9 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +27,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiCo
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 public class FragmentMovieDetails extends Fragment {
     private Movie movie;
@@ -142,6 +142,7 @@ public class FragmentMovieDetails extends Fragment {
                 }else{
                     textAdult.setVisibility(View.GONE);
                 }
+
                 textReleseDate.setText("Released on "+movie.getRelease_date());
 
                 String countries=movie.getCountries();

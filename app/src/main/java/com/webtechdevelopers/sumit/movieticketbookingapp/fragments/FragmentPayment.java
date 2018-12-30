@@ -1,13 +1,17 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.razorpay.Checkout;
 import com.razorpay.ExternalWalletListener;
@@ -15,18 +19,14 @@ import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistantDataStorage;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-public class FragmentPayment extends Fragment{
+public class FragmentPayment extends Fragment {
     private TextView calcualationText;
     private Button payButton;
     private Show show;
@@ -76,7 +76,7 @@ public class FragmentPayment extends Fragment{
         });
     }
 
-    private void startPayment(final View view){
+    private void startPayment(View view){
         Checkout checkout=new Checkout();
         JSONObject jsonObject=new JSONObject();
         try {
@@ -84,6 +84,13 @@ public class FragmentPayment extends Fragment{
             jsonObject.put("description","Ticket count");
             jsonObject.put("currency","INR");
             jsonObject.put("amount",""+(price*100));
+
+            SharedPreferences sharedPreferences=view.getContext().getSharedPreferences(Constants.LOGIN_PREF,Context.MODE_PRIVATE);
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", ""+sharedPreferences.getString(Constants.EMAIL,""));
+            preFill.put("contact", "");
+            jsonObject.put("prefill", preFill);
+
             checkout.open(getActivity(),jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -97,46 +104,5 @@ public class FragmentPayment extends Fragment{
 
             }
         });
-
-        /*
-        Checkout.handleActivityResult(getActivity(), 0, 0, null, new PaymentResultWithDataListener() {
-            @Override
-            public void onPaymentSuccess(String s, PaymentData paymentData) {
-                Log.i("PAYMENT_RESULT",""+s);
-                PersistantDataStorage persistantDataStorage=new PersistantDataStorage(view.getContext());
-                show.setPaymentData(paymentData);
-                persistantDataStorage.addShow(show);
-                Toast.makeText(view.getContext(),"Payment Successful",Toast.LENGTH_SHORT).show();
-                //TODO: Save order details into database. Set booked seats as already booked status in booing fragment
-            }
-
-            @Override
-            public void onPaymentError(int i, String s, PaymentData paymentData) {
-                Log.i("PAYMENT_RESULT","i: "+i+"\n"+s);
-                switch (i){
-                    case Checkout.PAYMENT_CANCELED:
-                        Toast.makeText(view.getContext(),"Payment Canceled",Toast.LENGTH_SHORT).show();
-                        break;
-                    case Checkout.NETWORK_ERROR:
-                        Toast.makeText(view.getContext(),"Network Filed",Toast.LENGTH_SHORT).show();
-                        break;
-                    case Checkout.INVALID_OPTIONS:
-                        Toast.makeText(view.getContext(),"Invalid Options",Toast.LENGTH_SHORT).show();
-                        break;
-                    case Checkout.TLS_ERROR:
-                        Toast.makeText(view.getContext(),"TLS Error",Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(view.getContext(),"Unknown error, Try again later",Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new ExternalWalletListener() {
-            @Override
-            public void onExternalWalletSelected(String s, PaymentData paymentData) {
-
-            }
-        });
-
-         */
     }
 }

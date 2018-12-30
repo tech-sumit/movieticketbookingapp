@@ -1,24 +1,25 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.razorpay.Checkout;
 import com.razorpay.PaymentData;
-import com.razorpay.PaymentResultListener;
 import com.razorpay.PaymentResultWithDataListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking;
+import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentOrders;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistantDataStorage;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class ActivityMain extends AppCompatActivity implements OnFragmentInteractionListener,PaymentResultWithDataListener{
     private int backCount=0;
@@ -35,10 +36,18 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
             @Override
             public void run() {
                 setContentView(R.layout.activity_main);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_container,new FragmentMain())
-                        .commitNow();
+                SharedPreferences sharedPreferences=getSharedPreferences(Constants.LOGIN_PREF,MODE_PRIVATE);
+                if(sharedPreferences.getBoolean(Constants.LOGIN,false)){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_container,new FragmentMain())
+                            .commitNow();
+                }else{
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_container,new FragmentLogin())
+                            .commitNow();
+                }
             }
         },2000);
     }
@@ -52,6 +61,14 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     public void onFragmentInteractionResult(String fragmentName, Bundle bundle) {
         FragmentMovieDetails fragmentMovieDetails;
         switch (fragmentName){
+            case "login_fragment":
+                last_fragment_id=R.layout.fragment_login;
+                FragmentLogin fragmentLogin=new FragmentLogin();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_container, fragmentLogin)
+                        .commit();
+                break;
             case "main_fragment":
                 last_fragment_id=R.layout.fragment_main;
                 FragmentMain fragmentMain =new FragmentMain();
@@ -110,7 +127,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                 FragmentOrders fragmentOrders=new FragmentOrders();
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_container, fragmentOrders)
+                        .add(R.id.main_container, fragmentOrders)
                         .addToBackStack("FragmentOrders")
                         .commit();
                 break;

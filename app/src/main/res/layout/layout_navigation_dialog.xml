@@ -6,7 +6,25 @@
     android:orientation="vertical"
     android:theme="@style/AppTheme.Blur">
 
-    <androidx.cardview.widget.CardView
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/profile_pic"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -38,9 +56,9 @@
                 android:textColor="@android:color/white"
                 android:textSize="30sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -72,42 +90,9 @@
                 android:textColor="@android:color/white"
                 android:textSize="30sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardElevation="16dp">
-
-        <LinearLayout
-            android:id="@+id/nav_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:padding="4dp"
-                app:srcCompat="@drawable/ic_settings" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="Settings"
-                android:textColor="@android:color/white"
-                android:textSize="30sp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
@@ -139,9 +124,9 @@
                 android:textColor="@android:color/white"
                 android:textSize="30sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </android.support.v7.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
@@ -173,5 +158,5 @@
                 android:textColor="@android:color/white"
                 android:textSize="30sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </android.support.v7.widget.CardView>
 </LinearLayout>

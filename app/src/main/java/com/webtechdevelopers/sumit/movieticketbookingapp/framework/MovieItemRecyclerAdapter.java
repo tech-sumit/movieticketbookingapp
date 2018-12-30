@@ -1,6 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movi
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecyclerAdapter.MovieItemHolder> {
 
@@ -46,9 +46,7 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
         movieItemHolder.movieImage.setImageURI(uri);
 
-
         Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
-//        movieItemHolder.movieDetailBackground.setImageURI(backgroundUri);
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(backgroundUri)
                 .setPostprocessor(new IterativeBoxBlurPostProcessor(20))
                 .build();

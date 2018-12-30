@@ -1,6 +1,11 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +24,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class FragmentBooking extends Fragment {
     private Movie movie;
@@ -102,6 +101,7 @@ public class FragmentBooking extends Fragment {
                 show.setVenue("");
             }
         });
+
         //Generating static theater layout
         for(int i=0;i<336;i++){
             int columnNo=(i)%maxSeatColumnCount;
@@ -113,6 +113,7 @@ public class FragmentBooking extends Fragment {
                 seatArrayList.add(new Seat(""+c+(columnNo+1),i/maxSeatColumnCount,(i-1)%maxSeatColumnCount+1, seatPrice,View.VISIBLE,false));
             }
         }
+
         SeatBookingRecyclerAdapter seatBookingAdapter =new SeatBookingRecyclerAdapter(seatArrayList,seatMaxSelectable, maxSeatColumnCount, new OnSeatClickActionListener() {
             @Override
             public void onSeatSelected(Seat seat) {

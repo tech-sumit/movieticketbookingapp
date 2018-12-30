@@ -1,12 +1,13 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +17,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBookingRecyclerAdapter.SeatHolder> {
 

@@ -17,6 +17,7 @@ public class PersistantDataStorage {
         this.context=context;
         sharedPreferences=context.getSharedPreferences(pref,Context.MODE_PRIVATE);
     }
+
     public void addShow(Show show){
         editor=sharedPreferences.edit();
         int orderCount=sharedPreferences.getInt("order_count",0);
@@ -26,6 +27,7 @@ public class PersistantDataStorage {
         editor.apply();
         Log.i("PersistantDataStorage","Show Saved: "+json);
     }
+
     public ArrayList<Show> getShows(){
         int orderCount=sharedPreferences.getInt("order_count",0);
         ArrayList<Show> shows=new ArrayList<>();
