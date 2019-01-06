@@ -35,11 +35,8 @@ public class FragmentBooking extends Fragment {
     private int maxSeatColumnCount =24;
     private int seatMaxSelectable=6;
 
-    private RecyclerView seatRecyclerView;
-    private ArrayList<Seat> seatArrayList;
-
     private TextView textCalculation;
-    private TextView movieName;
+
     public FragmentBooking() {
         // Required empty public constructor
     }
@@ -72,11 +69,12 @@ public class FragmentBooking extends Fragment {
         show=new Show();
         show.setMovie(movie);
 
-        seatRecyclerView =view.findViewById(R.id.seatRecyclerView);
+        RecyclerView seatRecyclerView = view.findViewById(R.id.seatRecyclerView);
         textCalculation=view.findViewById(R.id.textCalculation);
-        movieName=view.findViewById(R.id.movieName);
-        movieName.setText(""+movie.getTitle());
-        seatArrayList=new ArrayList<>();
+        TextView movieName = view.findViewById(R.id.movieName);
+        String movieNameText=""+movie.getTitle();
+        movieName.setText(movieNameText);
+        ArrayList<Seat> seatArrayList = new ArrayList<>();
         final Spinner showTiming=view.findViewById(R.id.showTiming);
         showTiming.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -103,12 +101,12 @@ public class FragmentBooking extends Fragment {
         });
 
         //Generating static theater layout
-        for(int i=0;i<336;i++){
+        for(int i=0;i<maxSeatCount;i++){
             int columnNo=(i)%maxSeatColumnCount;
             int rowNo=i/maxSeatColumnCount;
             char c= (char) (rowNo+65);
             if(columnNo==4||columnNo==5||columnNo==18||columnNo==19 ||rowNo==4||rowNo==9){
-                seatArrayList.add(new Seat().setVisiblity(View.GONE));
+                seatArrayList.add(new Seat().setVisibility(View.GONE));
             }else{
                 seatArrayList.add(new Seat(""+c+(columnNo+1),i/maxSeatColumnCount,(i-1)%maxSeatColumnCount+1, seatPrice,View.VISIBLE,false));
             }
@@ -120,7 +118,8 @@ public class FragmentBooking extends Fragment {
                 ArrayList<Seat> seats=show.getSeats();
                 seats.add(seat);
                 show.setSeats(seats);
-                textCalculation.setText(""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR");
+                String textCalculationText=""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR";
+                textCalculation.setText(textCalculationText);
                 Log.i("SeatAction","onSeatSelected: "+show.getSeats().toString());
             }
 
@@ -132,7 +131,8 @@ public class FragmentBooking extends Fragment {
                 if(seats.size()==0){
                     textCalculation.setText("--");
                 }else{
-                    textCalculation.setText(""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR");
+                    String textCalculationText=""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR";
+                    textCalculation.setText(textCalculationText);
                 }
                 Log.i("SeatAction","onSeatDeselected"+show.getSeats().toString());
             }

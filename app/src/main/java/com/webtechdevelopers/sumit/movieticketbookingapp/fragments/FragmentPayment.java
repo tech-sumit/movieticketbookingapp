@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class FragmentPayment extends Fragment {
-    private TextView calcualationText;
-    private Button payButton;
     private Show show;
     private float price;
     public FragmentPayment() {}
@@ -65,9 +62,9 @@ public class FragmentPayment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        calcualationText=view.findViewById(R.id.calculationText);
+        TextView calculationText = view.findViewById(R.id.calculationText);
         TextView moviePaymentlName=view.findViewById(R.id.moviePaymentlName);
-        payButton=view.findViewById(R.id.payButton);
+        Button payButton = view.findViewById(R.id.payButton);
         Movie movie=show.getMovie();
         SimpleDraweeView moviePaymentPoster=view.findViewById(R.id.moviePaymentPoster);
         moviePaymentPoster.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));
@@ -83,15 +80,17 @@ public class FragmentPayment extends Fragment {
                 .build();
         moviePaymentBackground.setController(controller);
 
-        moviePaymentlName.setText(""+movie.getTitle());
+        String movieTitle=""+movie.getTitle();
+        moviePaymentlName.setText(movieTitle);
 
         price=show.getSeatCount()*show.getSeats().get(0).getPrice();
         String calculation="Venue: "+show.getVenue()
                 +"\nTotal Seats: "+show.getSeatCount()
                 +"\nSeat rate: "+ show.getSeats().get(0).getPrice()+" INR"
                 +"\nTotal: "+price+" INR";
-        calcualationText.setText(calculation);
-        payButton.setText("Pay "+price+"INR");
+        calculationText.setText(calculation);
+        String payButtonText="Pay "+price+"INR";
+        payButton.setText(payButtonText);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -45,8 +45,8 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
     public void onBindViewHolder(@NonNull SeatHolder seatHolder, int i) {
         seat= seatArrayList.get(i);
 
-        if(seat.getVisiblity()==View.VISIBLE){
-            seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+        if(seat.getVisibility()==View.VISIBLE){
+            seatHolder.seatLayout.setVisibility(seat.getVisibility());
             seatHolder.bind(seat, onSeatClickActionListener);
             seat.setSeat_no(""+seat.getSeat_no());
             seatHolder.seatNumber.setText(seat.getSeat_no());
@@ -55,17 +55,8 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
             }
             Log.i("MovieDetails","\nData: "+seat.toString());
         }else {
-            seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+            seatHolder.seatLayout.setVisibility(seat.getVisibility());
         }
-
-        /*
-        if(!(seat.getColumn_no() ==0)){
-        }else{
-            seatHolder.seatLayout.setVisibility(View.VISIBLE);
-            seatHolder.seatImage.setVisibility(View.INVISIBLE);
-            seatHolder.seatNumber.setText(""+((char)(seat.getRow_no()+65)));
-        }
-        */
     }
 
     @Override
@@ -76,8 +67,8 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
     @Override
     public void onViewRecycled(@NonNull SeatHolder seatHolder) {
         super.onViewRecycled(seatHolder);
-        if (seat.getVisiblity() == View.VISIBLE) {
-            seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+        if (seat.getVisibility() == View.VISIBLE) {
+            seatHolder.seatLayout.setVisibility(seat.getVisibility());
             seatHolder.bind(seat, onSeatClickActionListener);
             seat.setSeat_no(""+seat.getSeat_no());
             seatHolder.seatNumber.setText(seat.getSeat_no());
@@ -86,19 +77,8 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
             }
             Log.i("MovieDetails", "\nData: " + seat.toString());
         } else {
-            seatHolder.seatLayout.setVisibility(seat.getVisiblity());
+            seatHolder.seatLayout.setVisibility(seat.getVisibility());
         }
-
-        /*
-        if (seat != null) {
-            if (!(seat.getColumn_no() == 0)) {
-            } else {
-                seatHolder.seatLayout.setVisibility(View.VISIBLE);
-                seatHolder.seatImage.setVisibility(View.INVISIBLE);
-                seatHolder.seatNumber.setText(""+((char)(seat.getRow_no()+65)));
-            }
-        }
-        */
     }
     class SeatHolder extends RecyclerView.ViewHolder {
         public ImageView seatImage;

@@ -70,7 +70,6 @@ public class FragmentNowPlaying extends Fragment {
                 final MovieItemRecyclerAdapter movieItemRecyclerAdapter=new MovieItemRecyclerAdapter(movieArrayList, new OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(Movie movie) {
-                        //TODO: display movie details and booking screen using movie item.
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
                         bundle.putString("type","now_playing");

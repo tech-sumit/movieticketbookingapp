@@ -97,7 +97,8 @@ public class FragmentMain extends Fragment {
                 Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
                 latestMovieImage.setImageURI(uri);
                 latestMovieName.setText(movie.getTitle());
-                latestMovieDuration.setText(""+movie.getVote_average());
+                String latestMovieDurationText=""+movie.getVote_average();
+                latestMovieDuration.setText(latestMovieDurationText);
                 latestMovieType.setText(movie.getGenres());
             }
         });
@@ -174,6 +175,7 @@ public class FragmentMain extends Fragment {
                                             SharedPreferences sharedPreferences1=view.getContext().getSharedPreferences(Constants.LOGIN_PREF,Context.MODE_PRIVATE);
                                             SharedPreferences.Editor editor=sharedPreferences1.edit();
                                             editor.clear();
+                                            editor.apply();
                                             ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("login_fragment",null);
                                         }
                                     });
@@ -196,25 +198,16 @@ public class FragmentMain extends Fragment {
             Log.i("FragmentMain","Position:"+position);
             switch (position){
                 case 0:
-                    FragmentTopRated fragmentTopRated = FragmentTopRated.newInstance("");
-                    if(fragmentTopRated ==null){
-                    }
-                    return fragmentTopRated;
+                    return new FragmentTopRated();
                 case 1:
-                    FragmentNowPlaying fragmentNowPlaying = FragmentNowPlaying.newInstance("");
-                    if(fragmentNowPlaying ==null){
-                    }
-                    return fragmentNowPlaying;
+                    return new FragmentNowPlaying();
                 case 2:
-                    FragmentUpcoming fragmentUpcoming = FragmentUpcoming.newInstance("");
-                    if(fragmentUpcoming ==null){
-                    }
-                    return fragmentUpcoming;
+                    return new FragmentUpcoming();
                 default:
                     Log.e("FragmentMain","Default case in onTabSelected");
 
             }
-            return FragmentTopRated.newInstance("");
+            return new FragmentTopRated();
         }
 
         @Override

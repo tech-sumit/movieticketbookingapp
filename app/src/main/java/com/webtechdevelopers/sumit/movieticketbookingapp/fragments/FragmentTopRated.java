@@ -31,25 +31,12 @@ public class FragmentTopRated extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Movie> movieArrayList;
 
-    private String mParam1;
-
     public FragmentTopRated() {
-    }
-
-    public static FragmentTopRated newInstance(String param1) {
-        FragmentTopRated fragment = new FragmentTopRated();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override

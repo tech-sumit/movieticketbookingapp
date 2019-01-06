@@ -1,11 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,7 +18,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentOrder
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistantDataStorage;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 public class ActivityMain extends AppCompatActivity implements OnFragmentInteractionListener,PaymentResultWithDataListener{
@@ -90,26 +87,6 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .addToBackStack("FragmentMovieDetails")
                         .commit();
                 break;
-/*
-            case "top_rated":
-                isDoubleClickAllowed=false;
-                fragmentMovieDetails = FragmentMovieDetails.newInstance(bundle);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_container, fragmentMovieDetails)
-                        .addToBackStack("FragmentMovieDetails")
-                        .commit();
-                break;
-            case "upcoming":
-                isDoubleClickAllowed=false;
-                fragmentMovieDetails =FragmentMovieDetails.newInstance(bundle);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_container, fragmentMovieDetails)
-                        .addToBackStack("FragmentMovieDetails")
-                        .commit();
-                break;
-*/
             case "booking":
                 isDoubleClickAllowed=false;
                 FragmentBooking fragmentBooking =FragmentBooking.newInstance(bundle);
@@ -162,14 +139,12 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     public void onPaymentSuccess(String s, PaymentData paymentData) {
         Log.i("PAYMENT_RESULT",""+s);
         try{
-            PersistantDataStorage persistantDataStorage=new PersistantDataStorage(this);
+            PersistentDataStorage persistentDataStorage =new PersistentDataStorage(this);
             show.setPaymentData(paymentData);
-            persistantDataStorage.addShow(show);
+            persistentDataStorage.addShow(show);
             Toast.makeText(this,"Payment Successful",Toast.LENGTH_SHORT).show();
             isDoubleClickAllowed=true;
-
             onFragmentInteractionResult("main_fragment",null);
-            //TODO: Save order details into database. Set booked seats as already booked status in booing fragment
         }catch (Exception e){
             e.printStackTrace();
         }

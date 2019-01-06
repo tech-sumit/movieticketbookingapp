@@ -8,25 +8,23 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 
 import java.util.ArrayList;
 
-public class PersistantDataStorage {
+public class PersistentDataStorage {
     private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-    private Context context;
-    private String pref="ticket_data";
-    public PersistantDataStorage(Context context){
-        this.context=context;
+
+    public PersistentDataStorage(Context context){
+        String pref = "ticket_data";
         sharedPreferences=context.getSharedPreferences(pref,Context.MODE_PRIVATE);
     }
 
     //We are adding one show each time. So cannot store arraylist of shows tobe stored in sharedPreferences
     public void addShow(Show show){
-        editor=sharedPreferences.edit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         int orderCount=sharedPreferences.getInt("order_count",0);
         String json=show.getSerializable();
         editor.putString(""+(orderCount+1),json);
         editor.putInt("order_count",(orderCount+1));
         editor.apply();
-        Log.i("PersistantDataStorage","Show Saved: "+json);
+        Log.i("PersistentDataStorage","Show Saved: "+json);
     }
 
     //Similarly we have to read one by one by specifying their keys.
@@ -40,8 +38,7 @@ public class PersistantDataStorage {
                 shows.add(Show.fromSerializable(jsonString));
             }
         }
-        Log.i("PersistantDataStorage","Show Data: "+shows);
+        Log.i("PersistentDataStorage","Show Data: "+shows);
         return shows;
     }
-
 }

@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnShowSelectedListener;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistantDataStorage;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.TicketDetailsRecyclerAdapter;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
@@ -38,8 +38,8 @@ public class FragmentOrders extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PersistantDataStorage persistantDataStorage=new PersistantDataStorage(view.getContext());
-        ArrayList<Show> shows=persistantDataStorage.getShows();
+        PersistentDataStorage persistentDataStorage =new PersistentDataStorage(view.getContext());
+        ArrayList<Show> shows= persistentDataStorage.getShows();
         if(shows.size()>0){
             TicketDetailsRecyclerAdapter ticketDetailsRecyclerAdapter=new TicketDetailsRecyclerAdapter(shows, new OnShowSelectedListener() {
                 @Override

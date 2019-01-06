@@ -29,7 +29,7 @@ public class SeatLayoutGenerator {
             seatArrayList.add(new Seat()
                     .setSeat_no(""+c+ (columnNo+1))
                     .setBooked(false)
-                    .setVisiblity(View.VISIBLE)
+                    .setVisibility(View.VISIBLE)
                     .setRow_no(i/maxColumnCount)
                     .setColumn_no((i-1)%maxColumnCount+1)
                     .setPrice(price));
@@ -44,7 +44,7 @@ public class SeatLayoutGenerator {
         for(int i=0;i<maxSeatCount;i++){
             int rowNo=i/maxColumnCount;
             if(rowNo==row){
-                seatArrayList.add(i+1,seatArrayList.get(i).setVisiblity(View.INVISIBLE));
+                seatArrayList.add(i+1,seatArrayList.get(i).setVisibility(View.INVISIBLE));
                 Log.i("removeColumnRow","removeRow seat removed "+seatArrayList.get(i).toString());
             }
         }
@@ -54,19 +54,10 @@ public class SeatLayoutGenerator {
         for(int i=0;i<maxSeatCount;i++){
             int columnNo=(i)%maxColumnCount;
             if(columnNo==column){
-                seatArrayList.add(i,seatArrayList.get(i).setVisiblity(View.INVISIBLE));
+                seatArrayList.add(i,seatArrayList.get(i).setVisibility(View.INVISIBLE));
                 Log.i("removeColumnRow","removeColumn seat removed "+seatArrayList.get(i).toString());
             }
         }
-
-        /*
-        for(int i=0;i<maxColumnCount;i++){
-            if(i/maxSeatCount==column){
-                seatArrayList.add(i,seatArrayList.get(i).setVisiblity(View.INVISIBLE));
-                Log.i("removeColumnRow","removeColumn seat removed "+seatArrayList.get(i).toString());
-            }
-        }
-        */
     }
 
     public int getMaxSeatCount() {

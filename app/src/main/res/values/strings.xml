@@ -16,10 +16,56 @@
         <item>Anant Theatre</item>
 -->
     </array>
-    <string name="theatre">Theatre</string>
     <string name="bookings">Bookings</string>
     <string name="settings">Settings</string>
 
     <string name="about_us_url">http://www.webtechdevelopers.com</string>
     <string name="web_client_id">460739082574-g5d23n2csgkqntrhrp44iuevavsob63k.apps.googleusercontent.com</string>
+    <string name="app_logo_description">Logo of Movie Ticket Booking App</string>
+    <string name="age_warning">Note: 18+ Age warning</string>
+    <string name="budget_not_available">Budget: N/A</string>
+    <string name="website_not_available">Website: N/A</string>
+    <string name="complete_payment_text">Complete Payment</string>
+    <string name="pay_now">Pay now</string>
+    <string name="production_companies">Production Companies</string>
+    <string name="runtime">runtime</string>
+    <string name="homepage">homepage</string>
+    <string name="website">Website:</string>
+    <string name="budget">Budget</string>
+    <string name="votes">Votes</string>
+    <string name="languages">languages</string>
+    <string name="production_countries">Production Countries</string>
+    <string name="release_date">Release Date</string>
+    <string name="adult">adult</string>
+    <string name="overview">Overview</string>
+    <string name="tagline">Tagline</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="popular">Popular</string>
+    <string name="todo">TODO</string>
+    <string name="top_rated">Top rated</string>
+    <string name="now_playing">Now playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="select_seats">Select seats</string>
+    <string name="available">Available</string>
+    <string name="selected">Selected</string>
+    <string name="sold_out">Sold out</string>
+    <string name="movie_name">Movie Name</string>
+    <string name="book_now">Book Now</string>
+    <string name="total">Total</string>
+    <string name="no_amount">--</string>
+    <string name="screen_this_way">SCREEN THIS WAY</string>
+    <string name="payment_id">Payment ID</string>
+    <string name="moviename">MovieName</string>
+    <string name="seats">Seats</string>
+    <string name="money_paid">Money Paid</string>
+    <string name="na">NA</string>
+    <string name="theatre">Theatre</string>
+    <string name="booking">Booking</string>
+    <string name="about_us">About Us</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="name">Name</string>
+    <string name="type">Type</string>
+    <string name="duration">Duration</string>
+    <string name="signout">SignOut</string>
+    <string name="calculation">Calculation</string>
 </resources>

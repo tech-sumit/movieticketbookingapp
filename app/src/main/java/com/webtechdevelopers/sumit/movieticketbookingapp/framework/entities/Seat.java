@@ -37,7 +37,7 @@ public class Seat implements Serializable {
         return price;
     }
 
-    public int getVisiblity() {
+    public int getVisibility() {
         return visiblity;
     }
 
@@ -65,8 +65,8 @@ public class Seat implements Serializable {
         return this;
     }
 
-    public Seat setVisiblity(int visiblity) {
-        this.visiblity = visiblity;
+    public Seat setVisibility(int visibility) {
+        this.visiblity = visibility;
         return this;
     }
 

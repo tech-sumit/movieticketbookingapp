@@ -66,7 +66,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_menu" />
+                app:srcCompat="@drawable/ic_menu"
+                android:focusable="true" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -115,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="4dp"
-                            android:text="Popular"
+                            android:text="@string/popular"
                             android:textColor="@android:color/white"
                             android:textSize="18sp"
                             android:textStyle="italic" />
@@ -125,7 +126,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="Name"
+                            android:text="@string/name"
                             android:textColor="@android:color/white"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -142,7 +143,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginRight="4dp"
-                                android:text="Type"
+                                android:text="@string/type"
                                 android:textColor="@android:color/white"
                                 android:textSize="18sp" />
 
@@ -150,14 +151,14 @@
                                 android:id="@+id/imageView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:contentDescription="TODO"
+                                android:contentDescription="@string/todo"
                                 app:srcCompat="@drawable/ic_star_rating" />
 
                             <TextView
                                 android:id="@+id/latestMovieDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Duration"
+                                android:text="@string/duration"
                                 android:textColor="@android:color/white"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -179,19 +180,19 @@
                     android:id="@+id/top_rated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Top rated" />
+                    android:text="@string/top_rated" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/now_playing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Now playing" />
+                    android:text="@string/now_playing" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/upcoming"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upcoming" />
+                    android:text="@string/upcoming" />
             </android.support.design.widget.TabLayout>
 
         </android.support.design.widget.AppBarLayout>

@@ -36,11 +36,6 @@ public class FragmentMovieDetails extends Fragment {
 
     private CardView movieDetailsCard;
 
-    private SimpleDraweeView movieDetailImage;
-    private SimpleDraweeView movieDetailBackground;
-    private TextView movieDetailName;
-    private TextView movieDetailGenre;
-
     private TextView textOverview;
     private TextView textAdult;
     private TextView textReleseDate;
@@ -54,7 +49,6 @@ public class FragmentMovieDetails extends Fragment {
     private TextView textProductionCompanies;
 
     private ProgressBar movieDetailsProgress;
-    private Button bookMovieNow;
 
     public FragmentMovieDetails() {
     }
@@ -87,11 +81,11 @@ public class FragmentMovieDetails extends Fragment {
         Fresco.initialize(view.getContext());
         Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
 
-        movieDetailImage =view.findViewById(R.id.movieDetailImage);
-        movieDetailBackground =view.findViewById(R.id.movieDetailBackground);
-        movieDetailName =view.findViewById(R.id.movieDetailName);
-        movieDetailGenre =view.findViewById(R.id.movieDetailType);
-        bookMovieNow=view.findViewById(R.id.bookMovieButton);
+        SimpleDraweeView movieDetailImage = view.findViewById(R.id.movieDetailImage);
+        SimpleDraweeView movieDetailBackground = view.findViewById(R.id.movieDetailBackground);
+        TextView movieDetailName = view.findViewById(R.id.movieDetailName);
+        TextView movieDetailGenre = view.findViewById(R.id.movieDetailType);
+        Button bookMovieNow = view.findViewById(R.id.bookMovieButton);
 
         movieDetailsCard=view.findViewById(R.id.movieDetailsCard);
         movieDetailsProgress=view.findViewById(R.id.movieDetailsProgress);
@@ -150,35 +144,41 @@ public class FragmentMovieDetails extends Fragment {
                 movie=JSONPacketParser.getDetailMovie(response);
                 textOverview.setText(movie.getOverview());
                 if(movie.isAdult()){
-                    textAdult.setText("Note: 18+ Age warning");
+                    textAdult.setText(getString(R.string.age_warning));
                 }else{
                     textAdult.setVisibility(View.GONE);
                 }
+                String textReleseDateText="Released on "+movie.getRelease_date();
+                textReleseDate.setText(textReleseDateText);
 
-                textReleseDate.setText("Released on "+movie.getRelease_date());
-
-                String countries=movie.getCountries();
-                textProductionCountries.setText("Production Countries: "+countries);
+                String countries="Production Countries: "+movie.getCountries();
+                textProductionCountries.setText(countries);
 
                 if(movie.getTag_line().equals("")){
                     textTagline.setVisibility(View.GONE);
                 }else{
-                    textTagline.setText("Tagline: "+movie.getTag_line());
+                    String textTaglineText="Tagline: "+movie.getTag_line();
+                    textTagline.setText(textTaglineText);
                 }
-                textSpokenLanguages.setText("Languages: "+movie.getSpoken_languages());
-                textVoteAverage.setText("Rating: "+movie.getVote_average());
+                String textSpokenLanguagesText="Languages: "+movie.getSpoken_languages();
+                textSpokenLanguages.setText(textSpokenLanguagesText);
+                String textVoteAverageText="Rating: "+movie.getVote_average();
+                textVoteAverage.setText(textVoteAverageText);
                 if(movie.getBudget()<=0){
-                    textBudget.setText("Budget: N/A");
+
+                    textBudget.setText(getString(R.string.budget_not_available));
                 }else{
-                    textBudget.setText("Budget: $"+movie.getBudget());
+                    String textBudgetText="Budget: $"+movie.getBudget();
+                    textBudget.setText(textBudgetText);
                 }
 
                 if(movie.getHomepage().equals("null")){
                     textHomepage.setVisibility(View.GONE);
                     TextView textWebsiteTag=view.findViewById(R.id.textWebsiteTag);
-                    textWebsiteTag.setText("Website: N/A");
+                    textWebsiteTag.setText(getString(R.string.website_not_available));
                 }else{
-                    textHomepage.setText(""+movie.getHomepage());
+                    String textHomepageText=""+movie.getHomepage();
+                    textHomepage.setText(textHomepageText);
                     textHomepage.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -186,7 +186,8 @@ public class FragmentMovieDetails extends Fragment {
                         }
                     });
                 }
-                textRuntime.setText("Duration: "+movie.getRuntime()+" minutes");
+                String textRuntimeText="Duration: "+movie.getRuntime()+" minutes";
+                textRuntime.setText(textRuntimeText);
                 if(movie.getCompanies().size()>0){
                     String companies="Production Companies: \n"+movie.getCompanies().get(0).getName();
                     for(int i=1;i<movie.getCompanies().size();i++){

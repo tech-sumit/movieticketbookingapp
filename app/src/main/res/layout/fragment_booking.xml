@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select seats"
+                android:text="@string/select_seats"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:text="Available"
+            android:text="@string/available"
             android:textColor="@android:color/black" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:background="#1fee4f"
-            android:text="Selected"
+            android:text="@string/selected"
             android:textColor="@android:color/black" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_marginBottom="4dp"
             android:layout_weight="1"
             android:background="@android:color/darker_gray"
-            android:text="Sold out"
+            android:text="@string/sold_out"
             android:textColor="@android:color/black" />
 
     </LinearLayout>
@@ -117,7 +117,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="Movie Name"
+        android:text="@string/movie_name"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -157,7 +157,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorAccent"
-        android:text="Book Now"
+        android:text="@string/book_now"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -176,7 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:text="Total"
+            android:text="@string/total"
             android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -187,7 +187,7 @@
             android:id="@+id/textCalculation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="--"
+            android:text="@string/no_amount"
             android:textColor="@android:color/white"
             tools:layout_editor_absoluteX="84dp"
             tools:layout_editor_absoluteY="481dp" />
@@ -200,7 +200,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
-        android:text="SCREEN THIS WAY"
+        android:text="@string/screen_this_way"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/bookButton"
         app:layout_constraintEnd_toEndOf="parent"

@@ -63,8 +63,10 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         for(Seat seat: seats){
             bookedSeats+=seat.getSeat_no()+" ";
         }
-        holder.ticketSeats.setText("Seats: "+bookedSeats);
-        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()+" INR"));
+        String ticketSeatsText="Seats: "+bookedSeats;
+        holder.ticketSeats.setText(ticketSeatsText);
+        String ticketMoneyPaidText=""+(show.getSeatCount()*show.getSeats().get(0).getPrice()+" INR");
+        holder.ticketMoneyPaid.setText(ticketMoneyPaidText);
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -90,8 +92,10 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         for(Seat seat: seats){
             bookedSeats+=seat.getSeat_no()+" ";
         }
-        holder.ticketSeats.setText("Seats: "+bookedSeats);
-        holder.ticketMoneyPaid.setText(""+(show.getSeatCount()*show.getSeats().get(0).getPrice()+" INR"));
+        String ticketSeatsText="Seats: "+bookedSeats;
+        holder.ticketSeats.setText(ticketSeatsText);
+        String ticketMoneyPaidText=""+(show.getSeatCount()*show.getSeats().get(0).getPrice()+" INR");
+        holder.ticketMoneyPaid.setText(ticketMoneyPaidText);
         Log.i("MovieDetails","\nData: "+movie.toString());
     }
 
@@ -107,7 +111,7 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         public TextView ticketMovieName;
         public TextView ticketSeats;
         public TextView ticketMoneyPaid;
-        public TicketHolder(@NonNull View itemView) {
+        TicketHolder(@NonNull View itemView) {
             super(itemView);
             ticketMovieImage=itemView.findViewById(R.id.ticketMovieImage);
             ticketBackground=itemView.findViewById(R.id.ticketBackground);
@@ -116,7 +120,7 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
             ticketSeats=itemView.findViewById(R.id.ticketSeats);
             ticketMoneyPaid=itemView.findViewById(R.id.ticketMoneyPaid);
         }
-        public void bind(final Show show, final OnShowSelectedListener onShowSelectedListener){
+        void bind(final Show show, final OnShowSelectedListener onShowSelectedListener){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

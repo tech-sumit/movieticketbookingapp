@@ -150,14 +150,6 @@ public class JSONPacketParser {
                     spoken_languages,
                     jsonMovie.getString("status"),
                     jsonMovie.getString("tagline"));
-/*
-            JSONArray genreArray=jsonMovie.getJSONArray("genres");
-            int genre[]=new int[genreArray.length()];
-            for(int j=0;j<genreArray.length();j++){
-                genre[j]=genreArray.getInt(j);
-            }
-            movie.setGenre_ids(genre);
-*/
         } catch (JSONException e) {
             e.printStackTrace();
         }

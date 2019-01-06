@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FragmentAboutUs">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <WebView
         android:id="@+id/web_about_us"
         android:layout_width="match_parent"

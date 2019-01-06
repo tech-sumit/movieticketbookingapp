@@ -12,7 +12,8 @@
         android:layout_height="200dp"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@mipmap/ic_launcher"
+        android:contentDescription="@string/app_logo_description" />
 
     <TextView
         android:id="@+id/textView"

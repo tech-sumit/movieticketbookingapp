@@ -57,7 +57,8 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         movieItemHolder.movieBackground.setController(controller);
 
         movieItemHolder.movieName.setText(movie.getTitle());
-        movieItemHolder.movieRating.setText(""+movie.getVote_average());
+        String movieRatingText=""+movie.getVote_average();
+        movieItemHolder.movieRating.setText(movieRatingText);
 
         movieItemHolder.movieGenre.setText(movie.getGenres());
         Log.i("MovieDetails","\nData: "+movie.toString());
@@ -72,12 +73,12 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         public SimpleDraweeView movieImage;
         public SimpleDraweeView movieBackground;
         public TextView movieName;
-        public TextView movieGenre;
-        public TextView movieRating;
+        TextView movieGenre;
+        TextView movieRating;
 
-        public View itemView;
+        View itemView;
 
-        public MovieItemHolder(@NonNull View itemView) {
+        MovieItemHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView=itemView;
             movieImage=itemView.findViewById(R.id.movieImage);
@@ -87,7 +88,7 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
             movieRating =itemView.findViewById(R.id.movieDuration);
         }
 
-        public void bind(final Movie movie, final OnItemSelectedListener onItemSelectedListener){
+        void bind(final Movie movie, final OnItemSelectedListener onItemSelectedListener){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,5 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/signout"
-        android:title="SignOut" />
+        android:title="@string/signout" />
 </menu>
