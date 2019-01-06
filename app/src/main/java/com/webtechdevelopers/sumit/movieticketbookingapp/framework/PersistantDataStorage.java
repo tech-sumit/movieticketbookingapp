@@ -18,6 +18,7 @@ public class PersistantDataStorage {
         sharedPreferences=context.getSharedPreferences(pref,Context.MODE_PRIVATE);
     }
 
+    //We are adding one show each time. So cannot store arraylist of shows tobe stored in sharedPreferences
     public void addShow(Show show){
         editor=sharedPreferences.edit();
         int orderCount=sharedPreferences.getInt("order_count",0);
@@ -28,6 +29,8 @@ public class PersistantDataStorage {
         Log.i("PersistantDataStorage","Show Saved: "+json);
     }
 
+    //Similarly we have to read one by one by specifying their keys.
+    //But we want to show all the show data in single fragment so we are reading them one by one and adding to ArrayList to pass them to recyclerview.
     public ArrayList<Show> getShows(){
         int orderCount=sharedPreferences.getInt("order_count",0);
         ArrayList<Show> shows=new ArrayList<>();

@@ -78,7 +78,7 @@ public class FragmentTopRated extends Fragment {
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
                         bundle.putString("type","top_rated");
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("top_rated",bundle);
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("movie_details",bundle);
                     }
                 });
                 topRatedMovies.setHasFixedSize(true);

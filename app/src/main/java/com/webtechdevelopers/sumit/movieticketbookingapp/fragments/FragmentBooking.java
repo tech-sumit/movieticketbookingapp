@@ -33,7 +33,7 @@ public class FragmentBooking extends Fragment {
     private int maxSeatCount =336;
     private int maxSeatRowCount =10;
     private int maxSeatColumnCount =24;
-    private int seatMaxSelectable=3;
+    private int seatMaxSelectable=6;
 
     private RecyclerView seatRecyclerView;
     private ArrayList<Seat> seatArrayList;
@@ -129,13 +129,16 @@ public class FragmentBooking extends Fragment {
                 ArrayList<Seat> seats=show.getSeats();
                 seats.remove(seat);
                 show.setSeats(seats);
-                textCalculation.setText(""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR");
+                if(seats.size()==0){
+                    textCalculation.setText("--");
+                }else{
+                    textCalculation.setText(""+show.getSeatCount()+"X"+seatPrice+"="+(show.getSeatCount()*seatPrice)+"INR");
+                }
                 Log.i("SeatAction","onSeatDeselected"+show.getSeats().toString());
             }
         });
 
         seatRecyclerView.setHasFixedSize(true);
-        //seatRecyclerView.getRecycledViewPool().setMaxRecycledViews(0,0);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(view.getContext(), maxSeatColumnCount);
         seatRecyclerView.setLayoutManager(gridLayoutManager);
         seatRecyclerView.setAdapter(seatBookingAdapter);

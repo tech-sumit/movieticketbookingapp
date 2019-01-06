@@ -75,7 +75,7 @@ public class FragmentUpcoming extends Fragment {
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
                         bundle.putString("type","upcoming");
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("upcoming",bundle);
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("movie_details",bundle);
                     }
                 });
                 upcomingMovies.setHasFixedSize(true);

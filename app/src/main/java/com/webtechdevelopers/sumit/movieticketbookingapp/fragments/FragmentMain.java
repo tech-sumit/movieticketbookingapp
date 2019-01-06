@@ -41,7 +41,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApi
 
 import java.util.ArrayList;
 
-
 public class FragmentMain extends Fragment {
     private SimpleDraweeView latestMovieImage;
     private TextView latestMovieName;
@@ -59,7 +58,6 @@ public class FragmentMain extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         if(container!=null){
             Fresco.initialize(container.getContext());
         }else {
@@ -72,10 +70,7 @@ public class FragmentMain extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setHasOptionsMenu(true);
-
-        final CoordinatorLayout mainCoordinatorLayout=view.findViewById(R.id.mainCoordinatorLayout);
-        final ConstraintLayout replaceableConstraintLayout=view.findViewById(R.id.replaceableConstraintLayout);
+        //getActivity().getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
@@ -137,8 +132,6 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            //mainCoordinatorLayout.setVisibility(View.GONE);
-                            //replaceableConstraintLayout.setVisibility(View.VISIBLE);
                             getActivity()
                                     .getSupportFragmentManager()
                                     .beginTransaction()
@@ -147,10 +140,6 @@ public class FragmentMain extends Fragment {
                                             new FragmentOrders())
                                     .addToBackStack("FragmentOrders")
                                     .commit();
-                            /*
-                            dialog.cancel();
-                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("orders",null);
-                            */
                         }
                     });
                     LinearLayout aboutUs=dialog.findViewById(R.id.nav_about_us);
@@ -158,8 +147,6 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            //mainCoordinatorLayout.setVisibility(View.GONE);
-                            //replaceableConstraintLayout.setVisibility(View.VISIBLE);
                             getActivity()
                                     .getSupportFragmentManager()
                                     .beginTransaction()
@@ -174,7 +161,6 @@ public class FragmentMain extends Fragment {
                     signOut.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            GoogleSignInAccount googleSignInAccount= GoogleSignIn.getLastSignedInAccount(getContext());
                             GoogleSignInOptions googleSignInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                     .requestEmail()
                                     .requestProfile()
@@ -197,12 +183,6 @@ public class FragmentMain extends Fragment {
 
             }
         });
-        /*
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionbar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        */
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

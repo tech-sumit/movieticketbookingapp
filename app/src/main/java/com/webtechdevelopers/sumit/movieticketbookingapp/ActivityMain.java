@@ -1,8 +1,11 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -59,6 +62,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public void onFragmentInteractionResult(String fragmentName, Bundle bundle) {
+        backCount=0;
         FragmentMovieDetails fragmentMovieDetails;
         switch (fragmentName){
             case "login_fragment":
@@ -75,9 +79,9 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_container, fragmentMain)
-                        .commit();
+                        .commitNowAllowingStateLoss();
                 break;
-            case "now_playing":
+            case "movie_details":
                 isDoubleClickAllowed=false;
                 fragmentMovieDetails =FragmentMovieDetails.newInstance(bundle);
                 getSupportFragmentManager()
@@ -86,6 +90,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .addToBackStack("FragmentMovieDetails")
                         .commit();
                 break;
+/*
             case "top_rated":
                 isDoubleClickAllowed=false;
                 fragmentMovieDetails = FragmentMovieDetails.newInstance(bundle);
@@ -104,6 +109,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .addToBackStack("FragmentMovieDetails")
                         .commit();
                 break;
+*/
             case "booking":
                 isDoubleClickAllowed=false;
                 FragmentBooking fragmentBooking =FragmentBooking.newInstance(bundle);
@@ -119,7 +125,6 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_container, fragmentPayment)
-                        .addToBackStack("FragmentPayment")
                         .commit();
                 break;
             case "orders":
@@ -139,10 +144,11 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public void onBackPressed() {
+
         if(isDoubleClickAllowed){
             backCount++;
             if(backCount>1){
-                super.onBackPressed();
+                finish();
             }else {
                 Toast.makeText(ActivityMain.this,"Press again to close",Toast.LENGTH_SHORT).show();
             }
@@ -155,11 +161,18 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     @Override
     public void onPaymentSuccess(String s, PaymentData paymentData) {
         Log.i("PAYMENT_RESULT",""+s);
-        PersistantDataStorage persistantDataStorage=new PersistantDataStorage(this);
-        show.setPaymentData(paymentData);
-        persistantDataStorage.addShow(show);
-        Toast.makeText(this,"Payment Successful",Toast.LENGTH_SHORT).show();
-        //TODO: Save order details into database. Set booked seats as already booked status in booing fragment
+        try{
+            PersistantDataStorage persistantDataStorage=new PersistantDataStorage(this);
+            show.setPaymentData(paymentData);
+            persistantDataStorage.addShow(show);
+            Toast.makeText(this,"Payment Successful",Toast.LENGTH_SHORT).show();
+            isDoubleClickAllowed=true;
+
+            onFragmentInteractionResult("main_fragment",null);
+            //TODO: Save order details into database. Set booked seats as already booked status in booing fragment
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -185,4 +198,5 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     public void setShow(Show show){
         this.show=show;
     }
+
 }

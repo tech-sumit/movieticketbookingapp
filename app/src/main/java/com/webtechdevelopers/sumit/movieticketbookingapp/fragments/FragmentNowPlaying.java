@@ -74,7 +74,7 @@ public class FragmentNowPlaying extends Fragment {
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
                         bundle.putString("type","now_playing");
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("now_playing",bundle);
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("movie_details",bundle);
                     }
                 });
                 nowPlayingMovies.setHasFixedSize(true);
