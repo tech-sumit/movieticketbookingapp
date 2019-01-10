@@ -25,9 +25,12 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
+
+import java.util.ArrayList;
 
 
 public class FragmentMovieDetails extends Fragment {
@@ -47,6 +50,8 @@ public class FragmentMovieDetails extends Fragment {
     private TextView textHomepage;
     private TextView textRuntime;
     private TextView textProductionCompanies;
+    private TextView textTrailersTag;
+    private TextView textTrailers;
 
     private ProgressBar movieDetailsProgress;
 
@@ -131,72 +136,119 @@ public class FragmentMovieDetails extends Fragment {
         textHomepage=view.findViewById(R.id.textHomepage);
         textRuntime=view.findViewById(R.id.textRuntime);
         textProductionCompanies=view.findViewById(R.id.textProductionCompanies);
+        textTrailersTag=view.findViewById(R.id.textTrailersTag);
+        textTrailers=view.findViewById(R.id.textTrailers);
 
-        ApiConnector apiConnector=new ApiConnector(view.getContext());
+        final ApiConnector apiConnector=new ApiConnector(view.getContext());
         apiConnector.getMovieDetails(movie.getId(), new OnApiResultRecived() {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
-
-                movieDetailsCard.setVisibility(View.VISIBLE);
-                movieDetailsProgress.setVisibility(View.GONE);
-
                 movie=JSONPacketParser.getDetailMovie(response);
-                textOverview.setText(movie.getOverview());
-                if(movie.isAdult()){
-                    textAdult.setText(getString(R.string.age_warning));
-                }else{
-                    textAdult.setVisibility(View.GONE);
-                }
-                String textReleseDateText="Released on "+movie.getRelease_date();
-                textReleseDate.setText(textReleseDateText);
+                apiConnector.getVideos(movie.getId(), new OnApiResultRecived() {
+                    @Override
+                    public void onResult(String response) {
+                        Log.i("ApiConnector","Response: "+response);
+                        /*
+                        TODO: JSON TO POJO NOT WORKING. ADD JSON PARSER METHOD FOR THE SAME.
+                        MovieTrailer movieTrailer=MovieTrailer.fromSerializable(response);
+                         */
+                        final ArrayList<Video> videoList=JSONPacketParser.getVideos(response);
+                        Log.i("ApiConnector","Videos size: "+videoList.size()+"\nVideos:"+videoList);
+                        if(videoList.size()>0){
+                            textTrailers.setText(videoList.get(0).getName());
+                            textTrailers.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.VIDEO_URL+videoList.get(0).getKey())));
+                                }
+                            });
+                            /*
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(),
+                                    android.R.layout.simple_list_item_1);
+                            for(int i=0;i<videoList.size();i++){
+                                adapter.add(videoList.get(i).getName());
+                            }
+*/
+                            //spinnerTrailers.setAdapter(adapter);
+                            /*
+                            spinnerTrailers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.VIDEO_URL+videoList.get(position).getKey())));
+                                }
 
-                String countries="Production Countries: "+movie.getCountries();
-                textProductionCountries.setText(countries);
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
 
-                if(movie.getTag_line().equals("")){
-                    textTagline.setVisibility(View.GONE);
-                }else{
-                    String textTaglineText="Tagline: "+movie.getTag_line();
-                    textTagline.setText(textTaglineText);
-                }
-                String textSpokenLanguagesText="Languages: "+movie.getSpoken_languages();
-                textSpokenLanguages.setText(textSpokenLanguagesText);
-                String textVoteAverageText="Rating: "+movie.getVote_average();
-                textVoteAverage.setText(textVoteAverageText);
-                if(movie.getBudget()<=0){
-
-                    textBudget.setText(getString(R.string.budget_not_available));
-                }else{
-                    String textBudgetText="Budget: $"+movie.getBudget();
-                    textBudget.setText(textBudgetText);
-                }
-
-                if(movie.getHomepage().equals("null")){
-                    textHomepage.setVisibility(View.GONE);
-                    TextView textWebsiteTag=view.findViewById(R.id.textWebsiteTag);
-                    textWebsiteTag.setText(getString(R.string.website_not_available));
-                }else{
-                    String textHomepageText=""+movie.getHomepage();
-                    textHomepage.setText(textHomepageText);
-                    textHomepage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(movie.getHomepage())));
+                                }
+                            });
+                            */
+                        }else{
+                            textTrailersTag.setVisibility(View.GONE);
+                            textTrailers.setVisibility(View.GONE);
                         }
-                    });
-                }
-                String textRuntimeText="Duration: "+movie.getRuntime()+" minutes";
-                textRuntime.setText(textRuntimeText);
-                if(movie.getCompanies().size()>0){
-                    String companies="Production Companies: \n"+movie.getCompanies().get(0).getName();
-                    for(int i=1;i<movie.getCompanies().size();i++){
-                        companies+="\n"+movie.getCompanies().get(i).getName();
+                        movieDetailsCard.setVisibility(View.VISIBLE);
+                        movieDetailsProgress.setVisibility(View.GONE);
+
+                        textOverview.setText(movie.getOverview());
+                        if(movie.isAdult()){
+                            textAdult.setText(getString(R.string.age_warning));
+                        }else{
+                            textAdult.setVisibility(View.GONE);
+                        }
+                        String textReleseDateText="Released on "+movie.getRelease_date();
+                        textReleseDate.setText(textReleseDateText);
+
+                        String countries="Production Countries: "+movie.getCountries();
+                        textProductionCountries.setText(countries);
+
+                        if(movie.getTag_line().equals("")){
+                            textTagline.setVisibility(View.GONE);
+                        }else{
+                            String textTaglineText="Tagline: "+movie.getTag_line();
+                            textTagline.setText(textTaglineText);
+                        }
+                        String textSpokenLanguagesText="Languages: "+movie.getSpoken_languages();
+                        textSpokenLanguages.setText(textSpokenLanguagesText);
+                        String textVoteAverageText="Rating: "+movie.getVote_average();
+                        textVoteAverage.setText(textVoteAverageText);
+                        if(movie.getBudget()<=0){
+
+                            textBudget.setText(getString(R.string.budget_not_available));
+                        }else{
+                            String textBudgetText="Budget: $"+movie.getBudget();
+                            textBudget.setText(textBudgetText);
+                        }
+
+                        if(movie.getHomepage().equals("null")){
+                            textHomepage.setVisibility(View.GONE);
+                            TextView textWebsiteTag=view.findViewById(R.id.textWebsiteTag);
+                            textWebsiteTag.setText(getString(R.string.website_not_available));
+                        }else{
+                            String textHomepageText=""+movie.getHomepage();
+                            textHomepage.setText(textHomepageText);
+                            textHomepage.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(movie.getHomepage())));
+                                }
+                            });
+                        }
+                        String textRuntimeText="Duration: "+movie.getRuntime()+" minutes";
+                        textRuntime.setText(textRuntimeText);
+                        if(movie.getCompanies().size()>0){
+                            String companies="Production Companies: \n"+movie.getCompanies().get(0).getName();
+                            for(int i=1;i<movie.getCompanies().size();i++){
+                                companies+="\n"+movie.getCompanies().get(i).getName();
+                            }
+                            textProductionCompanies.setText(companies);
+                        }else{
+                            textProductionCompanies.setVisibility(View.GONE);
+                        }
                     }
-                    textProductionCompanies.setText(companies);
-                }else{
-                    textProductionCompanies.setVisibility(View.GONE);
-                }
+                });
+
             }
         });
     }

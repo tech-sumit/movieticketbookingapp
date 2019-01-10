@@ -3,6 +3,7 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.framework.network;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCountry;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,14 +84,23 @@ public class JSONPacketParser {
         return movie;
     }
 
-    public static ArrayList<String> getVideos(String jsonString){
-        ArrayList<String> videos=new ArrayList<>();
+    public static ArrayList<Video> getVideos(String jsonString){
+        ArrayList<Video> videos=new ArrayList<>();
         try {
             JSONObject jsonObject=new JSONObject(jsonString);
             JSONArray results=jsonObject.getJSONArray("results");
             for(int i=0;i<results.length();i++){
                 JSONObject jsonMovie=results.getJSONObject(i);
-                videos.add(jsonMovie.getString("key"));
+                Video video=new Video();
+                video.setId(jsonMovie.getString("id"));
+                video.setIso6391(jsonMovie.getString("iso_639_1"));
+                video.setIso31661(jsonMovie.getString("iso_3166_1"));
+                video.setName(jsonMovie.getString("name"));
+                video.setSite(jsonMovie.getString("site"));
+                video.setKey(jsonMovie.getString("key"));
+                video.setSize(jsonMovie.getInt("size"));
+                video.setType(jsonMovie.getString("type"));
+                videos.add(video);
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -102,7 +102,7 @@ public class ApiConnector {
 
     public void getVideos(int id,final OnApiResultRecived onApiResultRecived){
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
-                Constants.BASE_URL+id+"/videos?api_key="+Constants.API_KEY,
+                Constants.BASE_URL+"/"+id+"/videos?api_key="+Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
