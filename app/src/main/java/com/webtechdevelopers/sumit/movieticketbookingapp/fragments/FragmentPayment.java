@@ -103,7 +103,7 @@ public class FragmentPayment extends Fragment {
         Checkout checkout=new Checkout();
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("name","Movie Ticket Booking App");
+            jsonObject.put("name","MovieResult Ticket Booking App");
             jsonObject.put("description","Ticket count");
             jsonObject.put("currency","INR");
             jsonObject.put("amount",""+(price*100));

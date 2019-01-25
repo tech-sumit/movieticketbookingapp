@@ -1,34 +1,73 @@
+
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
 import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-public class ProductionCompany implements Serializable {
-    private int id=0;
-    private String logo_path="";
-    private String name="";
-    private String origin_country="";
+public class ProductionCompany implements Serializable
+{
 
-    public ProductionCompany(int id, String logo_path, String name, String origin_country) {
-        this.id = id;
-        this.logo_path = logo_path;
-        this.name = name;
-        this.origin_country = origin_country;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("logo_path")
+    @Expose
+    private Object logoPath;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("origin_country")
+    @Expose
+    private String originCountry;
+    private final static long serialVersionUID = 3856993631970483792L;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public ProductionCompany() {
     }
 
-    public int getId() {
+    /**
+     * 
+     * @param id
+     * @param originCountry
+     * @param name
+     * @param logoPath
+     */
+    public ProductionCompany(Integer id, Object logoPath, String name, String originCountry) {
+        super();
+        this.id = id;
+        this.logoPath = logoPath;
+        this.name = name;
+        this.originCountry = originCountry;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getLogo_path() {
-        return logo_path;
+    public ProductionCompany withId(Integer id) {
+        this.id = id;
+        return this;
     }
 
-    public void setLogo_path(String logo_path) {
-        this.logo_path = logo_path;
+    public Object getLogoPath() {
+        return logoPath;
+    }
+
+    public void setLogoPath(Object logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public ProductionCompany withLogoPath(Object logoPath) {
+        this.logoPath = logoPath;
+        return this;
     }
 
     public String getName() {
@@ -39,21 +78,31 @@ public class ProductionCompany implements Serializable {
         this.name = name;
     }
 
-    public String getOrigin_country() {
-        return origin_country;
+    public ProductionCompany withName(String name) {
+        this.name = name;
+        return this;
     }
 
-    public void setOrigin_country(String origin_country) {
-        this.origin_country = origin_country;
+    public String getOriginCountry() {
+        return originCountry;
+    }
+
+    public void setOriginCountry(String originCountry) {
+        this.originCountry = originCountry;
+    }
+
+    public ProductionCompany withOriginCountry(String originCountry) {
+        this.originCountry = originCountry;
+        return this;
     }
 
     @Override
     public String toString() {
         return "ProductionCompany{" +
                 "id=" + id +
-                ", logo_path='" + logo_path + '\'' +
+                ", logoPath=" + logoPath +
                 ", name='" + name + '\'' +
-                ", origin_country='" + origin_country + '\'' +
+                ", originCountry='" + originCountry + '\'' +
                 '}';
     }
 }

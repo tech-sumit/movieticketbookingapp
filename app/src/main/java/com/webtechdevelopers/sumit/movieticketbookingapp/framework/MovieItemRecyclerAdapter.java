@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -73,10 +74,10 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         public SimpleDraweeView movieImage;
         public SimpleDraweeView movieBackground;
         public TextView movieName;
-        TextView movieGenre;
-        TextView movieRating;
-
-        View itemView;
+        private TextView movieGenre;
+        private TextView movieRating;
+        private ImageView starMovieIcon;
+        private View itemView;
 
         MovieItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +87,9 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
             movieName=itemView.findViewById(R.id.movieName);
             movieGenre =itemView.findViewById(R.id.movieType);
             movieRating =itemView.findViewById(R.id.movieDuration);
+            starMovieIcon=itemView.findViewById(R.id.starMovieIcon);
+            starMovieIcon.setVisibility(View.VISIBLE);
+
         }
 
         void bind(final Movie movie, final OnItemSelectedListener onItemSelectedListener){

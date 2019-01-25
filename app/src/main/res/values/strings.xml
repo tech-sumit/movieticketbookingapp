@@ -68,6 +68,6 @@
     <string name="duration">Duration</string>
     <string name="signout">SignOut</string>
     <string name="calculation">Calculation</string>
-    <string name="trailer_link">Goto movie trailer</string>
+    <string name="trailer_link">Goto movieResult trailer</string>
     <string name="trailers">Trailers</string>
 </resources>

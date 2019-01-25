@@ -1,22 +1,47 @@
+
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ProductionCountry implements Serializable {
-    private String iso_3166_1="";
-    private String name="";
+public class ProductionCountry implements Serializable
+{
 
-    public ProductionCountry(String iso_3166_1, String name) {
-        this.iso_3166_1 = iso_3166_1;
+    @SerializedName("iso_3166_1")
+    private String iso31661;
+    @SerializedName("name")
+    private String name;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public ProductionCountry() {
+    }
+
+    /**
+     * 
+     * @param iso31661
+     * @param name
+     */
+    public ProductionCountry(String iso31661, String name) {
+        super();
+        this.iso31661 = iso31661;
         this.name = name;
     }
 
-    public String getIso_3166_1() {
-        return iso_3166_1;
+    public String getIso31661() {
+        return iso31661;
     }
 
-    public void setIso_3166_1(String iso_3166_1) {
-        this.iso_3166_1 = iso_3166_1;
+    public void setIso31661(String iso31661) {
+        this.iso31661 = iso31661;
+    }
+
+    public ProductionCountry withIso31661(String iso31661) {
+        this.iso31661 = iso31661;
+        return this;
     }
 
     public String getName() {
@@ -27,20 +52,16 @@ public class ProductionCountry implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "ProductionCountry{" +
-                "iso_3166_1=" + iso_3166_1 +
-                ", name='" + name + '\'' +
-                '}';
+    public ProductionCountry withName(String name) {
+        this.name = name;
+        return this;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductionCountry)) return false;
-        ProductionCountry that = (ProductionCountry) o;
-        return getIso_3166_1().equals(that.getIso_3166_1())&&
-                getName().equals(that.getName());
+    public String toString() {
+        return "ProductionCountry{" +
+                "iso31661='" + iso31661 + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

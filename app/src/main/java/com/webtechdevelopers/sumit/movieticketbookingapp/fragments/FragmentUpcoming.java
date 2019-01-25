@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
@@ -54,7 +55,6 @@ public class FragmentUpcoming extends Fragment {
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
                 movieArrayList=JSONPacketParser.getMovies(response);
-
                 final MovieItemRecyclerAdapter movieItemRecyclerAdapter=new MovieItemRecyclerAdapter(movieArrayList, new OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(Movie movie) {

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,7 +25,9 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.DetailedMovie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.SpokenLanguage;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 
 public class FragmentMovieDetails extends Fragment {
     private Movie movie;
+    private DetailedMovie detailedMovie;
     private String type="";
 
     private CardView movieDetailsCard;
@@ -144,15 +148,11 @@ public class FragmentMovieDetails extends Fragment {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
-                movie=JSONPacketParser.getDetailMovie(response);
+                detailedMovie=JSONPacketParser.getDetailMovie(response);
                 apiConnector.getVideos(movie.getId(), new OnApiResultRecived() {
                     @Override
                     public void onResult(String response) {
                         Log.i("ApiConnector","Response: "+response);
-                        /*
-                        TODO: JSON TO POJO NOT WORKING. ADD JSON PARSER METHOD FOR THE SAME.
-                        MovieTrailer movieTrailer=MovieTrailer.fromSerializable(response);
-                         */
                         final ArrayList<Video> videoList=JSONPacketParser.getVideos(response);
                         Log.i("ApiConnector","Videos size: "+videoList.size()+"\nVideos:"+videoList);
                         if(videoList.size()>0){
@@ -163,27 +163,6 @@ public class FragmentMovieDetails extends Fragment {
                                     startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.VIDEO_URL+videoList.get(0).getKey())));
                                 }
                             });
-                            /*
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(),
-                                    android.R.layout.simple_list_item_1);
-                            for(int i=0;i<videoList.size();i++){
-                                adapter.add(videoList.get(i).getName());
-                            }
-*/
-                            //spinnerTrailers.setAdapter(adapter);
-                            /*
-                            spinnerTrailers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(Constants.VIDEO_URL+videoList.get(position).getKey())));
-                                }
-
-                                @Override
-                                public void onNothingSelected(AdapterView<?> parent) {
-
-                                }
-                            });
-                            */
                         }else{
                             textTrailersTag.setVisibility(View.GONE);
                             textTrailers.setVisibility(View.GONE);
@@ -191,56 +170,60 @@ public class FragmentMovieDetails extends Fragment {
                         movieDetailsCard.setVisibility(View.VISIBLE);
                         movieDetailsProgress.setVisibility(View.GONE);
 
-                        textOverview.setText(movie.getOverview());
-                        if(movie.isAdult()){
+                        textOverview.setText(detailedMovie.getOverview());
+                        if(detailedMovie.getAdult()){
                             textAdult.setText(getString(R.string.age_warning));
                         }else{
                             textAdult.setVisibility(View.GONE);
                         }
-                        String textReleseDateText="Released on "+movie.getRelease_date();
+                        String textReleseDateText="Released on "+detailedMovie.getReleaseDate();
                         textReleseDate.setText(textReleseDateText);
 
-                        String countries="Production Countries: "+movie.getCountries();
+                        String countries="Production Countries: ";
+                        for(int i=0;i<detailedMovie.getProductionCountries().size();i++){
+                            countries+="\n"+detailedMovie.getProductionCountries().get(i).getName();
+                        }
                         textProductionCountries.setText(countries);
 
-                        if(movie.getTag_line().equals("")){
+                        if(detailedMovie.getTagline().equals("")){
                             textTagline.setVisibility(View.GONE);
                         }else{
-                            String textTaglineText="Tagline: "+movie.getTag_line();
+                            String textTaglineText="Tagline: "+detailedMovie.getTagline();
                             textTagline.setText(textTaglineText);
                         }
-                        String textSpokenLanguagesText="Languages: "+movie.getSpoken_languages();
+                        String textSpokenLanguagesText="Languages: ";
+                        for(SpokenLanguage spokenLanguage:detailedMovie.getSpokenLanguages()){
+                            textSpokenLanguagesText+=", "+spokenLanguage.getName();
+                        }
                         textSpokenLanguages.setText(textSpokenLanguagesText);
-                        String textVoteAverageText="Rating: "+movie.getVote_average();
+                        String textVoteAverageText="Rating: "+detailedMovie.getVoteAverage();
                         textVoteAverage.setText(textVoteAverageText);
-                        if(movie.getBudget()<=0){
+                        if(detailedMovie.getBudget()<=0){
 
                             textBudget.setText(getString(R.string.budget_not_available));
                         }else{
-                            String textBudgetText="Budget: $"+movie.getBudget();
+                            String textBudgetText="Budget: $"+detailedMovie.getBudget();
                             textBudget.setText(textBudgetText);
                         }
-
-                        if(movie.getHomepage().equals("null")){
-                            textHomepage.setVisibility(View.GONE);
-                            TextView textWebsiteTag=view.findViewById(R.id.textWebsiteTag);
-                            textWebsiteTag.setText(getString(R.string.website_not_available));
-                        }else{
-                            String textHomepageText=""+movie.getHomepage();
+                        Log.i("textHomepage",""+detailedMovie.getHomepage());
+                        if(detailedMovie.getHomepage()!=null&&!detailedMovie.getHomepage().equals("null")) {
+                            LinearLayout layoutHomepage = view.findViewById(R.id.layoutHomepage);
+                            layoutHomepage.setVisibility(View.VISIBLE);
+                            String textHomepageText = "" + detailedMovie.getHomepage();
                             textHomepage.setText(textHomepageText);
                             textHomepage.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(movie.getHomepage())));
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(detailedMovie.getHomepage())));
                                 }
                             });
                         }
-                        String textRuntimeText="Duration: "+movie.getRuntime()+" minutes";
+                        String textRuntimeText="Duration: "+detailedMovie.getRuntime()+" minutes";
                         textRuntime.setText(textRuntimeText);
-                        if(movie.getCompanies().size()>0){
-                            String companies="Production Companies: \n"+movie.getCompanies().get(0).getName();
-                            for(int i=1;i<movie.getCompanies().size();i++){
-                                companies+="\n"+movie.getCompanies().get(i).getName();
+                        if(detailedMovie.getProductionCompanies().size()>0){
+                            String companies="Production Companies: ";
+                            for(int i=0;i<detailedMovie.getProductionCompanies().size();i++){
+                                companies+="\n"+detailedMovie.getProductionCompanies().get(i).getName();
                             }
                             textProductionCompanies.setText(companies);
                         }else{

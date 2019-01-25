@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class FragmentMain extends Fragment {
     private TextView latestMovieType;
     private TextView latestMovieDuration;
 
+    private ImageView starMovieIcon;
     public FragmentMain() {
     }
 
@@ -85,6 +87,7 @@ public class FragmentMain extends Fragment {
         latestMovieName=view.findViewById(R.id.latestMovieName);
         latestMovieType=view.findViewById(R.id.latestMovieType);
         latestMovieDuration=view.findViewById(R.id.latestMovieDuration);
+        starMovieIcon=view.findViewById(R.id.starImageIcon);
 
         ApiConnector apiConnector=new ApiConnector(view.getContext());
         apiConnector.getPopularMovies(1,new OnApiResultRecived() {
@@ -93,8 +96,9 @@ public class FragmentMain extends Fragment {
                 Log.i("Response Data","Response:\n"+response);
                 ArrayList<Movie> movies=JSONPacketParser.getMovies(response);
                 Movie movie=movies.get(0);
-                Log.i("Movie","Data: "+movie.toString());
+                Log.i("MovieResult","Data: "+movie.toString());
                 Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
+                starMovieIcon.setVisibility(View.VISIBLE);
                 latestMovieImage.setImageURI(uri);
                 latestMovieName.setText(movie.getTitle());
                 String latestMovieDurationText=""+movie.getVote_average();
@@ -125,6 +129,9 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
+                            //NOTE: We are launching FragmentMain from scratch so everything is
+                            // being reloaded even the movie contents are being fetched from servers.
+                            // So we has to show progressbar for it.
                             ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
                         }
                     });

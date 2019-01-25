@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
@@ -30,7 +31,6 @@ public class FragmentNowPlaying extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Movie> movieArrayList;
-
     public FragmentNowPlaying() {
     }
 
@@ -60,6 +60,7 @@ public class FragmentNowPlaying extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         nowPlayingMovies=view.findViewById(R.id.now_playing_movies);
+
         ApiConnector apiConnector=new ApiConnector(view.getContext());
         apiConnector.getNowPlayingMovies(1, new OnApiResultRecived() {
             @Override

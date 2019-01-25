@@ -1,8 +1,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.network;
 
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.DetailedMovie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCountry;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video;
 
 import org.json.JSONArray;
@@ -20,68 +19,27 @@ public class JSONPacketParser {
             JSONArray results=jsonObject.getJSONArray("results");
             for(int i=0;i<results.length();i++){
                 JSONObject jsonMovie=results.getJSONObject(i);
-                Movie movie=new Movie(
-                        jsonMovie.getInt("vote_count"),
-                        jsonMovie.getInt("id"),
-                        jsonMovie.getBoolean("video"),
-                        jsonMovie.getDouble("vote_average"),
-                        jsonMovie.getString("title"),
-                        jsonMovie.getDouble("popularity"),
-                        jsonMovie.getString("poster_path"),
-                        jsonMovie.getString("original_language"),
-                        jsonMovie.getString("original_title"),
-                        new int[]{1,2},//Added to avoid null pointer exception
-                        jsonMovie.getString("backdrop_path"),
-                        jsonMovie.getBoolean("adult"),
-                        jsonMovie.getString("overview"),
-                        jsonMovie.getString("release_date"));
-
-                JSONArray genreArray=jsonMovie.getJSONArray("genre_ids");
-                int genre[]=new int[genreArray.length()];
-                for(int j=0;j<genreArray.length();j++){
-                    genre[j]=genreArray.getInt(j);
-                }
-                movie.setGenre_ids(genre);
+                Movie movie=Movie.fromSerializable(jsonMovie.toString());
+                movie.setGenre_ids(movie.getGenre_ids());
                 movies.add(movie);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return  movies;
+        return movies;
     }
 
     public static Movie getMovie(String jsonString){
-        Movie movie = null;
+        Movie movieResult = null;
         try {
             JSONObject jsonMovie=new JSONObject(jsonString);
 
-            movie=new Movie(
-                    jsonMovie.getInt("vote_count"),
-                    jsonMovie.getInt("id"),
-                    jsonMovie.getBoolean("video"),
-                    jsonMovie.getDouble("vote_average"),
-                    jsonMovie.getString("title"),
-                    jsonMovie.getDouble("popularity"),
-                    jsonMovie.getString("poster_path"),
-                    jsonMovie.getString("original_language"),
-                    jsonMovie.getString("original_title"),
-                    new int[]{1,2},//Added to avoid null pointer exception
-                    jsonMovie.getString("backdrop_path"),
-                    jsonMovie.getBoolean("adult"),
-                    jsonMovie.getString("overview"),
-                    jsonMovie.getString("release_date"));
-            if(jsonMovie.has("genre_ids")){
-                JSONArray genreArray=jsonMovie.getJSONArray("genre_ids");
-                int genre[]=new int[genreArray.length()];
-                for(int j=0;j<genreArray.length();j++){
-                    genre[j]=genreArray.getInt(j);
-                }
-                movie.setGenre_ids(genre);
-            }
+            movieResult=Movie.fromSerializable(jsonMovie.toString());
+            movieResult.setGenre_ids(movieResult.getGenre_ids());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return movie;
+        return movieResult;
     }
 
     public static ArrayList<Video> getVideos(String jsonString){
@@ -91,16 +49,7 @@ public class JSONPacketParser {
             JSONArray results=jsonObject.getJSONArray("results");
             for(int i=0;i<results.length();i++){
                 JSONObject jsonMovie=results.getJSONObject(i);
-                Video video=new Video();
-                video.setId(jsonMovie.getString("id"));
-                video.setIso6391(jsonMovie.getString("iso_639_1"));
-                video.setIso31661(jsonMovie.getString("iso_3166_1"));
-                video.setName(jsonMovie.getString("name"));
-                video.setSite(jsonMovie.getString("site"));
-                video.setKey(jsonMovie.getString("key"));
-                video.setSize(jsonMovie.getInt("size"));
-                video.setType(jsonMovie.getString("type"));
-                videos.add(video);
+                videos.add(Video.fromSerializable(jsonMovie.toString()));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -108,58 +57,11 @@ public class JSONPacketParser {
         return videos;
     }
 
-    public static Movie getDetailMovie(String jsonString){
-        Movie movie = null;
+    public static DetailedMovie getDetailMovie(String jsonString){
+        DetailedMovie movie= null;
         try {
             JSONObject jsonMovie=new JSONObject(jsonString);
-            ArrayList<ProductionCompany> companies=new ArrayList<>();
-            JSONArray jsonCompanies=new JSONArray(jsonMovie.getString("production_companies"));
-
-            for(int i=0;i<jsonCompanies.length();i++){
-                JSONObject company=jsonCompanies.getJSONObject(i);
-                companies.add(new ProductionCompany(company.getInt("id"),company.getString("logo_path"),company.getString("name"),company.getString("origin_country")));
-            }
-
-            ArrayList<ProductionCountry> countries=new ArrayList<>();
-            JSONArray jsonCountries=new JSONArray(jsonMovie.getString("production_countries"));
-            for(int i=0;i<jsonCountries.length();i++){
-                JSONObject country=jsonCountries.getJSONObject(i);
-                countries.add(new ProductionCountry(country.getString("iso_3166_1"),country.getString("name")));
-            }
-
-            JSONArray jsonSpokenLanguages=new JSONArray(jsonMovie.getString("spoken_languages"));
-            String spoken_languages[]=new String [jsonSpokenLanguages.length()];
-            for(int i=0;i<jsonSpokenLanguages.length();i++){
-                JSONObject language=jsonSpokenLanguages.getJSONObject(i);
-                spoken_languages[i]= "" + language.getString("name");
-            }
-
-            movie=new Movie(
-                    jsonMovie.getInt("vote_count"),
-                    jsonMovie.getInt("id"),
-                    jsonMovie.getBoolean("video"),
-                    jsonMovie.getDouble("vote_average"),
-                    jsonMovie.getString("title"),
-                    jsonMovie.getDouble("popularity"),
-                    jsonMovie.getString("poster_path"),
-                    jsonMovie.getString("original_language"),
-                    jsonMovie.getString("original_title"),
-                    new int[]{1,2},//Added to avoid null pointer exception
-                    jsonMovie.getString("backdrop_path"),
-                    jsonMovie.getBoolean("adult"),
-                    jsonMovie.getString("overview"),
-                    jsonMovie.getString("release_date"),
-                    jsonMovie.getString("belongs_to_collection"),
-                    jsonMovie.getInt("budget"),
-                    jsonMovie.getString("homepage"),
-                    jsonMovie.getString("imdb_id"),
-                    companies,
-                    countries,
-                    jsonMovie.getInt("revenue"),
-                    jsonMovie.getInt("runtime"),
-                    spoken_languages,
-                    jsonMovie.getString("status"),
-                    jsonMovie.getString("tagline"));
+            movie=DetailedMovie.fromSerializable(jsonMovie.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

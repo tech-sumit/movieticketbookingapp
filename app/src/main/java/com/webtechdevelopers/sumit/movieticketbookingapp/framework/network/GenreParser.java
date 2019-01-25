@@ -22,7 +22,7 @@ public class GenreParser {
         genreMap.put(9648,"Mystery");
         genreMap.put(10749,"Romance");
         genreMap.put(878,"Science Fiction");
-        genreMap.put(10770,"TV Movie");
+        genreMap.put(10770,"TV MovieResult");
         genreMap.put(53,"Thriller");
         genreMap.put(10752,"War");
         genreMap.put(37,"Western");

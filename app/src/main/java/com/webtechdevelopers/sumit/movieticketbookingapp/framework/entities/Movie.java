@@ -1,5 +1,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.GenreParser;
 
 import java.io.Serializable;
@@ -8,31 +10,53 @@ import java.util.Arrays;
 
 public class Movie implements Serializable {
 
+    @SerializedName("vote_count")
     private int vote_count=0;
+    @SerializedName("id")
     private int id=0;
+    @SerializedName("video")
     private boolean video=false;
+    @SerializedName("vote_average")
     private double vote_average=0;
+    @SerializedName("title")
     private String title="";
+    @SerializedName("popularity")
     private double popularity=0;
+    @SerializedName("poster_path")
     private String poster_path="";
+    @SerializedName("original_language")
     private String original_language="";
+    @SerializedName("original_title")
     private String original_title="";
     private int genre_ids[];
     private String genres[];
+    @SerializedName("backdrop_path")
     private String backdrop_path="";
+    @SerializedName("adult")
     private boolean adult=false;
+    @SerializedName("overview")
     private String overview="";
+    @SerializedName("release_date")
     private String release_date="";
+    @SerializedName("belongs_to_collection")
     private String belongs_to_collection="";
+    @SerializedName("budget")
     private int budget=0;
+    @SerializedName("homepage")
     private String homepage="";
+    @SerializedName("imdb_id")
     private String imdb_id="";
     private ArrayList<ProductionCompany> companies;
     private ArrayList<ProductionCountry> countries;
+    @SerializedName("revenue")
     private int revenue=0;
+    @SerializedName("runtime")
     private int runtime=0;
+    @SerializedName("spoken_languages")
     private String spoken_languages[];
+    @SerializedName("status")
     private String status="";
+    @SerializedName("tag_line")
     private String tag_line="";
 
     public Movie(){
@@ -50,11 +74,11 @@ public class Movie implements Serializable {
         this.original_language = original_language;
         this.original_title = original_title;
         this.genre_ids = genre_ids;
+        setGenre_ids(genre_ids);
         this.backdrop_path = backdrop_path;
         this.adult = adult;
         this.overview = overview;
         this.release_date = release_date;
-
         this.belongs_to_collection = "";
         this.budget = 0;
         this.homepage ="";
@@ -79,6 +103,7 @@ public class Movie implements Serializable {
         this.original_language = original_language;
         this.original_title = original_title;
         this.genre_ids = genre_ids;
+        setGenre_ids(genre_ids);
         this.backdrop_path = backdrop_path;
         this.adult = adult;
         this.overview = overview;
@@ -251,7 +276,7 @@ public class Movie implements Serializable {
             if(genres.length>0){
                 String genre=genres[0];
                 for(int i=1;i<genres.length;i++){
-                    genre+=","+genres[i];
+                    genre+=", "+genres[i];
                 }
                 return genre;
             }
@@ -333,9 +358,17 @@ public class Movie implements Serializable {
         return tag_line;
     }
 
+    public String getSerializable(){
+        return new Gson().toJson(this);
+    }
+
+    public static Movie fromSerializable(String json){
+        return new Gson().fromJson(json,Movie.class);
+    }
+
     @Override
     public String toString() {
-        return "Movie{" +
+        return "MovieResult{" +
                 "vote_count=" + vote_count +
                 ", id=" + id +
                 ", video=" + video +
