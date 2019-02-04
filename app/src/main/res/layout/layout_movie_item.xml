@@ -73,11 +73,11 @@
                         app:srcCompat="@drawable/ic_star_rating" />
 
                     <TextView
-                        android:id="@+id/movieDuration"
+                        android:id="@+id/movieRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/duration"
+                        android:text="@string/ratings"
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
                 </LinearLayout>

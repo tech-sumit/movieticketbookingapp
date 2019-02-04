@@ -47,7 +47,7 @@ public class FragmentMain extends Fragment {
     private TextView latestMovieName;
     private TextView latestMovieType;
     private TextView latestMovieDuration;
-
+    private String lastFragment="";
     private ImageView starMovieIcon;
     public FragmentMain() {
     }
@@ -88,6 +88,7 @@ public class FragmentMain extends Fragment {
         latestMovieType=view.findViewById(R.id.latestMovieType);
         latestMovieDuration=view.findViewById(R.id.latestMovieDuration);
         starMovieIcon=view.findViewById(R.id.starImageIcon);
+        lastFragment="main_fragment";
 
         ApiConnector apiConnector=new ApiConnector(view.getContext());
         apiConnector.getPopularMovies(1,new OnApiResultRecived() {
@@ -132,22 +133,29 @@ public class FragmentMain extends Fragment {
                             //NOTE: We are launching FragmentMain from scratch so everything is
                             // being reloaded even the movie contents are being fetched from servers.
                             // So we has to show progressbar for it.
-                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
+                            if(!lastFragment.equals("main_fragment")){
+                                lastFragment="main_fragment";
+                                ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
+                            }
                         }
                     });
+
                     LinearLayout orders=dialog.findViewById(R.id.nav_booking);
                     orders.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            getActivity()
-                                    .getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(
-                                            R.id.replaceableConstraintLayout,
-                                            new FragmentOrders())
-                                    .addToBackStack("FragmentOrders")
-                                    .commit();
+                            if(!lastFragment.equals("FragmentOrders")) {
+                                getActivity()
+                                        .getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(
+                                                R.id.replaceableConstraintLayout,
+                                                new FragmentOrders())
+                                        .addToBackStack("FragmentOrders")
+                                        .commit();
+                                lastFragment = "FragmentOrders";
+                            }
                         }
                     });
                     LinearLayout aboutUs=dialog.findViewById(R.id.nav_about_us);
@@ -155,14 +163,17 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            getActivity()
-                                    .getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(
-                                            R.id.replaceableConstraintLayout,
-                                            new FragmentAboutUs())
-                                    .addToBackStack("FragmentAboutUs")
-                                    .commit();
+                            if(!lastFragment.equals("FragmentAboutUs")) {
+                                getActivity()
+                                        .getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(
+                                                R.id.replaceableConstraintLayout,
+                                                new FragmentAboutUs())
+                                        .addToBackStack("FragmentAboutUs")
+                                        .commit();
+                                lastFragment = "FragmentAboutUs";
+                            }
                         }
                     });
                     LinearLayout signOut=dialog.findViewById(R.id.nav_signout);
@@ -179,11 +190,14 @@ public class FragmentMain extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             dialog.cancel();
-                                            SharedPreferences sharedPreferences1=view.getContext().getSharedPreferences(Constants.LOGIN_PREF,Context.MODE_PRIVATE);
-                                            SharedPreferences.Editor editor=sharedPreferences1.edit();
-                                            editor.clear();
-                                            editor.apply();
-                                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("login_fragment",null);
+                                            if(!lastFragment.equals("login_fragment")) {
+                                                SharedPreferences sharedPreferences1 = view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = sharedPreferences1.edit();
+                                                editor.clear();
+                                                editor.apply();
+                                                ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
+                                                lastFragment = "login_fragment";
+                                            }
                                         }
                                     });
                         }

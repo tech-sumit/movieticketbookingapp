@@ -159,7 +159,7 @@
                                 android:id="@+id/latestMovieDuration"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/duration"
+                                android:text="@string/ratings"
                                 android:textColor="@android:color/white"
                                 android:textSize="18sp" />
                         </LinearLayout>

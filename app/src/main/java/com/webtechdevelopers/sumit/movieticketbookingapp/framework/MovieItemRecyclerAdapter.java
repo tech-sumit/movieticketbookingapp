@@ -44,6 +44,9 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         Movie movie=movieArrayList.get(i);
         movieItemHolder.bind(movie,onItemSelectedListener);
 
+        movieItemHolder.starMovieIcon.setVisibility(View.VISIBLE);
+
+
         Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
         movieItemHolder.movieImage.setImageURI(uri);
 
@@ -86,9 +89,8 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
             movieBackground=itemView.findViewById(R.id.movieBackground);
             movieName=itemView.findViewById(R.id.movieName);
             movieGenre =itemView.findViewById(R.id.movieType);
-            movieRating =itemView.findViewById(R.id.movieDuration);
+            movieRating =itemView.findViewById(R.id.movieRating);
             starMovieIcon=itemView.findViewById(R.id.starMovieIcon);
-            starMovieIcon.setVisibility(View.VISIBLE);
 
         }
 

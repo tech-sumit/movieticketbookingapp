@@ -65,9 +65,16 @@
     <string name="sign_out">Sign Out</string>
     <string name="name">Name</string>
     <string name="type">Type</string>
-    <string name="duration">Duration</string>
+    <string name="rating">Ratings: </string>
     <string name="signout">SignOut</string>
     <string name="calculation">Calculation</string>
     <string name="trailer_link">Goto movieResult trailer</string>
     <string name="trailers">Trailers</string>
+    <string name="tag_line">Tagline:</string>
+    <string name="language">Languages:</string>
+    <string name="ratings">Rating:</string>
+    <string name="budget_amount">Budget: $</string>
+    <string name="movie_duration">Duration:</string>
+    <string name="minutes">minutes</string>
+    <string name="released_on">Released on</string>
 </resources>

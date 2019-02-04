@@ -176,10 +176,10 @@ public class FragmentMovieDetails extends Fragment {
                         }else{
                             textAdult.setVisibility(View.GONE);
                         }
-                        String textReleseDateText="Released on "+detailedMovie.getReleaseDate();
+                        String textReleseDateText=getString(R.string.released_on)+detailedMovie.getReleaseDate();
                         textReleseDate.setText(textReleseDateText);
 
-                        String countries="Production Countries: ";
+                        String countries=""+getString(R.string.production_countries)+": ";
                         for(int i=0;i<detailedMovie.getProductionCountries().size();i++){
                             countries+="\n"+detailedMovie.getProductionCountries().get(i).getName();
                         }
@@ -188,21 +188,21 @@ public class FragmentMovieDetails extends Fragment {
                         if(detailedMovie.getTagline().equals("")){
                             textTagline.setVisibility(View.GONE);
                         }else{
-                            String textTaglineText="Tagline: "+detailedMovie.getTagline();
+                            String textTaglineText=getString(R.string.tag_line)+detailedMovie.getTagline();
                             textTagline.setText(textTaglineText);
                         }
-                        String textSpokenLanguagesText="Languages: ";
+                        String textSpokenLanguagesText=getString(R.string.language);
                         for(SpokenLanguage spokenLanguage:detailedMovie.getSpokenLanguages()){
                             textSpokenLanguagesText+=", "+spokenLanguage.getName();
                         }
                         textSpokenLanguages.setText(textSpokenLanguagesText);
-                        String textVoteAverageText="Rating: "+detailedMovie.getVoteAverage();
+                        String textVoteAverageText=getString(R.string.ratings)+detailedMovie.getVoteAverage();
                         textVoteAverage.setText(textVoteAverageText);
                         if(detailedMovie.getBudget()<=0){
 
                             textBudget.setText(getString(R.string.budget_not_available));
                         }else{
-                            String textBudgetText="Budget: $"+detailedMovie.getBudget();
+                            String textBudgetText=getString(R.string.budget_amount)+detailedMovie.getBudget();
                             textBudget.setText(textBudgetText);
                         }
                         Log.i("textHomepage",""+detailedMovie.getHomepage());
@@ -218,10 +218,10 @@ public class FragmentMovieDetails extends Fragment {
                                 }
                             });
                         }
-                        String textRuntimeText="Duration: "+detailedMovie.getRuntime()+" minutes";
+                        String textRuntimeText=getString(R.string.movie_duration)+detailedMovie.getRuntime()+getString(R.string.minutes);
                         textRuntime.setText(textRuntimeText);
                         if(detailedMovie.getProductionCompanies().size()>0){
-                            String companies="Production Companies: ";
+                            String companies=getString(R.string.production_companies)+": ";
                             for(int i=0;i<detailedMovie.getProductionCompanies().size();i++){
                                 companies+="\n"+detailedMovie.getProductionCompanies().get(i).getName();
                             }
