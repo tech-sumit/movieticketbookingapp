@@ -1,12 +1,10 @@
-
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProductionCompany implements Serializable
-{
+public class ProductionCompany implements Serializable {
 
     @SerializedName("id")
     @Expose

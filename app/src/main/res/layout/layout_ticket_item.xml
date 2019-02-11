@@ -51,6 +51,7 @@
                     android:layout_marginBottom="4dp"
                     android:text="@string/payment_id"
                     android:textColor="@android:color/white"
+                    android:textSize="12sp"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="124dp" />
 

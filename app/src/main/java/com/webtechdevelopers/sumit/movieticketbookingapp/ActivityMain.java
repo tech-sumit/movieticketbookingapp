@@ -1,8 +1,11 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,6 +35,16 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
         Checkout.preload(this);
         //setTheme(R.style.AppTheme_NoActionBar_Dark);
         setContentView(R.layout.layout_splash_screen);
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, 43);
+        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

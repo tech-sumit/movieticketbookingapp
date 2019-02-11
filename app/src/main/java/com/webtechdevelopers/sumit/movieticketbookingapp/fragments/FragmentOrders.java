@@ -45,6 +45,17 @@ public class FragmentOrders extends Fragment {
                 @Override
                 public void onShowSelected(Show show) {
                     Log.i("OnShowSelectedListener","Show Selected: \n"+show.getSerializable());
+                    Bundle bundle=new Bundle();
+
+                    bundle.putSerializable("show",show);
+                    bundle.putString("payment_id",show.getPaymentData().getPaymentId());
+                    bundle.putString("name",show.getMovie().getOriginal_title());
+                    bundle.putString("venue",show.getVenue());
+                    bundle.putString("time",show.getTime());
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_container, FragmentTicketDetails.newInstance(bundle))
+                            .commit();
                 }
             });
             RecyclerView ticketBookingRecyclerView=view.findViewById(R.id.ticketBookingRecyclerView);

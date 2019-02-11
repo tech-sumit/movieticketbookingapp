@@ -77,4 +77,7 @@
     <string name="movie_duration">Duration:</string>
     <string name="minutes">minutes</string>
     <string name="released_on">Released on</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

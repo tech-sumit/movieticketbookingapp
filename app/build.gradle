@@ -41,6 +41,8 @@ dependencies {
     implementation 'com.razorpay:checkout:1.4.9'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 }
 
 repositories {

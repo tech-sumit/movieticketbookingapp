@@ -1,16 +1,23 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.razorpay.PaymentData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Show implements Serializable {
+
+    @SerializedName("movie")
     private Movie movie;
+    @SerializedName("venue")
     private String venue = "";
+    @SerializedName("time")
     private String time = "";
+    @SerializedName("seats")
     private ArrayList<Seat> seats;
+    @SerializedName("payment_data")
     private PaymentData paymentData;
 
     public Show() {
