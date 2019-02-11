@@ -1,5 +1,6 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -156,8 +157,10 @@ public class FragmentTicketDetails extends Fragment {
         }
 
         ticketDetailSave.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onClick(View v) {
+                ticketDetailSave.setVisibility(View.GONE);
                 bitmap=screenShot(view);
                 Document document = new Document();
                 try {
@@ -174,16 +177,20 @@ public class FragmentTicketDetails extends Fragment {
                     out.flush();
                     out.close();
 
-                    PdfWriter.getInstance(document, new FileOutputStream(path+movie.getTitle()+show.getVenue()+show.getTime()+".pdf"));
+                    PdfWriter.getInstance(document, new FileOutputStream(path+"/"+movie.getTitle()+show.getVenue()+show.getTime()+".pdf"));
                     document.open();
-                    Image image = Image.getInstance(path+"/"+file_name);  // Change image's name and extension.
+                    Image image = Image.getInstance(path+"/"+file_name);
 
                     float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
-                            - document.rightMargin() - 0) / image.getWidth()) * 100; // 0 means you have no indentation. If you have any, change it.
+                            - document.rightMargin() - 0) / image.getWidth()) * 100;
                     image.scalePercent(scaler);
-                    image.setAlignment(Image.ALIGN_CENTER | Image.ALIGN_TOP);
+                    image.setAlignment(Image.ALIGN_TOP|Image.ALIGN_BOTTOM|Image.ALIGN_CENTER|Image.ALIGN_JUSTIFIED_ALL);
+                    //image.setAlignment(Image.ALIGN_JUSTIFIED_ALL);
                     document.add(image);
                     document.close();
+
+                    file.delete();
+                    ticketDetailSave.setVisibility(View.VISIBLE);
 
                     Toast.makeText(view.getContext(),"PDF saved",Toast.LENGTH_SHORT).show();
                 } catch (DocumentException e) {

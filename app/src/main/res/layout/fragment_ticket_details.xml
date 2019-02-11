@@ -87,7 +87,7 @@
                     android:layout_weight="1"
                     android:text="@string/moviename"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="8dp" />
@@ -108,7 +108,8 @@
                     android:layout_marginBottom="4dp"
                     android:text="@string/payment_id"
                     android:textColor="@android:color/white"
-                    android:textSize="12sp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="124dp" />
 
@@ -119,7 +120,8 @@
                     android:layout_marginBottom="4dp"
                     android:text="@string/seats"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     tools:layout_editor_absoluteX="392dp"
                     tools:layout_editor_absoluteY="41dp" />
 
@@ -130,7 +132,8 @@
                     android:layout_marginBottom="4dp"
                     android:text="Location"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/ticketDetailTime"
@@ -139,7 +142,8 @@
                     android:layout_marginBottom="4dp"
                     android:text="Time"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/ticketDetailQRCode"

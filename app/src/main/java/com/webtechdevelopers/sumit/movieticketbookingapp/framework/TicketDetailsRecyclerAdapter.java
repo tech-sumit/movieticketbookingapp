@@ -56,7 +56,9 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
                 .setOldController(holder.ticketBackground.getController())
                 .build();
         holder.ticketBackground.setController(controller);
-        holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
+        if(show.getPaymentData().getOrderId()!=null){
+            holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
+        }
         holder.ticketMovieName.setText(movie.getOriginal_title());
         ArrayList<Seat> seats=show.getSeats();
         String bookedSeats="";
