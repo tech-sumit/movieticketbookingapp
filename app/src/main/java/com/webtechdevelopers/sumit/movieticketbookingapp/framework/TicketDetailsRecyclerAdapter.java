@@ -22,7 +22,6 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 
 import java.util.ArrayList;
 
-
 public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDetailsRecyclerAdapter.TicketHolder> {
 
     private ArrayList<Show> shows;

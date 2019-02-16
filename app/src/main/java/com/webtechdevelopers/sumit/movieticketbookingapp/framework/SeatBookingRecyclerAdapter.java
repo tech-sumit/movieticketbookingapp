@@ -130,5 +130,4 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
             });
         }
     }
-
 }

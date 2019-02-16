@@ -191,10 +191,8 @@ public class FragmentMain extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             dialog.cancel();
                                             if(!lastFragment.equals("login_fragment")) {
-                                                SharedPreferences sharedPreferences1 = view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE);
-                                                SharedPreferences.Editor editor = sharedPreferences1.edit();
-                                                editor.clear();
-                                                editor.apply();
+                                                view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE).edit().clear().apply();
+                                                view.getContext().getSharedPreferences("ticket_data", Context.MODE_PRIVATE).edit().clear().apply();
                                                 ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
                                                 lastFragment = "login_fragment";
                                             }

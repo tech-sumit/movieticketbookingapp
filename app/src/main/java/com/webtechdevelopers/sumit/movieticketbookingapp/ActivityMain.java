@@ -19,6 +19,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentOrders;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment;
+import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentTicketDetails;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
@@ -59,7 +60,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.main_container,new FragmentLogin())
-                            .commitNow();
+                            .commitNowAllowingStateLoss();
                 }
             }
         },2000);
@@ -124,6 +125,13 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .beginTransaction()
                         .add(R.id.main_container, fragmentOrders)
                         .addToBackStack("FragmentOrders")
+                        .commit();
+            case "ticket_details":
+                isDoubleClickAllowed=false;
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_container, FragmentTicketDetails.newInstance(bundle))
+                        .addToBackStack("FragmentTicketDetails")
                         .commit();
                 break;
             default:

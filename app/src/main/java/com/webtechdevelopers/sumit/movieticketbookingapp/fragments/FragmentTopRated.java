@@ -75,5 +75,5 @@ public class FragmentTopRated extends Fragment {
                 topRatedMovies.setLayoutManager(linearLayoutManager);
             }
         });
-    }
+     }
 }

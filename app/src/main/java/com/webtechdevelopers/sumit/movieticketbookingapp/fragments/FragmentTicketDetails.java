@@ -1,6 +1,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -29,17 +29,22 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -173,18 +178,22 @@ public class FragmentTicketDetails extends Fragment {
                     File file=new File(dest,file_name);
                     if (file.exists ()) file.delete ();
                     FileOutputStream out = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
                     out.flush();
                     out.close();
 
                     PdfWriter.getInstance(document, new FileOutputStream(path+"/"+movie.getTitle()+show.getVenue()+show.getTime()+".pdf"));
                     document.open();
+                    document.setPageSize(PageSize.A4);
                     Image image = Image.getInstance(path+"/"+file_name);
 
                     float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
                             - document.rightMargin() - 0) / image.getWidth()) * 100;
+
                     image.scalePercent(scaler);
-                    image.setAlignment(Image.ALIGN_TOP|Image.ALIGN_BOTTOM|Image.ALIGN_CENTER|Image.ALIGN_JUSTIFIED_ALL);
+
+                    image.scaleToFit(PageSize.A4.getWidth(),PageSize.A4.getHeight());
+                    image.setAlignment(Image.ALIGN_CENTER);
                     //image.setAlignment(Image.ALIGN_JUSTIFIED_ALL);
                     document.add(image);
                     document.close();
@@ -215,6 +224,7 @@ public class FragmentTicketDetails extends Fragment {
         //view.draw(canvas);
         return bitmap;
     }
+
     public static String getAppPath(Context context) {
         File dir = new File(android.os.Environment.getExternalStorageDirectory()
                 + File.separator
@@ -225,4 +235,5 @@ public class FragmentTicketDetails extends Fragment {
         }
         return dir.getPath() + File.separator;
     }
+
 }

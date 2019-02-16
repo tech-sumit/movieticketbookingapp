@@ -367,7 +367,7 @@ public class Movie implements Serializable {
     }
 
     @Override
-    public String toString() {
+     public String toString() {
         return "MovieResult{" +
                 "vote_count=" + vote_count +
                 ", id=" + id +
