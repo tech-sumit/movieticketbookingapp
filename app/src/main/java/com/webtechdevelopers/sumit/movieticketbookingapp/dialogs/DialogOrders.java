@@ -1,19 +1,16 @@
-package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
+package com.webtechdevelopers.sumit.movieticketbookingapp.dialogs;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnShowSelectedListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.TicketDetailsRecyclerAdapter;
@@ -21,24 +18,27 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 
 import java.util.ArrayList;
 
-public class FragmentOrders extends Fragment {
-    public FragmentOrders() {
+public class DialogOrders extends Dialog {
+    private View view;
+    private Context context;
+    private FloatingActionButton backButton;
+    public DialogOrders(Context context) {
+        super(context,R.style.AppTheme_NoActionBar_Dark);
+        this.context=context;
+        view=View.inflate(context,R.layout.layout_orders, null);
+        setContentView(view);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_orders, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        backButton=findViewById(R.id.backFab);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel();
+            }
+        });
         PersistentDataStorage persistentDataStorage =new PersistentDataStorage(view.getContext());
         ArrayList<Show> shows= persistentDataStorage.getShows();
         if(shows.size()>0){
@@ -52,8 +52,8 @@ public class FragmentOrders extends Fragment {
                     bundle.putString("name",show.getMovie().getOriginal_title());
                     bundle.putString("venue",show.getVenue());
                     bundle.putString("time",show.getTime());
-                    ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("ticket_details",bundle);
-
+                    DialogTicketDetails dialogTicketDetails =new DialogTicketDetails(view.getContext(),bundle);
+                    dialogTicketDetails.show();
                 }
             });
             RecyclerView ticketBookingRecyclerView=view.findViewById(R.id.ticketBookingRecyclerView);
@@ -66,4 +66,5 @@ public class FragmentOrders extends Fragment {
             Toast.makeText(view.getContext(),"No tickets booked till date", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,12 +24,13 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogAboutUs;
+import com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogOrders;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
@@ -113,7 +111,7 @@ public class FragmentMain extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder=new AlertDialog.Builder(view.getContext());
-                View dialogView=View.inflate(view.getContext(),R.layout.layout_navigation_dialog,null);
+                final View dialogView=View.inflate(view.getContext(),R.layout.layout_navigation_dialog,null);
                 builder.setView(dialogView);
                 final AlertDialog dialog=builder.create();
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -145,17 +143,8 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            if(!lastFragment.equals("FragmentOrders")) {
-                                getActivity()
-                                        .getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(
-                                                R.id.replaceableConstraintLayout,
-                                                new FragmentOrders())
-                                        .addToBackStack("FragmentOrders")
-                                        .commit();
-                                lastFragment = "FragmentOrders";
-                            }
+                            DialogOrders dialogOrders =new DialogOrders(dialogView.getContext());
+                            dialogOrders.show();
                         }
                     });
                     LinearLayout aboutUs=dialog.findViewById(R.id.nav_about_us);
@@ -163,17 +152,7 @@ public class FragmentMain extends Fragment {
                         @Override
                         public void onClick(View v) {
                             dialog.cancel();
-                            if(!lastFragment.equals("FragmentAboutUs")) {
-                                getActivity()
-                                        .getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(
-                                                R.id.replaceableConstraintLayout,
-                                                new FragmentAboutUs())
-                                        .addToBackStack("FragmentAboutUs")
-                                        .commit();
-                                lastFragment = "FragmentAboutUs";
-                            }
+                            new DialogAboutUs(dialogView.getContext()).show();
                         }
                     });
                     LinearLayout signOut=dialog.findViewById(R.id.nav_signout);

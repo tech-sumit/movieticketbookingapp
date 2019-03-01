@@ -1,7 +1,7 @@
-package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
+package com.webtechdevelopers.sumit.movieticketbookingapp.dialogs;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,9 +12,7 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,21 +28,17 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -53,8 +47,9 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 import static android.content.Context.WINDOW_SERVICE;
 
-public class FragmentTicketDetails extends Fragment {
+public class DialogTicketDetails extends Dialog {
 
+    private final Bundle bundle;
     SimpleDraweeView ticketMovieImage;
     SimpleDraweeView ticketBackground;
     TextView ticketPaymentID;
@@ -71,49 +66,35 @@ public class FragmentTicketDetails extends Fragment {
     private String time;
     private Show show;
     private Bitmap bitmap;
-    public FragmentTicketDetails() {
+    private View view;
+    private Context context;
 
-    }
-
-    public static FragmentTicketDetails newInstance(Bundle bundle){
-        FragmentTicketDetails fragmentTicketDetails=new FragmentTicketDetails();
-        fragmentTicketDetails.setArguments(bundle);
-        return fragmentTicketDetails;
+    public DialogTicketDetails(Context context, Bundle bundle) {
+        super(context,R.style.AppTheme_NoActionBar_Dark);
+        this.context=context;
+        this.bundle=bundle;
+        view=View.inflate(context,R.layout.layout_ticket_details, null);
+        setContentView(view);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments()!=null){
-            show= (Show) getArguments().getSerializable("show");
-            paymentID=getArguments().getString("payment_id");
-            name=getArguments().getString("name");
-            venue=getArguments().getString("venue");
-            time=getArguments().getString("time");
+        show= (Show) bundle.getSerializable("show");
+        paymentID=bundle.getString("payment_id");
+        name=bundle.getString("name");
+        venue=bundle.getString("venue");
+        time=bundle.getString("time");
+        ticketMovieImage=findViewById(R.id.ticketDetailMovieImage);
+        ticketBackground=findViewById(R.id.ticketDetailBackground);
+        ticketPaymentID=findViewById(R.id.ticketDetailPaymentID);
+        ticketMovieName=findViewById(R.id.ticketDetailMovieName);
+        ticketSeats=findViewById(R.id.ticketDetailSeats);
 
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_ticket_details, container, false);
-    }
-
-    @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        ticketMovieImage=view.findViewById(R.id.ticketDetailMovieImage);
-        ticketBackground=view.findViewById(R.id.ticketDetailBackground);
-        ticketPaymentID=view.findViewById(R.id.ticketDetailPaymentID);
-        ticketMovieName=view.findViewById(R.id.ticketDetailMovieName);
-        ticketSeats=view.findViewById(R.id.ticketDetailSeats);
-
-        ticketLocation=view.findViewById(R.id.ticketDetailLocation);
-        ticketTime=view.findViewById(R.id.ticketDetailTime);
-        ticketQRCode=view.findViewById(R.id.ticketDetailQRCode);
-        ticketDetailSave=view.findViewById(R.id.ticketDetailSave);
+        ticketLocation=findViewById(R.id.ticketDetailLocation);
+        ticketTime=findViewById(R.id.ticketDetailTime);
+        ticketQRCode=findViewById(R.id.ticketDetailQRCode);
+        ticketDetailSave=findViewById(R.id.ticketDetailSave);
 
         final Movie movie=show.getMovie();
 
@@ -139,7 +120,7 @@ public class FragmentTicketDetails extends Fragment {
         Log.i("MovieDetails","\nData: "+movie.toString());
         ticketLocation.setText(venue);
         ticketTime.setText(time);
-        WindowManager manager = (WindowManager) view.getContext().getSystemService(WINDOW_SERVICE);
+        WindowManager manager = (WindowManager) getContext().getSystemService(WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
         Point point = new Point();
         display.getSize(point);
@@ -170,7 +151,7 @@ public class FragmentTicketDetails extends Fragment {
                 Document document = new Document();
                 try {
                     String file_name=movie.getTitle()+show.getVenue()+show.getTime()+".png";
-                    String path=Environment.getExternalStorageDirectory().toString()+"/"+getString(R.string.app_name);
+                    String path=Environment.getExternalStorageDirectory().toString()+"/"+context.getString(R.string.app_name);
                     File dest = new File(path);
                     if(!dest.exists()){
                         dest.mkdirs();
@@ -213,7 +194,9 @@ public class FragmentTicketDetails extends Fragment {
                 }
             }
         });
+
     }
+
 
     public Bitmap screenShot(View view) {
         view.setDrawingCacheEnabled(true);

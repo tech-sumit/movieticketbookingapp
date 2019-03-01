@@ -17,9 +17,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooki
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails;
-import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentOrders;
 import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment;
-import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentTicketDetails;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
@@ -118,22 +116,24 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
                         .replace(R.id.main_container, fragmentPayment)
                         .commit();
                 break;
+/*
             case "orders":
                 isDoubleClickAllowed=false;
-                FragmentOrders fragmentOrders=new FragmentOrders();
+                DialogOrders fragmentOrders=new DialogOrders();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.main_container, fragmentOrders)
-                        .addToBackStack("FragmentOrders")
+                        .addToBackStack("DialogOrders")
                         .commit();
             case "ticket_details":
                 isDoubleClickAllowed=false;
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_container, FragmentTicketDetails.newInstance(bundle))
-                        .addToBackStack("FragmentTicketDetails")
+                        .replace(R.id.main_container, DialogTicketDetails.newInstance(bundle))
+                        .addToBackStack("DialogTicketDetails")
                         .commit();
                 break;
+*/
             default:
                 isDoubleClickAllowed=false;
                 Log.e("CASE_ERROR","Invalid fragmentId ID:"+fragmentName);
