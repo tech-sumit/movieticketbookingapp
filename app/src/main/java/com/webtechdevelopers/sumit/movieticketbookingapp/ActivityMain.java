@@ -142,7 +142,6 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public void onBackPressed() {
-
         if(isDoubleClickAllowed){
             backCount++;
             if(backCount>1){
@@ -154,6 +153,12 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
             super.onBackPressed();
             backCount=0;
         }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backCount=0;
+            }
+        },3000);
     }
 
     @Override
