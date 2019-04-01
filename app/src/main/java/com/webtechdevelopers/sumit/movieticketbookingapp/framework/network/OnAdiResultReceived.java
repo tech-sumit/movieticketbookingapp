@@ -1,5 +1,5 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.network;
 
-public interface OnApiResultRecived {
+public interface OnAdiResultReceived {
     void onResult(String response);
 }

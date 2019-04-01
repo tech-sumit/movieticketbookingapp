@@ -47,6 +47,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:padding="4dp"
+                android:contentDescription="@string/theatre"
                 app:srcCompat="@drawable/ic_theatre" />
 
             <TextView
@@ -81,6 +82,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:padding="4dp"
+                android:contentDescription="@string/booking"
                 app:srcCompat="@drawable/ic_booking" />
 
             <TextView
@@ -114,6 +116,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/about_us"
                 android:padding="8dp"
                 app:srcCompat="@android:drawable/ic_dialog_info" />
 
@@ -148,6 +151,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:contentDescription="@string/sign_out"
                 android:padding="4dp"
                 app:srcCompat="@drawable/ic_signout" />
 

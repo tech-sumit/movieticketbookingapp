@@ -1,9 +1,9 @@
 
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
-import java.io.Serializable;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 public class SpokenLanguage implements Serializable
 {
@@ -13,18 +13,6 @@ public class SpokenLanguage implements Serializable
     @SerializedName("name")
     private String name;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public SpokenLanguage() {
-    }
-
-    /**
-     * 
-     * @param iso6391
-     * @param name
-     */
     public SpokenLanguage(String iso6391, String name) {
         super();
         this.iso6391 = iso6391;

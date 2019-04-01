@@ -31,10 +31,9 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Spok
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnAdiResultReceived;
 
 import java.util.ArrayList;
-
 
 public class FragmentMovieDetails extends Fragment {
     private Movie movie;
@@ -78,7 +77,7 @@ public class FragmentMovieDetails extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie_details, container, false);
@@ -108,7 +107,8 @@ public class FragmentMovieDetails extends Fragment {
                     public void onClick(View v) {
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("booking",bundle);
+                        if(getActivity()!=null)
+                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("booking",bundle);
                     }
                 });
             }else{
@@ -145,12 +145,12 @@ public class FragmentMovieDetails extends Fragment {
             textTrailers=view.findViewById(R.id.textTrailers);
 
             final ApiConnector apiConnector=new ApiConnector(view.getContext());
-            apiConnector.getMovieDetails(movie.getId(), new OnApiResultRecived() {
+            apiConnector.getMovieDetails(movie.getId(), new OnAdiResultReceived() {
                 @Override
                 public void onResult(String response) {
                     Log.i("Response Data","Response:\n"+response);
                     detailedMovie=JSONPacketParser.getDetailMovie(response);
-                    apiConnector.getVideos(movie.getId(), new OnApiResultRecived() {
+                    apiConnector.getVideos(movie.getId(), new OnAdiResultReceived() {
                         @Override
                         public void onResult(String response) {
                             Log.i("ApiConnector","Response: "+response);
@@ -180,11 +180,11 @@ public class FragmentMovieDetails extends Fragment {
                             String textReleseDateText=getString(R.string.released_on)+detailedMovie.getReleaseDate();
                             textReleseDate.setText(textReleseDateText);
 
-                            String countries=""+getString(R.string.production_countries)+": ";
+                            StringBuilder countries= new StringBuilder("" + getString(R.string.production_countries) + ": ");
                             for(int i=0;i<detailedMovie.getProductionCountries().size();i++){
-                                countries+="\n"+detailedMovie.getProductionCountries().get(i).getName();
+                                countries.append("\n").append(detailedMovie.getProductionCountries().get(i).getName());
                             }
-                            textProductionCountries.setText(countries);
+                            textProductionCountries.setText(countries.toString());
 
                             if(detailedMovie.getTagline().equals("")){
                                 textTagline.setVisibility(View.GONE);
@@ -192,11 +192,11 @@ public class FragmentMovieDetails extends Fragment {
                                 String textTaglineText=getString(R.string.tag_line)+detailedMovie.getTagline();
                                 textTagline.setText(textTaglineText);
                             }
-                            String textSpokenLanguagesText=getString(R.string.language);
+                            StringBuilder textSpokenLanguagesText= new StringBuilder(getString(R.string.language));
                             for(SpokenLanguage spokenLanguage:detailedMovie.getSpokenLanguages()){
-                                textSpokenLanguagesText+=", "+spokenLanguage.getName();
+                                textSpokenLanguagesText.append(", ").append(spokenLanguage.getName());
                             }
-                            textSpokenLanguages.setText(textSpokenLanguagesText);
+                            textSpokenLanguages.setText(textSpokenLanguagesText.toString());
                             String textVoteAverageText=getString(R.string.ratings)+detailedMovie.getVoteAverage();
                             textVoteAverage.setText(textVoteAverageText);
                             if(detailedMovie.getBudget()<=0){
@@ -222,11 +222,11 @@ public class FragmentMovieDetails extends Fragment {
                             String textRuntimeText=getString(R.string.movie_duration)+detailedMovie.getRuntime()+getString(R.string.minutes);
                             textRuntime.setText(textRuntimeText);
                             if(detailedMovie.getProductionCompanies().size()>0){
-                                String companies=getString(R.string.production_companies)+": ";
+                                StringBuilder companies= new StringBuilder(getString(R.string.production_companies) + ": ");
                                 for(int i=0;i<detailedMovie.getProductionCompanies().size();i++){
-                                    companies+="\n"+detailedMovie.getProductionCompanies().get(i).getName();
+                                    companies.append("\n").append(detailedMovie.getProductionCompanies().get(i).getName());
                                 }
-                                textProductionCompanies.setText(companies);
+                                textProductionCompanies.setText(companies.toString());
                             }else{
                                 textProductionCompanies.setVisibility(View.GONE);
                             }

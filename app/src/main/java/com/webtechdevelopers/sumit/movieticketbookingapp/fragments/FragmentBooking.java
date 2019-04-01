@@ -29,16 +29,19 @@ public class FragmentBooking extends Fragment {
     private Movie movie;
     private Show show;
 
-    private int seatPrice =200;
-    private int maxSeatCount =336;
-    private int maxSeatRowCount =10;
-    private int maxSeatColumnCount =24;
-    private int seatMaxSelectable=6;
+    private int seatPrice;
+    private int maxSeatCount;
+    private int maxSeatColumnCount;
+    private int seatMaxSelectable;
 
     private TextView textCalculation;
 
     public FragmentBooking() {
         // Required empty public constructor
+        maxSeatCount = 336;
+        maxSeatColumnCount = 24;
+        seatMaxSelectable = 6;
+        seatPrice = 200;
     }
 
     public static FragmentBooking newInstance(Bundle bundle) {
@@ -57,7 +60,7 @@ public class FragmentBooking extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_booking, container, false);
@@ -112,7 +115,7 @@ public class FragmentBooking extends Fragment {
             }
         }
 
-        SeatBookingRecyclerAdapter seatBookingAdapter =new SeatBookingRecyclerAdapter(seatArrayList,seatMaxSelectable, maxSeatColumnCount, new OnSeatClickActionListener() {
+        SeatBookingRecyclerAdapter seatBookingAdapter =new SeatBookingRecyclerAdapter(seatArrayList,seatMaxSelectable, new OnSeatClickActionListener() {
             @Override
             public void onSeatSelected(Seat seat) {
                 ArrayList<Seat> seats=show.getSeats();
@@ -149,7 +152,8 @@ public class FragmentBooking extends Fragment {
                 if(show.getSeats().size()>0){
                     Bundle bundle=new Bundle();
                     bundle.putSerializable("show",show);
-                    ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("payment",bundle);
+                    if(getActivity() !=null)
+                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("payment",bundle);
                 }else{
                     Toast.makeText(view.getContext(),"No seats selected",Toast.LENGTH_SHORT).show();
                 }

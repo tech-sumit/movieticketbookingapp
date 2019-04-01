@@ -50,26 +50,15 @@ import static android.content.Context.WINDOW_SERVICE;
 public class DialogTicketDetails extends Dialog {
 
     private final Bundle bundle;
-    SimpleDraweeView ticketMovieImage;
-    SimpleDraweeView ticketBackground;
-    TextView ticketPaymentID;
-    TextView ticketMovieName;
-    TextView ticketSeats;
-    TextView ticketLocation;
-    TextView ticketTime;
-    ImageView ticketQRCode;
-    FloatingActionButton ticketDetailSave;
+    private SimpleDraweeView ticketMovieImage;
+    private FloatingActionButton ticketDetailSave;
 
-    private String paymentID;
-    private String name;
-    private String venue;
-    private String time;
     private Show show;
     private Bitmap bitmap;
     private View view;
     private Context context;
 
-    public DialogTicketDetails(Context context, Bundle bundle) {
+    DialogTicketDetails(Context context, Bundle bundle) {
         super(context,R.style.AppTheme_NoActionBar_Dark);
         this.context=context;
         this.bundle=bundle;
@@ -81,19 +70,19 @@ public class DialogTicketDetails extends Dialog {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         show= (Show) bundle.getSerializable("show");
-        paymentID=bundle.getString("payment_id");
-        name=bundle.getString("name");
-        venue=bundle.getString("venue");
-        time=bundle.getString("time");
+        String paymentID = bundle.getString("payment_id");
+        String name = bundle.getString("name");
+        String venue = bundle.getString("venue");
+        String time = bundle.getString("time");
         ticketMovieImage=findViewById(R.id.ticketDetailMovieImage);
-        ticketBackground=findViewById(R.id.ticketDetailBackground);
-        ticketPaymentID=findViewById(R.id.ticketDetailPaymentID);
-        ticketMovieName=findViewById(R.id.ticketDetailMovieName);
-        ticketSeats=findViewById(R.id.ticketDetailSeats);
+        SimpleDraweeView ticketBackground = findViewById(R.id.ticketDetailBackground);
+        TextView ticketPaymentID = findViewById(R.id.ticketDetailPaymentID);
+        TextView ticketMovieName = findViewById(R.id.ticketDetailMovieName);
+        TextView ticketSeats = findViewById(R.id.ticketDetailSeats);
 
-        ticketLocation=findViewById(R.id.ticketDetailLocation);
-        ticketTime=findViewById(R.id.ticketDetailTime);
-        ticketQRCode=findViewById(R.id.ticketDetailQRCode);
+        TextView ticketLocation = findViewById(R.id.ticketDetailLocation);
+        TextView ticketTime = findViewById(R.id.ticketDetailTime);
+        ImageView ticketQRCode = findViewById(R.id.ticketDetailQRCode);
         ticketDetailSave=findViewById(R.id.ticketDetailSave);
 
         final Movie movie=show.getMovie();
@@ -111,9 +100,9 @@ public class DialogTicketDetails extends Dialog {
         ticketPaymentID.setText(paymentID);
         ticketMovieName.setText(name);
         ArrayList<Seat> seats=show.getSeats();
-        String bookedSeats="";
+        StringBuilder bookedSeats= new StringBuilder();
         for(Seat seat: seats){
-            bookedSeats+=seat.getSeat_no()+" ";
+            bookedSeats.append(seat.getSeat_no()).append(" ");
         }
         String ticketSeatsText="Seats: "+bookedSeats;
         ticketSeats.setText(ticketSeatsText);
@@ -129,11 +118,11 @@ public class DialogTicketDetails extends Dialog {
         int smallerDimension = width < height ? width : height;
         //smallerDimension = smallerDimension * 3 / 4;
 
-        String data="Movie name: "+name+"" +
-                "\nPayment ID: "+paymentID+
+        String data="Movie name: "+ name +"" +
+                "\nPayment ID: "+ paymentID +
                 "\nSeats: "+ticketSeatsText+
-                "\nLocation: "+venue+
-                "\nTime: "+time;
+                "\nLocation: "+ venue +
+                "\nTime: "+ time;
         QRGEncoder qrgEncoder = new QRGEncoder(data, null, QRGContents.Type.TEXT, smallerDimension);
         try {
             bitmap = qrgEncoder.encodeAsBitmap();

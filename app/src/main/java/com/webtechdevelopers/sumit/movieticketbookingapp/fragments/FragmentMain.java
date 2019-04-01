@@ -36,7 +36,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInt
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnAdiResultReceived;
 
 import java.util.ArrayList;
 
@@ -61,7 +61,8 @@ public class FragmentMain extends Fragment {
         if(container!=null){
             Fresco.initialize(container.getContext());
         }else {
-            getActivity().finish();
+            if(getActivity()!=null)
+                getActivity().finish();
         }
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
@@ -89,7 +90,7 @@ public class FragmentMain extends Fragment {
         lastFragment="main_fragment";
 
         ApiConnector apiConnector=new ApiConnector(view.getContext());
-        apiConnector.getPopularMovies(1,new OnApiResultRecived() {
+        apiConnector.getPopularMovies(1,new OnAdiResultReceived() {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
@@ -114,7 +115,8 @@ public class FragmentMain extends Fragment {
                 final View dialogView=View.inflate(view.getContext(),R.layout.layout_navigation_dialog,null);
                 builder.setView(dialogView);
                 final AlertDialog dialog=builder.create();
-                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                if(dialog.getWindow()!=null)
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 dialog.show();
                 if(dialog.isShowing()){
                     SimpleDraweeView profilePic=dialog.findViewById(R.id.profile_pic);
@@ -133,7 +135,8 @@ public class FragmentMain extends Fragment {
                             // So we has to show progressbar for it.
                             if(!lastFragment.equals("main_fragment")){
                                 lastFragment="main_fragment";
-                                ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
+                                if(getActivity()!=null)
+                                    ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
                             }
                         }
                     });
@@ -163,20 +166,22 @@ public class FragmentMain extends Fragment {
                                     .requestEmail()
                                     .requestProfile()
                                     .build();
-                            GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(view.getContext(), googleSignInOptions);
-                            googleSignInClient.signOut()
-                                    .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            dialog.cancel();
-                                            if(!lastFragment.equals("login_fragment")) {
-                                                view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE).edit().clear().apply();
-                                                view.getContext().getSharedPreferences("ticket_data", Context.MODE_PRIVATE).edit().clear().apply();
-                                                ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
-                                                lastFragment = "login_fragment";
+                            if(getActivity()!=null){
+                                GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(view.getContext(), googleSignInOptions);
+                                googleSignInClient.signOut()
+                                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                dialog.cancel();
+                                                if(!lastFragment.equals("login_fragment")) {
+                                                    view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE).edit().clear().apply();
+                                                    view.getContext().getSharedPreferences("ticket_data", Context.MODE_PRIVATE).edit().clear().apply();
+                                                    ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
+                                                    lastFragment = "login_fragment";
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                            }
                         }
                     });
                 }
@@ -185,9 +190,9 @@ public class FragmentMain extends Fragment {
         });
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

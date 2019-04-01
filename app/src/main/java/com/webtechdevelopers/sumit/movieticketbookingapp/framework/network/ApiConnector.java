@@ -15,30 +15,14 @@ public class ApiConnector {
     public ApiConnector(Context context){
         this.context=context;
     }
-    public void getLatestMovie(final OnApiResultRecived onApiResultRecived){
-        Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
-                Constants.BASE_URL+"/latest?api_key="+Constants.API_KEY,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                }));
-    }
 
-    public void getNowPlayingMovies(int page,final OnApiResultRecived onApiResultRecived){
+    public void getNowPlayingMovies(int page,final OnAdiResultReceived onAdiResultReceived){
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
                 Constants.BASE_URL+"/now_playing?page="+page+"&api_key="+Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
+                        onAdiResultReceived.onResult(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -49,13 +33,13 @@ public class ApiConnector {
                 }));
     }
 
-    public void getPopularMovies(int page,final OnApiResultRecived onApiResultRecived){
+    public void getPopularMovies(int page,final OnAdiResultReceived onAdiResultReceived){
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
                 Constants.BASE_URL+"/popular?page="+page+"&api_key="+Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
+                        onAdiResultReceived.onResult(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -66,13 +50,13 @@ public class ApiConnector {
                 }));
     }
 
-    public void getTopRatedMovies(int page,final OnApiResultRecived onApiResultRecived){
+    public void getTopRatedMovies(int page,final OnAdiResultReceived onAdiResultReceived){
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
                 Constants.BASE_URL+"/top_rated?page="+page+"&api_key="+Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
+                        onAdiResultReceived.onResult(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -83,13 +67,13 @@ public class ApiConnector {
                 }));
     }
 
-    public void getUpcomingMovies(int page,final OnApiResultRecived onApiResultRecived){
+    public void getUpcomingMovies(int page,final OnAdiResultReceived onAdiResultReceived){
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
                 Constants.BASE_URL+"/upcoming?page="+page+"&api_key="+Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
+                        onAdiResultReceived.onResult(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -100,13 +84,13 @@ public class ApiConnector {
                 }));
     }
 
-    public void getVideos(int id,final OnApiResultRecived onApiResultRecived){
+    public void getVideos(int id,final OnAdiResultReceived onAdiResultReceived){
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
                 Constants.BASE_URL+"/"+id+"/videos?api_key="+Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
+                        onAdiResultReceived.onResult(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -117,13 +101,13 @@ public class ApiConnector {
                 }));
     }
 
-    public void getMovieDetails(int id,final OnApiResultRecived onApiResultRecived) {
+    public void getMovieDetails(int id,final OnAdiResultReceived onAdiResultReceived) {
         Volley.newRequestQueue(context).add(new StringRequest(Request.Method.GET,
                 Constants.BASE_URL + "/" + id + "?api_key=" + Constants.API_KEY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        onApiResultRecived.onResult(response);
+                        onAdiResultReceived.onResult(response);
                     }
                 },
                 new Response.ErrorListener() {

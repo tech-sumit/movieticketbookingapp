@@ -102,7 +102,8 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="2"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:layout_marginStart="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -129,7 +130,9 @@
                         android:layout_marginRight="4dp"
                         android:text="@string/type"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="4dp" />
 
                 </LinearLayout>
 
@@ -150,7 +153,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="20dp"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="10dp">
 
                     <TextView
                         android:id="@+id/textTagline"
@@ -258,7 +263,7 @@
                             android:id="@+id/textHomepage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="left"
+                            android:gravity="start"
                             android:paddingBottom="4dp"
                             android:text="@string/homepage"
                             android:textColor="@color/colorAccent"

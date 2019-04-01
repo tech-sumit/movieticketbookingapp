@@ -1,7 +1,6 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.os.Bundle;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,25 +10,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnItemSelectedListener;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONPacketParser;
-import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnApiResultRecived;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnAdiResultReceived;
 
 import java.util.ArrayList;
 
 //TODO: Create 3 fragments for the menu content
 public class FragmentTopRated extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
     private RecyclerView topRatedMovies;
-    private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Movie> movieArrayList;
 
     public FragmentTopRated() {
@@ -41,7 +36,7 @@ public class FragmentTopRated extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_top_rated, container, false);
@@ -53,7 +48,7 @@ public class FragmentTopRated extends Fragment {
         topRatedMovies=view.findViewById(R.id.top_rated_movies);
 
         ApiConnector apiConnector=new ApiConnector(view.getContext());
-        apiConnector.getTopRatedMovies(1, new OnApiResultRecived() {
+        apiConnector.getTopRatedMovies(1, new OnAdiResultReceived() {
             @Override
             public void onResult(String response) {
                 Log.i("Response Data","Response:\n"+response);
@@ -65,7 +60,8 @@ public class FragmentTopRated extends Fragment {
                         Bundle bundle=new Bundle();
                         bundle.putSerializable("movie",movie);
                         bundle.putString("type","top_rated");
-                        ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("movie_details",bundle);
+                        if(getActivity()!=null)
+                            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("movie_details",bundle);
                     }
                 });
                 topRatedMovies.setHasFixedSize(true);

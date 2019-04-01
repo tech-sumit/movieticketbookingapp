@@ -52,7 +52,7 @@ public class FragmentPayment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Fresco.initialize(container.getContext());
@@ -113,8 +113,8 @@ public class FragmentPayment extends Fragment {
             preFill.put("email", ""+sharedPreferences.getString(Constants.EMAIL,""));
             preFill.put("contact", "");
             jsonObject.put("prefill", preFill);
-
-            checkout.open(getActivity(),jsonObject);
+            if(getActivity()!=null)
+                checkout.open(getActivity(),jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }

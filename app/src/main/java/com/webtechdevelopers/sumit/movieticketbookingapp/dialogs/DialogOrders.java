@@ -20,11 +20,9 @@ import java.util.ArrayList;
 
 public class DialogOrders extends Dialog {
     private View view;
-    private Context context;
-    private FloatingActionButton backButton;
+
     public DialogOrders(Context context) {
         super(context,R.style.AppTheme_NoActionBar_Dark);
-        this.context=context;
         view=View.inflate(context,R.layout.layout_orders, null);
         setContentView(view);
     }
@@ -32,7 +30,7 @@ public class DialogOrders extends Dialog {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        backButton=findViewById(R.id.backFab);
+        FloatingActionButton backButton = findViewById(R.id.backFab);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

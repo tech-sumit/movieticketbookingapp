@@ -2,6 +2,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -63,6 +64,7 @@ public class MovieTrailer implements Serializable{
         return new Gson().fromJson(json,MovieTrailer.class);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "MovieTrailer{" +

@@ -18,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
@@ -28,10 +27,10 @@ public class FragmentLogin extends Fragment {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
-    static GoogleApiClient mGoogleApiClient;
-    private String TAG="FragmentLogin";
+    private String TAG;
     public FragmentLogin() {
         // Required empty public constructor
+        TAG = "FragmentLogin";
     }
 
     @Override
@@ -40,7 +39,7 @@ public class FragmentLogin extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -70,8 +69,10 @@ public class FragmentLogin extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-        updateUI(account);
+        if(getContext() !=null){
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+            updateUI(account);
+        }
     }
 
     @Override
@@ -93,20 +94,23 @@ public class FragmentLogin extends Fragment {
         }
     }
     private void updateUI(GoogleSignInAccount account){
-        if(account!=null){
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(Constants.LOGIN, true);
-            editor.putString(Constants.EMAIL, "" + account.getEmail());
-            editor.putString(Constants.NAME, "" + account.getDisplayName());
-            editor.putString(Constants.PROFILE_PIC, "" + account.getPhotoUrl());
-            editor.apply();
-            ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
-        }else {
-            SharedPreferences sharedPreferences = getContext().getSharedPreferences("login_pref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear();
-            editor.apply();
+        if(getContext() !=null){
+            if(account!=null){
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(Constants.LOGIN, true);
+                editor.putString(Constants.EMAIL, "" + account.getEmail());
+                editor.putString(Constants.NAME, "" + account.getDisplayName());
+                editor.putString(Constants.PROFILE_PIC, "" + account.getPhotoUrl());
+                editor.apply();
+                if(getActivity() !=null)
+                    ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
+            }else {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login_pref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+            }
         }
     }
 }

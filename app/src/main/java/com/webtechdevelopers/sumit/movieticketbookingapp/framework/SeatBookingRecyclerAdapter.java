@@ -21,16 +21,13 @@ import java.util.ArrayList;
 public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBookingRecyclerAdapter.SeatHolder> {
 
     private ArrayList<Seat> seatArrayList;
-    private int seatMaxSelectable=0;
-    private int columnCount=0;
+    private int seatMaxSelectable;
     private int seatSelectedCount = 0;
-    private int columnIndex=0;
     private OnSeatClickActionListener onSeatClickActionListener;
     private Seat seat;
-    public SeatBookingRecyclerAdapter(ArrayList<Seat> seatArrayList,int setMaxSelectable,int columnCount, OnSeatClickActionListener onSeatClickActionListener){
+    public SeatBookingRecyclerAdapter(ArrayList<Seat> seatArrayList, int setMaxSelectable, OnSeatClickActionListener onSeatClickActionListener){
         this.seatArrayList =seatArrayList;
         this.seatMaxSelectable=setMaxSelectable;
-        this.columnCount=columnCount;
         this.onSeatClickActionListener =onSeatClickActionListener;
     }
 
@@ -81,14 +78,14 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
         }
     }
     class SeatHolder extends RecyclerView.ViewHolder {
-        public ImageView seatImage;
-        public TextView seatNumber;
+        ImageView seatImage;
+        TextView seatNumber;
         private int seatMaxSelectable;
-        public View itemView;
-        public RelativeLayout seatLayout;
+        View itemView;
+        RelativeLayout seatLayout;
         private boolean isSelected = false;
 
-        public SeatHolder(@NonNull View itemView, int setMaxSelectable) {
+        SeatHolder(@NonNull View itemView, int setMaxSelectable) {
             super(itemView);
             this.itemView = itemView;
             this.seatMaxSelectable = setMaxSelectable;
@@ -97,7 +94,7 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
             seatLayout = itemView.findViewById(R.id.seatLayout);
         }
 
-        public void bind(final Seat seat, final OnSeatClickActionListener onSeatClickActionListener) {
+        void bind(final Seat seat, final OnSeatClickActionListener onSeatClickActionListener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

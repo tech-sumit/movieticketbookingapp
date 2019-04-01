@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 
 public class DialogAboutUs extends Dialog {
-    Context context;
+    private Context context;
     public DialogAboutUs(Context context) {
         super(context,R.style.AppTheme_NoActionBar_Dark);
         this.context=context;

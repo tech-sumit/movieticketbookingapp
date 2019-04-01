@@ -1,5 +1,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -18,22 +20,7 @@ public class ProductionCompany implements Serializable {
     @SerializedName("origin_country")
     @Expose
     private String originCountry;
-    private final static long serialVersionUID = 3856993631970483792L;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public ProductionCompany() {
-    }
-
-    /**
-     * 
-     * @param id
-     * @param originCountry
-     * @param name
-     * @param logoPath
-     */
     public ProductionCompany(Integer id, Object logoPath, String name, String originCountry) {
         super();
         this.id = id;
@@ -50,24 +37,6 @@ public class ProductionCompany implements Serializable {
         this.id = id;
     }
 
-    public ProductionCompany withId(Integer id) {
-        this.id = id;
-        return this;
-    }
-
-    public Object getLogoPath() {
-        return logoPath;
-    }
-
-    public void setLogoPath(Object logoPath) {
-        this.logoPath = logoPath;
-    }
-
-    public ProductionCompany withLogoPath(Object logoPath) {
-        this.logoPath = logoPath;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
@@ -76,24 +45,7 @@ public class ProductionCompany implements Serializable {
         this.name = name;
     }
 
-    public ProductionCompany withName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getOriginCountry() {
-        return originCountry;
-    }
-
-    public void setOriginCountry(String originCountry) {
-        this.originCountry = originCountry;
-    }
-
-    public ProductionCompany withOriginCountry(String originCountry) {
-        this.originCountry = originCountry;
-        return this;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "ProductionCompany{" +

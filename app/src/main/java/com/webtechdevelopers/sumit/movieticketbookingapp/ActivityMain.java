@@ -1,6 +1,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     private boolean isDoubleClickAllowed=true;
     private Show show;
 
+    @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

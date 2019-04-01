@@ -1,5 +1,7 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.razorpay.PaymentData;
@@ -22,12 +24,6 @@ public class Show implements Serializable {
 
     public Show() {
         seats=new ArrayList<>();
-    }
-
-    public Show(Movie movie, String venue, ArrayList<Seat> seats) {
-        this.movie = movie;
-        this.venue = venue;
-        this.seats = seats;
     }
 
     public Movie getMovie() {
@@ -82,6 +78,7 @@ public class Show implements Serializable {
         return new Gson().fromJson(json,Show.class);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Show{" +

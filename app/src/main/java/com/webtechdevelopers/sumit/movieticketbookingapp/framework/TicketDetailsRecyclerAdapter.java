@@ -60,9 +60,9 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         }
         holder.ticketMovieName.setText(movie.getOriginal_title());
         ArrayList<Seat> seats=show.getSeats();
-        String bookedSeats="";
+        StringBuilder bookedSeats= new StringBuilder();
         for(Seat seat: seats){
-            bookedSeats+=seat.getSeat_no()+" ";
+            bookedSeats.append(seat.getSeat_no()).append(" ");
         }
         String ticketSeatsText="Seats: "+bookedSeats;
         holder.ticketSeats.setText(ticketSeatsText);
@@ -89,9 +89,9 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         holder.ticketPaymentID.setText(show.getPaymentData().getOrderId());
         holder.ticketMovieName.setText(movie.getOriginal_title());
         ArrayList<Seat> seats=show.getSeats();
-        String bookedSeats="";
+        StringBuilder bookedSeats= new StringBuilder();
         for(Seat seat: seats){
-            bookedSeats+=seat.getSeat_no()+" ";
+            bookedSeats.append(seat.getSeat_no()).append(" ");
         }
         String ticketSeatsText="Seats: "+bookedSeats;
         holder.ticketSeats.setText(ticketSeatsText);
@@ -105,13 +105,13 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
         return shows.size();
     }
 
-    public class TicketHolder extends RecyclerView.ViewHolder{
-        public SimpleDraweeView ticketMovieImage;
-        public SimpleDraweeView ticketBackground;
-        public TextView ticketPaymentID;
-        public TextView ticketMovieName;
-        public TextView ticketSeats;
-        public TextView ticketMoneyPaid;
+    class TicketHolder extends RecyclerView.ViewHolder{
+        SimpleDraweeView ticketMovieImage;
+        SimpleDraweeView ticketBackground;
+        TextView ticketPaymentID;
+        TextView ticketMovieName;
+        TextView ticketSeats;
+        TextView ticketMoneyPaid;
         TicketHolder(@NonNull View itemView) {
             super(itemView);
             ticketMovieImage=itemView.findViewById(R.id.ticketMovieImage);

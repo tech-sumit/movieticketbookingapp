@@ -13,18 +13,9 @@ public class Genre implements Serializable
     @SerializedName("name")
     private String name;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
     public Genre() {
     }
 
-    /**
-     * 
-     * @param id
-     * @param name
-     */
     public Genre(Integer id, String name) {
         super();
         this.id = id;

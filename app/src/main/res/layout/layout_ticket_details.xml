@@ -36,7 +36,9 @@
                 android:clickable="true"
                 android:src="@android:drawable/stat_sys_download"
                 app:backgroundTint="@color/colorPrimaryDark"
-                app:elevation="0dp" />
+                app:elevation="0dp"
+                android:layout_marginStart="8dp"
+                android:focusable="true" />
 
 
         </LinearLayout>
@@ -93,7 +95,8 @@
                         android:textSize="30sp"
                         android:textStyle="bold"
                         tools:layout_editor_absoluteX="392dp"
-                        tools:layout_editor_absoluteY="8dp" />
+                        tools:layout_editor_absoluteY="8dp"
+                        android:layout_marginStart="4dp" />
 
                 </LinearLayout>
 
@@ -133,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="Location"
+                        android:text="@string/location"
                         android:textColor="@android:color/white"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -143,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        android:text="Time"
+                        android:text="@string/time"
                         android:textColor="@android:color/white"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -152,6 +155,7 @@
                         android:id="@+id/ticketDetailQRCode"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
+                        android:contentDescription="@string/qrcode"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="4dp"
                         android:src="@android:drawable/ic_menu_report_image" />

@@ -73,10 +73,10 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
         return movieArrayList.size();
     }
 
-    public static class MovieItemHolder extends RecyclerView.ViewHolder {
-        public SimpleDraweeView movieImage;
-        public SimpleDraweeView movieBackground;
-        public TextView movieName;
+    static class MovieItemHolder extends RecyclerView.ViewHolder {
+        SimpleDraweeView movieImage;
+        SimpleDraweeView movieBackground;
+        TextView movieName;
         private TextView movieGenre;
         private TextView movieRating;
         private ImageView starMovieIcon;
