@@ -1,5 +1,8 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.framework.network;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.DetailedMovie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video;
@@ -11,6 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class JSONPacketParser {
+    @NonNull
     public static ArrayList<Movie> getMovies(String jsonString){
         ArrayList<Movie> movies=new ArrayList<>();
         try {
@@ -29,19 +33,22 @@ public class JSONPacketParser {
         return movies;
     }
 
-    public static Movie getMovie(String jsonString){
-        Movie movieResult = null;
-        try {
-            JSONObject jsonMovie=new JSONObject(jsonString);
+// --Commented out by Inspection START (6/4/19 11:35 PM):
+//    public static Movie getMovie(String jsonString){
+//        Movie movieResult = null;
+//        try {
+//            JSONObject jsonMovie=new JSONObject(jsonString);
+//
+//            movieResult=Movie.fromSerializable(jsonMovie.toString());
+//            movieResult.setGenre_ids(movieResult.getGenre_ids());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return movieResult;
+//    }
+// --Commented out by Inspection STOP (6/4/19 11:35 PM)
 
-            movieResult=Movie.fromSerializable(jsonMovie.toString());
-            movieResult.setGenre_ids(movieResult.getGenre_ids());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return movieResult;
-    }
-
+    @NonNull
     public static ArrayList<Video> getVideos(String jsonString){
         ArrayList<Video> videos=new ArrayList<>();
         try {
@@ -57,6 +64,7 @@ public class JSONPacketParser {
         return videos;
     }
 
+    @Nullable
     public static DetailedMovie getDetailMovie(String jsonString){
         DetailedMovie movie= null;
         try {

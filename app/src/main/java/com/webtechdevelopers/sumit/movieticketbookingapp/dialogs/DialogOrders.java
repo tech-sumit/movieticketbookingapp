@@ -3,6 +3,7 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +20,9 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 import java.util.ArrayList;
 
 public class DialogOrders extends Dialog {
-    private View view;
+    private final View view;
 
-    public DialogOrders(Context context) {
+    public DialogOrders(@NonNull Context context) {
         super(context,R.style.AppTheme_NoActionBar_Dark);
         view=View.inflate(context,R.layout.layout_orders, null);
         setContentView(view);
@@ -42,7 +43,7 @@ public class DialogOrders extends Dialog {
         if(shows.size()>0){
             TicketDetailsRecyclerAdapter ticketDetailsRecyclerAdapter=new TicketDetailsRecyclerAdapter(shows, new OnShowSelectedListener() {
                 @Override
-                public void onShowSelected(Show show) {
+                public void onShowSelected(@NonNull Show show) {
                     Log.i("OnShowSelectedListener","Show Selected: \n"+show.getSerializable());
                     Bundle bundle=new Bundle();
                     bundle.putSerializable("show",show);

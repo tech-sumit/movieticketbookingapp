@@ -45,18 +45,14 @@ public class FragmentMain extends Fragment {
     private TextView latestMovieName;
     private TextView latestMovieType;
     private TextView latestMovieDuration;
+    @NonNull
     private String lastFragment="";
     private ImageView starMovieIcon;
     public FragmentMain() {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         if(container!=null){
             Fresco.initialize(container.getContext());
@@ -196,6 +192,7 @@ public class FragmentMain extends Fragment {
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             Log.i("FragmentMain","Position:"+position);

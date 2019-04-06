@@ -11,57 +11,57 @@ import java.util.List;
 public class DetailedMovie implements Serializable {
 
     @SerializedName("adult")
-    private Boolean adult;
+    private final Boolean adult;
     @SerializedName("backdrop_path")
-    private String backdropPath;
+    private final String backdropPath;
     @SerializedName("belongs_to_collection")
-    private Object belongsToCollection;
+    private final Object belongsToCollection;
     @SerializedName("budget")
-    private Integer budget;
+    private final Integer budget;
     @SerializedName("genres")
-    private List<Genre> genres;
+    private final List<Genre> genres;
     @SerializedName("homepage")
-    private String homepage;
+    private final String homepage;
     @SerializedName("id")
-    private Integer id;
+    private final Integer id;
     @SerializedName("imdb_id")
-    private String imdbId;
+    private final String imdbId;
     @SerializedName("original_language")
-    private String originalLanguage;
+    private final String originalLanguage;
     @SerializedName("original_title")
-    private String originalTitle;
+    private final String originalTitle;
     @SerializedName("overview")
-    private String overview;
+    private final String overview;
     @SerializedName("popularity")
-    private Double popularity;
+    private final Double popularity;
     @SerializedName("poster_path")
-    private String posterPath;
+    private final String posterPath;
     @SerializedName("production_companies")
-    private List<ProductionCompany> productionCompanies;
+    private final List<ProductionCompany> productionCompanies;
     @SerializedName("production_countries")
-    private List<ProductionCountry> productionCountries;
+    private final List<ProductionCountry> productionCountries;
     @SerializedName("release_date")
-    private String releaseDate;
+    private final String releaseDate;
     @SerializedName("revenue")
-    private Integer revenue;
+    private final Integer revenue;
     @SerializedName("runtime")
-    private Integer runtime;
+    private final Integer runtime;
     @SerializedName("spoken_languages")
-    private List<SpokenLanguage> spokenLanguages;
+    private final List<SpokenLanguage> spokenLanguages;
     @SerializedName("status")
-    private String status;
+    private final String status;
     @SerializedName("tagline")
-    private String tagline;
+    private final String tagline;
     @SerializedName("title")
-    private String title;
+    private final String title;
     @SerializedName("video")
-    private Boolean video;
+    private final Boolean video;
     @SerializedName("vote_average")
-    private Double voteAverage;
+    private final Double voteAverage;
     @SerializedName("vote_count")
-    private Integer voteCount;
+    private final Integer voteCount;
 
-    public DetailedMovie(Boolean adult, String backdropPath, Object belongsToCollection, Integer budget, List<Genre> genres, String homepage, Integer id, String imdbId, String originalLanguage, String originalTitle, String overview, Double popularity, String posterPath, List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries, String releaseDate, Integer revenue, Integer runtime, List<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, Double voteAverage, Integer voteCount) {
+    private DetailedMovie(Boolean adult, String backdropPath, Object belongsToCollection, Integer budget, List<Genre> genres, String homepage, Integer id, String imdbId, String originalLanguage, String originalTitle, String overview, Double popularity, String posterPath, List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries, String releaseDate, Integer revenue, Integer runtime, List<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, Double voteAverage, Integer voteCount) {
         super();
         this.adult = adult;
         this.backdropPath = backdropPath;
@@ -102,14 +102,6 @@ public class DetailedMovie implements Serializable {
         return homepage;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getOverview() {
         return overview;
     }
@@ -134,17 +126,6 @@ public class DetailedMovie implements Serializable {
         return spokenLanguages;
     }
 
-    public String getTagline() {
-        return tagline;
-    }
-
-    public Double getVoteAverage() {
-        return voteAverage;
-    }
-
-    public String getSerializable(){
-        return new Gson().toJson(this);
-    }
 
     public static DetailedMovie fromSerializable(String json){
         return new Gson().fromJson(json,DetailedMovie.class);

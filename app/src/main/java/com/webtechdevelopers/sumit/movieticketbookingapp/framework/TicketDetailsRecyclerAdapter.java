@@ -22,11 +22,12 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 
 import java.util.ArrayList;
 
+@SuppressWarnings("ALL")
 public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDetailsRecyclerAdapter.TicketHolder> {
 
-    private ArrayList<Show> shows;
+    private final ArrayList<Show> shows;
     private Show show;
-    private OnShowSelectedListener onShowSelectedListener;
+    private final OnShowSelectedListener onShowSelectedListener;
     public TicketDetailsRecyclerAdapter(ArrayList<Show> shows,OnShowSelectedListener onShowSelectedListener){
         this.shows=shows;
         this.onShowSelectedListener=onShowSelectedListener;
@@ -106,12 +107,12 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
     }
 
     class TicketHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView ticketMovieImage;
-        SimpleDraweeView ticketBackground;
-        TextView ticketPaymentID;
-        TextView ticketMovieName;
-        TextView ticketSeats;
-        TextView ticketMoneyPaid;
+        final SimpleDraweeView ticketMovieImage;
+        final SimpleDraweeView ticketBackground;
+        final TextView ticketPaymentID;
+        final TextView ticketMovieName;
+        final TextView ticketSeats;
+        final TextView ticketMoneyPaid;
         TicketHolder(@NonNull View itemView) {
             super(itemView);
             ticketMovieImage=itemView.findViewById(R.id.ticketMovieImage);
@@ -121,7 +122,7 @@ public class TicketDetailsRecyclerAdapter extends RecyclerView.Adapter<TicketDet
             ticketSeats=itemView.findViewById(R.id.ticketSeats);
             ticketMoneyPaid=itemView.findViewById(R.id.ticketMoneyPaid);
         }
-        void bind(final Show show, final OnShowSelectedListener onShowSelectedListener){
+        void bind(final Show show, @NonNull final OnShowSelectedListener onShowSelectedListener){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

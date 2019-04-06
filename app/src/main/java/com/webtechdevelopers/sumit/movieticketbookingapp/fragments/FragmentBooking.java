@@ -26,24 +26,25 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 import java.util.ArrayList;
 
 public class FragmentBooking extends Fragment {
+    @Nullable
     private Movie movie;
     private Show show;
 
-    private int seatPrice;
-    private int maxSeatCount;
-    private int maxSeatColumnCount;
-    private int seatMaxSelectable;
+    private final int seatPrice;
+    private final int maxSeatCount;
+    private final int maxSeatColumnCount;
+    private final int seatMaxSelectable;
 
     private TextView textCalculation;
 
     public FragmentBooking() {
-        // Required empty public constructor
         maxSeatCount = 336;
         maxSeatColumnCount = 24;
         seatMaxSelectable = 6;
         seatPrice = 200;
     }
 
+    @NonNull
     public static FragmentBooking newInstance(Bundle bundle) {
         FragmentBooking fragment = new FragmentBooking();
         fragment.setArguments(bundle);
@@ -148,7 +149,7 @@ public class FragmentBooking extends Fragment {
 
         view.findViewById(R.id.bookButton).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(@NonNull View view) {
                 if(show.getSeats().size()>0){
                     Bundle bundle=new Bundle();
                     bundle.putSerializable("show",show);

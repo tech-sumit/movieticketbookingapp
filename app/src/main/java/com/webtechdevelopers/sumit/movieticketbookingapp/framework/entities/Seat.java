@@ -39,11 +39,11 @@ public class Seat implements Serializable {
         return isBooked;
     }
 
-    public Seat setSeat_no(String seat_no) {
+    public void setSeat_no(String seat_no) {
         this.seat_no = seat_no;
-        return this;
     }
 
+    @NonNull
     public Seat setVisibility(int visibility) {
         this.visibility = visibility;
         return this;

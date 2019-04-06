@@ -11,31 +11,9 @@ public class ProductionCompany implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("logo_path")
-    @Expose
-    private Object logoPath;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("origin_country")
-    @Expose
-    private String originCountry;
-
-    public ProductionCompany(Integer id, Object logoPath, String name, String originCountry) {
-        super();
-        this.id = id;
-        this.logoPath = logoPath;
-        this.name = name;
-        this.originCountry = originCountry;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -50,9 +28,7 @@ public class ProductionCompany implements Serializable {
     public String toString() {
         return "ProductionCompany{" +
                 "id=" + id +
-                ", logoPath=" + logoPath +
                 ", name='" + name + '\'' +
-                ", originCountry='" + originCountry + '\'' +
                 '}';
     }
 }

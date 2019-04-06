@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="m"
         tools:ignore="GoogleAppIndexingWarning"
-        android:fullBackupContent="">
+        android:fullBackupContent="true">
         <activity
             android:name=".ActivityMain"
             android:screenOrientation="portrait"

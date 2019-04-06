@@ -2,12 +2,14 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.framework.network;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.HashMap;
 //This class is created to translate the genre ids sent by server as genre type
 //If not used then we have to make an api call to TheMovieDB Server to get genre string associated to id passed.
 public class GenreParser {
-    private HashMap<Integer, String > genreMap;
+    @NonNull
+    private final HashMap<Integer, String > genreMap;
     @SuppressLint("UseSparseArrays")
     public GenreParser() {
         genreMap=new HashMap<>();
@@ -32,6 +34,7 @@ public class GenreParser {
         genreMap.put(37,"Western");
     }
 
+    @Nullable
     public String getGenre(int id){
         return genreMap.get(id);
     }

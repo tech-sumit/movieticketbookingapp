@@ -15,15 +15,16 @@ import android.widget.Toast;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 
 public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBookingRecyclerAdapter.SeatHolder> {
 
-    private ArrayList<Seat> seatArrayList;
-    private int seatMaxSelectable;
+    private final ArrayList<Seat> seatArrayList;
+    private final int seatMaxSelectable;
     private int seatSelectedCount = 0;
-    private OnSeatClickActionListener onSeatClickActionListener;
+    private final OnSeatClickActionListener onSeatClickActionListener;
     private Seat seat;
     public SeatBookingRecyclerAdapter(ArrayList<Seat> seatArrayList, int setMaxSelectable, OnSeatClickActionListener onSeatClickActionListener){
         this.seatArrayList =seatArrayList;
@@ -78,11 +79,12 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
         }
     }
     class SeatHolder extends RecyclerView.ViewHolder {
-        ImageView seatImage;
-        TextView seatNumber;
-        private int seatMaxSelectable;
-        View itemView;
-        RelativeLayout seatLayout;
+        final ImageView seatImage;
+        final TextView seatNumber;
+        private final int seatMaxSelectable;
+        @NonNull
+        final View itemView;
+        final RelativeLayout seatLayout;
         private boolean isSelected = false;
 
         SeatHolder(@NonNull View itemView, int setMaxSelectable) {
@@ -94,7 +96,7 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
             seatLayout = itemView.findViewById(R.id.seatLayout);
         }
 
-        void bind(final Seat seat, final OnSeatClickActionListener onSeatClickActionListener) {
+        void bind(@NonNull final Seat seat, @NonNull final OnSeatClickActionListener onSeatClickActionListener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,7 +112,12 @@ public class SeatBookingRecyclerAdapter extends RecyclerView.Adapter<SeatBooking
                                         + "\nseatSelectedCount:" + seatSelectedCount);
                                 onSeatClickActionListener.onSeatSelected(seat);
                             } else {
-                                Toast.makeText(itemView.getContext(), "Only " + seatMaxSelectable + " seats can be booked at a time", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(itemView.getContext(),
+                                        MessageFormat
+                                                .format(
+                                                        "Only {0} seats can be booked at a time",
+                                                        seatMaxSelectable)
+                                        , Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             isSelected = false;

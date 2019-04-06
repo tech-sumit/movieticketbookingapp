@@ -33,10 +33,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class FragmentPayment extends Fragment {
+    @Nullable
     private Show show;
     private float price;
     public FragmentPayment() {}
 
+    @NonNull
     public static FragmentPayment newInstance(Bundle bundle) {
         FragmentPayment fragment = new FragmentPayment();
         fragment.setArguments(bundle);
@@ -52,7 +54,7 @@ public class FragmentPayment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @NonNull ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Fresco.initialize(container.getContext());
@@ -93,7 +95,7 @@ public class FragmentPayment extends Fragment {
         payButton.setText(payButtonText);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(@NonNull View view) {
                 startPayment(view);
             }
         });

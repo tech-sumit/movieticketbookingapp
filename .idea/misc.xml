@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany id" />
+      <entry_point TYPE="field" FQNAME="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.SpokenLanguage iso6391" />
+    </entry_points>
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ExampleUnitTest" method="addition_isCorrect" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ExampleUnitTest" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking" method="FragmentBooking" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin" method="FragmentLogin" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain" method="FragmentMain" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails" method="FragmentMovieDetails" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentNowPlaying" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentNowPlaying" method="FragmentNowPlaying" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment" method="FragmentPayment" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentTopRated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentTopRated" method="FragmentTopRated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentUpcoming" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentUpcoming" method="FragmentUpcoming" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Genre" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Genre" method="getId" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Genre" method="getName" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCountry" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Genre" method="setId" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Genre" method="setName" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany" method="setName" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCountry" method="setName" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.SpokenLanguage" method="setName" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.SpokenLanguage" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain" method="onBackPressed" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain" method="onCreate" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain" method="onPaymentError" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.ActivityMain" method="onPaymentSuccess" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.ApiConnector" method="ApiConnector" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.DetailedMovie" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogAboutUs" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogAboutUs" method="DialogAboutUs" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogOrders" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogOrders" method="DialogOrders" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.GenreParser" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.GenreParser" method="GenreParser" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter.MovieItemHolder" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter.MovieItemHolder" method="MovieItemHolder" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.MovieItemRecyclerAdapter" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin" method="onActivityResult" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking" method="onCreate" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails" method="onCreate" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment" method="onCreate" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentNowPlaying" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentTopRated" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentUpcoming" method="onCreateView" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin" method="onStart" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentBooking" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentLogin" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMovieDetails" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentNowPlaying" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayment" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentTopRated" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentUpcoming" method="onViewCreated" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.SeatBookingRecyclerAdapter" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.SeatBookingRecyclerAdapter.SeatHolder" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.SeatBookingRecyclerAdapter.SeatHolder" method="SeatHolder" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain.SectionsPagerAdapter" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentMain.SectionsPagerAdapter" method="SectionsPagerAdapter" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.DetailedMovie" method="toString" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCompany" method="toString" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.ProductionCountry" method="toString" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show" method="toString" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Video" method="Video" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogAboutUs" method="onCreate" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.TicketDetailsRecyclerAdapter" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.TicketDetailsRecyclerAdapter.TicketHolder" />
+    <pattern value="com.webtechdevelopers.sumit.movieticketbookingapp.framework.TicketDetailsRecyclerAdapter.TicketHolder" method="TicketHolder" />
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />

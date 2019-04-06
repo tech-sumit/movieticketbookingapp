@@ -27,15 +27,11 @@ public class FragmentLogin extends Fragment {
 
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
-    private String TAG;
+    @NonNull
+    private final String TAG;
     public FragmentLogin() {
         // Required empty public constructor
         TAG = "FragmentLogin";
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -93,7 +89,7 @@ public class FragmentLogin extends Fragment {
             updateUI(null);
         }
     }
-    private void updateUI(GoogleSignInAccount account){
+    private void updateUI(@Nullable GoogleSignInAccount account){
         if(getContext() !=null){
             if(account!=null){
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE);

@@ -16,15 +16,11 @@
         <item>Anant Theatre</item>
 -->
     </array>
-    <string name="bookings">Bookings</string>
-    <string name="settings">Settings</string>
 
     <string name="about_us_url">http://www.webtechdevelopers.com</string>
-    <string name="web_client_id">460739082574-g5d23n2csgkqntrhrp44iuevavsob63k.apps.googleusercontent.com</string>
     <string name="app_logo_description">Logo of Movie Ticket Booking App</string>
     <string name="age_warning">Note: 18+ Age warning</string>
     <string name="budget_not_available">Budget: N/A</string>
-    <string name="website_not_available">Website: N/A</string>
     <string name="complete_payment_text">Complete Payment</string>
     <string name="pay_now">Pay now</string>
     <string name="production_companies">Production Companies</string>
@@ -65,10 +61,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="name">Name</string>
     <string name="type">Type</string>
-    <string name="rating">Ratings: </string>
-    <string name="signout">SignOut</string>
     <string name="calculation">Calculation</string>
-    <string name="trailer_link">Goto movieResult trailer</string>
     <string name="trailers">Trailers</string>
     <string name="tag_line">Tagline:</string>
     <string name="language">Languages:</string>

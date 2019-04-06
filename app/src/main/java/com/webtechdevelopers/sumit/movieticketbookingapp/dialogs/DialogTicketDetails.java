@@ -4,11 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.Display;
@@ -47,18 +48,19 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 import static android.content.Context.WINDOW_SERVICE;
 
-public class DialogTicketDetails extends Dialog {
+class DialogTicketDetails extends Dialog {
 
     private final Bundle bundle;
-    private SimpleDraweeView ticketMovieImage;
     private FloatingActionButton ticketDetailSave;
 
+    @Nullable
     private Show show;
     private Bitmap bitmap;
-    private View view;
-    private Context context;
+    private final View view;
+    @NonNull
+    private final Context context;
 
-    DialogTicketDetails(Context context, Bundle bundle) {
+    DialogTicketDetails(@NonNull Context context, Bundle bundle) {
         super(context,R.style.AppTheme_NoActionBar_Dark);
         this.context=context;
         this.bundle=bundle;
@@ -74,7 +76,7 @@ public class DialogTicketDetails extends Dialog {
         String name = bundle.getString("name");
         String venue = bundle.getString("venue");
         String time = bundle.getString("time");
-        ticketMovieImage=findViewById(R.id.ticketDetailMovieImage);
+        SimpleDraweeView ticketMovieImage = findViewById(R.id.ticketDetailMovieImage);
         SimpleDraweeView ticketBackground = findViewById(R.id.ticketDetailBackground);
         TextView ticketPaymentID = findViewById(R.id.ticketDetailPaymentID);
         TextView ticketMovieName = findViewById(R.id.ticketDetailMovieName);
@@ -187,25 +189,13 @@ public class DialogTicketDetails extends Dialog {
     }
 
 
-    public Bitmap screenShot(View view) {
+    private Bitmap screenShot(View view) {
         view.setDrawingCacheEnabled(true);
         Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
         //Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
         view.setDrawingCacheEnabled(false);
         //view.draw(canvas);
         return bitmap;
-    }
-
-    public static String getAppPath(Context context) {
-        File dir = new File(android.os.Environment.getExternalStorageDirectory()
-                + File.separator
-                + context.getResources().getString(R.string.app_name)
-                + File.separator);
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        return dir.getPath() + File.separator;
     }
 
 }

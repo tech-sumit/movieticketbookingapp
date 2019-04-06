@@ -24,25 +24,10 @@ import java.util.ArrayList;
 
 
 public class FragmentNowPlaying extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
     private RecyclerView nowPlayingMovies;
     private ArrayList<Movie> movieArrayList;
     public FragmentNowPlaying() {
     }
-
-    public static FragmentNowPlaying newInstance(String param1) {
-        FragmentNowPlaying fragment = new FragmentNowPlaying();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

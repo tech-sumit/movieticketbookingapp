@@ -36,8 +36,10 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnAdi
 import java.util.ArrayList;
 
 public class FragmentMovieDetails extends Fragment {
+    @Nullable
     private Movie movie;
     private DetailedMovie detailedMovie;
+    @Nullable
     private String type="";
 
     private CardView movieDetailsCard;
@@ -61,6 +63,7 @@ public class FragmentMovieDetails extends Fragment {
     public FragmentMovieDetails() {
     }
 
+    @NonNull
     public static FragmentMovieDetails newInstance(Bundle bundle) {
         FragmentMovieDetails fragment = new FragmentMovieDetails();
         fragment.setArguments(bundle);

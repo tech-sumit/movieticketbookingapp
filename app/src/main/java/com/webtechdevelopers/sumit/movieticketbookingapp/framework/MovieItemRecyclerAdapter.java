@@ -22,10 +22,11 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movi
 import java.util.ArrayList;
 
 
+@SuppressWarnings("ALL")
 public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecyclerAdapter.MovieItemHolder> {
 
-    private ArrayList<Movie> movieArrayList;
-    private OnItemSelectedListener onItemSelectedListener;
+    private final ArrayList<Movie> movieArrayList;
+    private final OnItemSelectedListener onItemSelectedListener;
     public MovieItemRecyclerAdapter(ArrayList<Movie> movieArrayList,OnItemSelectedListener onItemSelectedListener){
         this.movieArrayList=movieArrayList;
         this.onItemSelectedListener=onItemSelectedListener;
@@ -74,13 +75,14 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
     }
 
     static class MovieItemHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView movieImage;
-        SimpleDraweeView movieBackground;
-        TextView movieName;
-        private TextView movieGenre;
-        private TextView movieRating;
-        private ImageView starMovieIcon;
-        private View itemView;
+        final SimpleDraweeView movieImage;
+        final SimpleDraweeView movieBackground;
+        final TextView movieName;
+        private final TextView movieGenre;
+        private final TextView movieRating;
+        private final ImageView starMovieIcon;
+        @NonNull
+        private final View itemView;
 
         MovieItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,7 +96,7 @@ public class MovieItemRecyclerAdapter extends RecyclerView.Adapter<MovieItemRecy
 
         }
 
-        void bind(final Movie movie, final OnItemSelectedListener onItemSelectedListener){
+        void bind(final Movie movie, @NonNull final OnItemSelectedListener onItemSelectedListener){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

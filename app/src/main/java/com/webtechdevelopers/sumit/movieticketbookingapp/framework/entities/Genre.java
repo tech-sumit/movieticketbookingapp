@@ -5,22 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Genre implements Serializable
-{
+class Genre implements Serializable {
 
     @SerializedName("id")
     private Integer id;
     @SerializedName("name")
     private String name;
 
-    public Genre() {
-    }
-
-    public Genre(Integer id, String name) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
 
     public Integer getId() {
         return id;
@@ -30,11 +21,6 @@ public class Genre implements Serializable
         this.id = id;
     }
 
-    public Genre withId(Integer id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
@@ -42,11 +28,5 @@ public class Genre implements Serializable
     public void setName(String name) {
         this.name = name;
     }
-
-    public Genre withName(String name) {
-        this.name = name;
-        return this;
-    }
-
 
 }

@@ -2,6 +2,7 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.framework;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
@@ -9,7 +10,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 import java.util.ArrayList;
 
 public class PersistentDataStorage {
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public PersistentDataStorage(Context context){
         String pref = "ticket_data";
@@ -17,7 +18,7 @@ public class PersistentDataStorage {
     }
 
     //We are adding one show each time. So cannot store arraylist of shows tobe stored in sharedPreferences
-    public void addShow(Show show){
+    public void addShow(@NonNull Show show){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         int orderCount=sharedPreferences.getInt("order_count",0);
         String json=show.getSerializable();
@@ -29,6 +30,7 @@ public class PersistentDataStorage {
 
     //Similarly we have to read one by one by specifying their keys.
     //But we want to show all the show data in single fragment so we are reading them one by one and adding to ArrayList to pass them to recyclerview.
+    @NonNull
     public ArrayList<Show> getShows(){
         int orderCount=sharedPreferences.getInt("order_count",0);
         ArrayList<Show> shows=new ArrayList<>();

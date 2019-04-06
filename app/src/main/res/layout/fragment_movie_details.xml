@@ -8,8 +8,6 @@
     android:orientation="vertical"
     tools:context=".fragments.FragmentMovieDetails">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ProgressBar
         android:id="@+id/movieDetailsProgress"
         style="?android:attr/progressBarStyle"
@@ -139,7 +137,6 @@
             </LinearLayout>
 
             <ScrollView
-                android:id="@+id/scrollView2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
@@ -168,7 +165,6 @@
                         android:textStyle="bold|italic" />
 
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="4dp"
@@ -251,7 +247,6 @@
                         android:visibility="gone">
 
                         <TextView
-                            android:id="@+id/textWebsiteTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="4dp"

@@ -61,11 +61,11 @@ public class Movie implements Serializable {
     @SerializedName("tag_line")
     private String tag_line="";
 
-    public Movie(){
+    private Movie(){
 
     }
 
-    public Movie(int vote_count, int id, boolean video, double vote_average, String title, double popularity, String poster_path, String original_language, String original_title, int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_date) {
+    private Movie(int vote_count, int id, boolean video, double vote_average, String title, double popularity, String poster_path, String original_language, String original_title, @NonNull int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_date) {
         this.vote_count = vote_count;
         this.id = id;
         this.video = video;
@@ -94,7 +94,7 @@ public class Movie implements Serializable {
         this.tag_line = "";
     }
 
-    public Movie(int vote_count, int id, boolean video, double vote_average, String title, double popularity, String poster_path, String original_language, String original_title, int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_date, String belongs_to_collection, int budget, String homepage, String imdb_id, ArrayList<ProductionCompany> companies, ArrayList<ProductionCountry> countries, int revenue, int runtime, String[] spoken_languages, String status, String tag_line) {
+    private Movie(int vote_count, int id, boolean video, double vote_average, String title, double popularity, String poster_path, String original_language, String original_title, @NonNull int[] genre_ids, String backdrop_path, boolean adult, String overview, String release_date, String belongs_to_collection, int budget, String homepage, String imdb_id, ArrayList<ProductionCompany> companies, ArrayList<ProductionCountry> countries, int revenue, int runtime, String[] spoken_languages, String status, String tag_line) {
         this.vote_count = vote_count;
         this.id = id;
         this.video = video;
@@ -123,11 +123,13 @@ public class Movie implements Serializable {
         this.tag_line = tag_line;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+// --Commented out by Inspection START (6/4/19 11:35 PM):
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+// --Commented out by Inspection STOP (6/4/19 11:35 PM)
 
-    public void setGenre_ids(int[] genre_ids) {
+    public void setGenre_ids(@NonNull int[] genre_ids) {
         this.genre_ids = genre_ids;
         GenreParser genreParser=new GenreParser();
         genres=new String[genre_ids.length];
@@ -160,6 +162,7 @@ public class Movie implements Serializable {
         return genre_ids;
     }
 
+    @NonNull
     public String getGenres() {
         if(genres!=null){
             if(genres.length>0){
@@ -175,11 +178,6 @@ public class Movie implements Serializable {
 
     public String getBackdrop_path() {
         return backdrop_path;
-    }
-
-
-    public String getSerializable(){
-        return new Gson().toJson(this);
     }
 
     public static Movie fromSerializable(String json){
