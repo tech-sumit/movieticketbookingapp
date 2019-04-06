@@ -2,9 +2,11 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -34,6 +36,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.JSONP
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.network.OnAdiResultReceived;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FragmentMovieDetails extends Fragment {
     @Nullable
@@ -86,12 +89,13 @@ public class FragmentMovieDetails extends Fragment {
         return inflater.inflate(R.layout.fragment_movie_details, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(getActivity()!=null&&isAdded()){
             Fresco.initialize(view.getContext());
-            Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
+            Uri uri = Uri.parse(Constants.IMAGE_URL+ Objects.requireNonNull(movie).getPoster_path());
 
             SimpleDraweeView movieDetailImage = view.findViewById(R.id.movieDetailImage);
             SimpleDraweeView movieDetailBackground = view.findViewById(R.id.movieDetailBackground);
@@ -103,6 +107,7 @@ public class FragmentMovieDetails extends Fragment {
             movieDetailsProgress=view.findViewById(R.id.movieDetailsProgress);
 
             Log.i("TYPE",""+type);
+            assert type != null;
             if(!type.equals("upcoming")){
                 bookMovieNow.setVisibility(View.VISIBLE);
                 bookMovieNow.setOnClickListener(new View.OnClickListener() {

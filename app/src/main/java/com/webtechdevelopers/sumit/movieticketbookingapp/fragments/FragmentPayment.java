@@ -32,6 +32,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@SuppressWarnings("ALL")
 public class FragmentPayment extends Fragment {
     @Nullable
     private Show show;
@@ -67,6 +68,7 @@ public class FragmentPayment extends Fragment {
         TextView calculationText = view.findViewById(R.id.calculationText);
         TextView moviePaymentlName=view.findViewById(R.id.moviePaymentlName);
         Button payButton = view.findViewById(R.id.payButton);
+        assert show != null;
         Movie movie=show.getMovie();
         SimpleDraweeView moviePaymentPoster=view.findViewById(R.id.moviePaymentPoster);
         moviePaymentPoster.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));

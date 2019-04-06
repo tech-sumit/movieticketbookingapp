@@ -87,8 +87,9 @@ class DialogTicketDetails extends Dialog {
         ImageView ticketQRCode = findViewById(R.id.ticketDetailQRCode);
         ticketDetailSave=findViewById(R.id.ticketDetailSave);
 
-        final Movie movie=show.getMovie();
+        final Movie movie= show != null ? show.getMovie() : null;
 
+        assert movie != null;
         ticketMovieImage.setImageURI(Uri.parse(Constants.IMAGE_URL+movie.getPoster_path()));
         Uri backgroundUri = Uri.parse(Constants.IMAGE_URL+movie.getBackdrop_path());
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(backgroundUri)

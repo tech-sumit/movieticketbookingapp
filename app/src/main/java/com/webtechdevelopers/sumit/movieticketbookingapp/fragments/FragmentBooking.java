@@ -1,8 +1,10 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Seat
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FragmentBooking extends Fragment {
     @Nullable
@@ -67,6 +70,7 @@ public class FragmentBooking extends Fragment {
         return inflater.inflate(R.layout.fragment_booking, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,7 +80,7 @@ public class FragmentBooking extends Fragment {
         RecyclerView seatRecyclerView = view.findViewById(R.id.seatRecyclerView);
         textCalculation=view.findViewById(R.id.textCalculation);
         TextView movieName = view.findViewById(R.id.movieName);
-        String movieNameText=""+movie.getTitle();
+        String movieNameText=""+ Objects.requireNonNull(movie).getTitle();
         movieName.setText(movieNameText);
         ArrayList<Seat> seatArrayList = new ArrayList<>();
         final Spinner showTiming=view.findViewById(R.id.showTiming);
