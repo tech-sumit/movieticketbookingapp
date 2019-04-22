@@ -2,13 +2,14 @@ package com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.razorpay.PaymentData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+@IgnoreExtraProperties
 public class Show implements Serializable {
 
     @SerializedName("movie")

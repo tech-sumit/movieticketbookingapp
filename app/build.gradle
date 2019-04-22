@@ -35,7 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.wingjay:blurimageviewlib:2.0.1'
     implementation 'com.facebook.fresco:fresco:1.11.0'
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.razorpay:checkout:1.4.9'
@@ -43,6 +42,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crash:16.2.1'
     implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
 }
 
 repositories {

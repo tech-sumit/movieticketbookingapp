@@ -12,6 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
@@ -23,6 +28,7 @@ import com.webtechdevelopers.sumit.movieticketbookingapp.fragments.FragmentPayme
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
+import com.webtechdevelopers.sumit.movieticketbookingapp.framework.SerializationUtils;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Show;
 
 public class ActivityMain extends AppCompatActivity implements OnFragmentInteractionListener,PaymentResultWithDataListener{
@@ -160,9 +166,39 @@ public class ActivityMain extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void onPaymentSuccess(String s, PaymentData paymentData) {
+    public void onPaymentSuccess(final String s, PaymentData paymentData) {
         Log.i("PAYMENT_RESULT",""+s);
         try{
+            String id=getSharedPreferences(Constants.LOGIN_PREF,MODE_PRIVATE).getString(Constants.ID,"");
+            assert id != null;
+            if(id.equals("")){
+                Log.i("onPaymentSuccess","Empty Email at onPaymentSuccess id:"+id);
+                return;
+            }
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.BOOKINGS);
+            databaseReference.child(id).setValue(SerializationUtils.serialize(show));
+            Log.i("onPaymentSuccess","Show data: "+show.getSerializable());
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Show show= dataSnapshot.getValue(Show.class);
+                    assert show != null;
+                    Log.w("FirebaseDatabase", "add Show :onDataChange show: "+show.toString());
+                    if (show.equals(ActivityMain.this.show)){
+                        Log.w("FirebaseDatabase",
+                                "add Show :onDataChange show not matched: show"
+                                        +show.toString()
+                                        +"\nOriginal show: "
+                                        +ActivityMain.this.show);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("FirebaseDatabase", "add Show :onCancelled", databaseError.toException());
+                }
+            });
             PersistentDataStorage persistentDataStorage =new PersistentDataStorage(this);
             show.setPaymentData(paymentData);
             persistentDataStorage.addShow(show);

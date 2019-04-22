@@ -30,8 +30,8 @@ public class Movie implements Serializable {
     private String original_language="";
     @SerializedName("original_title")
     private String original_title="";
-    private int genre_ids[];
-    private String genres[];
+    private int[] genre_ids;
+    private String[] genres;
     @SerializedName("backdrop_path")
     private String backdrop_path="";
     @SerializedName("adult")
@@ -55,7 +55,7 @@ public class Movie implements Serializable {
     @SerializedName("runtime")
     private int runtime=0;
     @SerializedName("spoken_languages")
-    private String spoken_languages[];
+    private String[] spoken_languages;
     @SerializedName("status")
     private String status="";
     @SerializedName("tag_line")

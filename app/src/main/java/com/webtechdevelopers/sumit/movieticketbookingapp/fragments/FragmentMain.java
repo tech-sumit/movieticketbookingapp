@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -46,18 +49,19 @@ public class FragmentMain extends Fragment {
     private TextView latestMovieType;
     private TextView latestMovieDuration;
     @NonNull
-    private String lastFragment="";
+    private String lastFragment = "";
     private ImageView starMovieIcon;
+
     public FragmentMain() {
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
-        if(container!=null){
+        if (container != null) {
             Fresco.initialize(container.getContext());
-        }else {
-            if(getActivity()!=null)
+        } else {
+            if (getActivity() != null)
                 getActivity().finish();
         }
         return inflater.inflate(R.layout.fragment_main, container, false);
@@ -78,110 +82,98 @@ public class FragmentMain extends Fragment {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        latestMovieImage=view.findViewById(R.id.latestMovieImage);
-        latestMovieName=view.findViewById(R.id.latestMovieName);
-        latestMovieType=view.findViewById(R.id.latestMovieType);
-        latestMovieDuration=view.findViewById(R.id.latestMovieDuration);
-        starMovieIcon=view.findViewById(R.id.starImageIcon);
-        lastFragment="main_fragment";
+        latestMovieImage = view.findViewById(R.id.latestMovieImage);
+        latestMovieName = view.findViewById(R.id.latestMovieName);
+        latestMovieType = view.findViewById(R.id.latestMovieType);
+        latestMovieDuration = view.findViewById(R.id.latestMovieDuration);
+        starMovieIcon = view.findViewById(R.id.starImageIcon);
+        lastFragment = "main_fragment";
 
-        ApiConnector apiConnector=new ApiConnector(view.getContext());
-        apiConnector.getPopularMovies(1,new OnAdiResultReceived() {
+        ApiConnector apiConnector = new ApiConnector(view.getContext());
+        apiConnector.getPopularMovies(1, new OnAdiResultReceived() {
             @Override
             public void onResult(String response) {
-                Log.i("Response Data","Response:\n"+response);
-                ArrayList<Movie> movies=JSONPacketParser.getMovies(response);
-                Movie movie=movies.get(0);
-                Log.i("MovieResult","Data: "+movie.toString());
-                Uri uri = Uri.parse(Constants.IMAGE_URL+movie.getPoster_path());
+                Log.i("Response Data", "Response:\n" + response);
+                ArrayList<Movie> movies = JSONPacketParser.getMovies(response);
+                Movie movie = movies.get(0);
+                Log.i("MovieResult", "Data: " + movie.toString());
+                Uri uri = Uri.parse(Constants.IMAGE_URL + movie.getPoster_path());
                 starMovieIcon.setVisibility(View.VISIBLE);
                 latestMovieImage.setImageURI(uri);
                 latestMovieName.setText(movie.getTitle());
-                String latestMovieDurationText=""+movie.getVote_average();
+                String latestMovieDurationText = "" + movie.getVote_average();
                 latestMovieDuration.setText(latestMovieDurationText);
                 latestMovieType.setText(movie.getGenres());
             }
         });
 
-        FloatingActionButton menuFab=view.findViewById(R.id.menuFab);
+        final DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
+        final NavigationView navigationView = view.findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                        Log.i("NavigationView",""+menuItem.getTitle());
+                        menuItem.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_theatre:
+                                Log.i("NavigationView","nav_theatre");
+                                if (!lastFragment.equals("main_fragment")) {
+                                    lastFragment = "main_fragment";
+                                    if (getActivity() != null)
+                                        ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("main_fragment", null);
+                                }
+                                break;
+                            case R.id.nav_booking:
+                                Log.i("NavigationView","nav_booking");
+                                new DialogOrders(view.getContext()).show();
+                                break;
+                            case R.id.nav_about_us:
+                                Log.i("NavigationView","nav_about_us");
+                                new DialogAboutUs(view.getContext()).show();
+                                break;
+                            case R.id.nav_signout:
+                                Log.i("NavigationView","nav_signout");
+                                GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                        .requestEmail()
+                                        .requestProfile()
+                                        .build();
+                                if (getActivity() != null) {
+                                    GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(view.getContext(), googleSignInOptions);
+                                    googleSignInClient.signOut()
+                                            .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (!lastFragment.equals("login_fragment")) {
+                                                        view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE).edit().clear().apply();
+                                                        view.getContext().getSharedPreferences("ticket_data", Context.MODE_PRIVATE).edit().clear().apply();
+                                                        ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
+                                                        lastFragment = "login_fragment";
+                                                    }
+                                                }
+                                            });
+                                }
+                                break;
+
+                        }
+                        return true;
+                    }
+                }
+        );
+        View header=navigationView.getHeaderView(0);
+        SimpleDraweeView profilePic = header.findViewById(R.id.profile_pic);
+        SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("login_pref", Context.MODE_PRIVATE);
+        String profilePicURL = sharedPreferences.getString(Constants.PROFILE_PIC, "");
+        profilePic.setImageURI(Uri.parse(profilePicURL));
+        TextView profileName = header.findViewById(R.id.profile_name);
+        profileName.setText(sharedPreferences.getString(Constants.NAME, ""));
+
+        FloatingActionButton menuFab = view.findViewById(R.id.menuFab);
         menuFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(view.getContext());
-                final View dialogView=View.inflate(view.getContext(),R.layout.layout_navigation_dialog,null);
-                builder.setView(dialogView);
-                final AlertDialog dialog=builder.create();
-                if(dialog.getWindow()!=null)
-                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                dialog.show();
-                if(dialog.isShowing()){
-                    SimpleDraweeView profilePic=dialog.findViewById(R.id.profile_pic);
-                    SharedPreferences sharedPreferences=view.getContext().getSharedPreferences("login_pref",Context.MODE_PRIVATE);
-                    String profilePicURL=sharedPreferences.getString(Constants.PROFILE_PIC,"");
-                    profilePic.setImageURI(Uri.parse(profilePicURL));
-                    TextView profileName=dialog.findViewById(R.id.profile_name);
-                    profileName.setText(sharedPreferences.getString(Constants.NAME,""));
-                    LinearLayout theatre=dialog.findViewById(R.id.nav_theatre);
-                    theatre.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                            //NOTE: We are launching FragmentMain from scratch so everything is
-                            // being reloaded even the movie contents are being fetched from servers.
-                            // So we has to show progressbar for it.
-                            if(!lastFragment.equals("main_fragment")){
-                                lastFragment="main_fragment";
-                                if(getActivity()!=null)
-                                    ((OnFragmentInteractionListener)getActivity()).onFragmentInteractionResult("main_fragment",null);
-                            }
-                        }
-                    });
-
-                    LinearLayout orders=dialog.findViewById(R.id.nav_booking);
-                    orders.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                            DialogOrders dialogOrders =new DialogOrders(dialogView.getContext());
-                            dialogOrders.show();
-                        }
-                    });
-                    LinearLayout aboutUs=dialog.findViewById(R.id.nav_about_us);
-                    aboutUs.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.cancel();
-                            new DialogAboutUs(dialogView.getContext()).show();
-                        }
-                    });
-                    LinearLayout signOut=dialog.findViewById(R.id.nav_signout);
-                    signOut.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            GoogleSignInOptions googleSignInOptions= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                    .requestEmail()
-                                    .requestProfile()
-                                    .build();
-                            if(getActivity()!=null){
-                                GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(view.getContext(), googleSignInOptions);
-                                googleSignInClient.signOut()
-                                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                dialog.cancel();
-                                                if(!lastFragment.equals("login_fragment")) {
-                                                    view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE).edit().clear().apply();
-                                                    view.getContext().getSharedPreferences("ticket_data", Context.MODE_PRIVATE).edit().clear().apply();
-                                                    ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
-                                                    lastFragment = "login_fragment";
-                                                }
-                                            }
-                                        });
-                            }
-                        }
-                    });
-                }
-
+                drawerLayout.openDrawer(navigationView);
             }
         });
     }
@@ -195,8 +187,8 @@ public class FragmentMain extends Fragment {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            Log.i("FragmentMain","Position:"+position);
-            switch (position){
+            Log.i("FragmentMain", "Position:" + position);
+            switch (position) {
                 case 0:
                     return new FragmentTopRated();
                 case 1:
@@ -204,7 +196,7 @@ public class FragmentMain extends Fragment {
                 case 2:
                     return new FragmentUpcoming();
                 default:
-                    Log.e("FragmentMain","Default case in onTabSelected");
+                    Log.e("FragmentMain", "Default case in onTabSelected");
 
             }
             return new FragmentTopRated();

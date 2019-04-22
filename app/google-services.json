@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "460739082574-m3amva3iups3hhhle4ls58q5svtmbu8m.apps.googleusercontent.com",
+          "client_id": "460739082574-p2r1qlk6m789le608md2n58mhr905580.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.webtechdevelopers.sumit.movieticketbookingapp",
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "460739082574-37i7i2duvaukm59s8qnl050mq5nurrnv.apps.googleusercontent.com",
+              "client_id": "460739082574-p2r1qlk6m789le608md2n58mhr905580.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

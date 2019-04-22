@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
@@ -47,6 +48,7 @@ public class FragmentLogin extends Fragment {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestId()
                 .requestProfile()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(view.getContext(),gso);
@@ -97,6 +99,7 @@ public class FragmentLogin extends Fragment {
                 editor.putBoolean(Constants.LOGIN, true);
                 editor.putString(Constants.EMAIL, "" + account.getEmail());
                 editor.putString(Constants.NAME, "" + account.getDisplayName());
+                editor.putString(Constants.ID, "" + account.getId());
                 editor.putString(Constants.PROFILE_PIC, "" + account.getPhotoUrl());
                 editor.apply();
                 if(getActivity() !=null)

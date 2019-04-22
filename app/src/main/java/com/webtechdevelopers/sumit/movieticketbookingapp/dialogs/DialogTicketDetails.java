@@ -119,7 +119,6 @@ class DialogTicketDetails extends Dialog {
         int width = point.x;
         int height = point.y;
         int smallerDimension = width < height ? width : height;
-        //smallerDimension = smallerDimension * 3 / 4;
 
         String data="Movie name: "+ name +"" +
                 "\nPayment ID: "+ paymentID +

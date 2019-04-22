@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_theatre"
+            android:icon="@drawable/ic_theatre"
+            android:title="@string/theatre"/>
+        <item
+            android:id="@+id/nav_booking"
+            android:icon="@drawable/ic_booking"
+            android:title="@string/booking"/>
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_about"
+            android:title="@string/about_us"/>
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_signout"
+            android:title="@string/sign_out"/>
+    </group>
+</menu>
