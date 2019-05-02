@@ -48,7 +48,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 import static android.content.Context.WINDOW_SERVICE;
 
-class DialogTicketDetails extends Dialog {
+public class DialogTicketDetails extends Dialog {
 
     private final Bundle bundle;
     private FloatingActionButton ticketDetailSave;
@@ -60,7 +60,7 @@ class DialogTicketDetails extends Dialog {
     @NonNull
     private final Context context;
 
-    DialogTicketDetails(@NonNull Context context, Bundle bundle) {
+    public DialogTicketDetails(@NonNull Context context, Bundle bundle) {
         super(context,R.style.AppTheme_NoActionBar_Dark);
         this.context=context;
         this.bundle=bundle;

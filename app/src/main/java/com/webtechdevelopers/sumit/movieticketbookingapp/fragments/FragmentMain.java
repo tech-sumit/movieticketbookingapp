@@ -1,12 +1,12 @@
 package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -32,8 +31,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
-import com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogAboutUs;
-import com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogOrders;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnFragmentInteractionListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.entities.Movie;
@@ -71,8 +68,6 @@ public class FragmentMain extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //getActivity().getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
 
         ViewPager mViewPager = view.findViewById(R.id.viewPager);
@@ -87,6 +82,7 @@ public class FragmentMain extends Fragment {
         latestMovieType = view.findViewById(R.id.latestMovieType);
         latestMovieDuration = view.findViewById(R.id.latestMovieDuration);
         starMovieIcon = view.findViewById(R.id.starImageIcon);
+        ConstraintLayout constraintLayout=view.findViewById(R.id.fragment_container);
         lastFragment = "main_fragment";
 
         ApiConnector apiConnector = new ApiConnector(view.getContext());
@@ -107,75 +103,6 @@ public class FragmentMain extends Fragment {
             }
         });
 
-        final DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
-        final NavigationView navigationView = view.findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                        Log.i("NavigationView",""+menuItem.getTitle());
-                        menuItem.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_theatre:
-                                Log.i("NavigationView","nav_theatre");
-                                if (!lastFragment.equals("main_fragment")) {
-                                    lastFragment = "main_fragment";
-                                    if (getActivity() != null)
-                                        ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("main_fragment", null);
-                                }
-                                break;
-                            case R.id.nav_booking:
-                                Log.i("NavigationView","nav_booking");
-                                new DialogOrders(view.getContext()).show();
-                                break;
-                            case R.id.nav_about_us:
-                                Log.i("NavigationView","nav_about_us");
-                                new DialogAboutUs(view.getContext()).show();
-                                break;
-                            case R.id.nav_signout:
-                                Log.i("NavigationView","nav_signout");
-                                GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                        .requestEmail()
-                                        .requestProfile()
-                                        .build();
-                                if (getActivity() != null) {
-                                    GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(view.getContext(), googleSignInOptions);
-                                    googleSignInClient.signOut()
-                                            .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (!lastFragment.equals("login_fragment")) {
-                                                        view.getContext().getSharedPreferences(Constants.LOGIN_PREF, Context.MODE_PRIVATE).edit().clear().apply();
-                                                        view.getContext().getSharedPreferences("ticket_data", Context.MODE_PRIVATE).edit().clear().apply();
-                                                        ((OnFragmentInteractionListener) getActivity()).onFragmentInteractionResult("login_fragment", null);
-                                                        lastFragment = "login_fragment";
-                                                    }
-                                                }
-                                            });
-                                }
-                                break;
-
-                        }
-                        return true;
-                    }
-                }
-        );
-        View header=navigationView.getHeaderView(0);
-        SimpleDraweeView profilePic = header.findViewById(R.id.profile_pic);
-        SharedPreferences sharedPreferences = view.getContext().getSharedPreferences("login_pref", Context.MODE_PRIVATE);
-        String profilePicURL = sharedPreferences.getString(Constants.PROFILE_PIC, "");
-        profilePic.setImageURI(Uri.parse(profilePicURL));
-        TextView profileName = header.findViewById(R.id.profile_name);
-        profileName.setText(sharedPreferences.getString(Constants.NAME, ""));
-
-        FloatingActionButton menuFab = view.findViewById(R.id.menuFab);
-        menuFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(navigationView);
-            }
-        });
     }
 
     class SectionsPagerAdapter extends FragmentPagerAdapter {

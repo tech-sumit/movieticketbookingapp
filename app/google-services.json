@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "460739082574-p2r1qlk6m789le608md2n58mhr905580.apps.googleusercontent.com",
+          "client_id": "460739082574-cn65opf3i3kni5qjiumstnk1f9eq39qa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.webtechdevelopers.sumit.movieticketbookingapp",
@@ -23,7 +23,15 @@
           }
         },
         {
-          "client_id": "460739082574-37i7i2duvaukm59s8qnl050mq5nurrnv.apps.googleusercontent.com",
+          "client_id": "460739082574-g5d23n2csgkqntrhrp44iuevavsob63k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webtechdevelopers.sumit.movieticketbookingapp",
+            "certificate_hash": "8749486cb18084d5b4abd7b45f4fd2a4aae9608b"
+          }
+        },
+        {
+          "client_id": "460739082574-4oti3n2s8mf3gq25hnb2t6lqc9evbek7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "460739082574-p2r1qlk6m789le608md2n58mhr905580.apps.googleusercontent.com",
+              "client_id": "460739082574-4oti3n2s8mf3gq25hnb2t6lqc9evbek7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

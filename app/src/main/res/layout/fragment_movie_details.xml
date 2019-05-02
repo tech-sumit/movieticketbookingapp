@@ -19,34 +19,7 @@
         android:progress="@android:integer/config_shortAnimTime"
         app:layout_constraintBottom_toBottomOf="@+id/movieDetailsCard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/movie_details"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    </android.support.design.widget.AppBarLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/movieDetailsCard"
@@ -55,7 +28,6 @@
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
@@ -63,7 +35,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bookMovieButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/movieDetailBackground"
@@ -97,11 +69,11 @@
                     android:id="@+id/movieDetailImage"
                     android:layout_width="match_parent"
                     android:layout_height="164dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_weight="2"
-                    android:scaleType="fitCenter"
-                    android:layout_marginStart="8dp" />
+                    android:scaleType="fitCenter" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,13 +96,13 @@
                         android:id="@+id/movieDetailType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_marginRight="4dp"
                         android:text="@string/type"
                         android:textColor="@android:color/white"
-                        android:textSize="18sp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="4dp" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -149,10 +121,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="10dp"
                     android:paddingStart="20dp"
-                    android:paddingEnd="10dp">
+                    android:paddingLeft="20dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:id="@+id/textTagline"

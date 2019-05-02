@@ -1,15 +1,16 @@
-package com.webtechdevelopers.sumit.movieticketbookingapp.dialogs;
+package com.webtechdevelopers.sumit.movieticketbookingapp.fragments;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.webtechdevelopers.sumit.movieticketbookingapp.R;
+import com.webtechdevelopers.sumit.movieticketbookingapp.dialogs.DialogTicketDetails;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.Constants;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.OnShowSelectedListener;
 import com.webtechdevelopers.sumit.movieticketbookingapp.framework.PersistentDataStorage;
@@ -30,32 +32,29 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DialogOrders extends Dialog {
-    private final View view;
+public class FrgementOrders extends Fragment {
 
-    public DialogOrders(@NonNull Context context) {
-        super(context,R.style.AppTheme_NoActionBar_Dark);
-        view=View.inflate(context,R.layout.layout_orders, null);
-        setContentView(view);
+    public FrgementOrders(){
+
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FloatingActionButton backButton = findViewById(R.id.backFab);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancel();
-            }
-        });
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_orders, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(Constants.BOOKINGS);
-        String id=getContext().getSharedPreferences(Constants.LOGIN_PREF,MODE_PRIVATE).getString(Constants.ID,"");
+        String id=view.getContext().getSharedPreferences(Constants.LOGIN_PREF,MODE_PRIVATE).getString(Constants.ID,"");
         assert id != null;
         if(id.equals("")){
-            Log.i("DialogOrders","Empty Email at onPaymentSuccess id:"+id);
+            Log.i("FrgementOrders","Empty Email at onPaymentSuccess id:"+id);
             return;
         }
 
@@ -63,12 +62,13 @@ public class DialogOrders extends Dialog {
         bookings.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("DialogOrders", "onChildAdded:" + dataSnapshot.getKey());
+                Log.d("FrgementOrders", "onChildAdded:" + dataSnapshot.getKey());
                 ArrayList<Show> shows=new ArrayList<>();
                 for(int i=0;i<dataSnapshot.getChildrenCount();i++){
-                    shows.add((Show) SerializationUtils.deserialize((String) dataSnapshot.getValue()));
+                    //shows.add(Show.fromSerializable(""+dataSnapshot.getValue()));
+                    Log.i("FrgementOrders","onChildAdded value: "+dataSnapshot.getValue());
                 }
-                Log.i("DialogOrders","onChildAdded shows: "+shows.toString());
+                Log.i("FrgementOrders","onChildAdded shows: "+shows.toString());
             }
 
             @Override
@@ -77,7 +77,7 @@ public class DialogOrders extends Dialog {
                 for(int i=0;i<dataSnapshot.getChildrenCount();i++){
                     shows.add(dataSnapshot.getValue(Show.class));
                 }
-                Log.i("DialogOrders","onChildChanged shows: "+shows.toString());
+                Log.i("FrgementOrders","onChildChanged shows: "+shows.toString());
             }
 
             @Override
@@ -86,7 +86,7 @@ public class DialogOrders extends Dialog {
                 for(int i=0;i<dataSnapshot.getChildrenCount();i++){
                     shows.add(dataSnapshot.getValue(Show.class));
                 }
-                Log.i("DialogOrders","onChildRemoved shows: "+shows.toString());
+                Log.i("FrgementOrders","onChildRemoved shows: "+shows.toString());
             }
 
             @Override
@@ -95,16 +95,15 @@ public class DialogOrders extends Dialog {
                 for(int i=0;i<dataSnapshot.getChildrenCount();i++){
                     shows.add(dataSnapshot.getValue(Show.class));
                 }
-                Log.i("DialogOrders","onChildMoved shows: "+shows.toString());
+                Log.i("FrgementOrders","onChildMoved shows: "+shows.toString());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("DialogOrders", "onCancelled", databaseError.toException());
-                Toast.makeText(DialogOrders.this.getContext(), "Failed to load comments.",
-                        Toast.LENGTH_SHORT).show();
+                Log.w("FrgementOrders", "onCancelled", databaseError.toException());
             }
         });
+
         PersistentDataStorage persistentDataStorage =new PersistentDataStorage(view.getContext());
         ArrayList<Show> shows= persistentDataStorage.getShows();
         if(shows.size()>0){
@@ -131,6 +130,12 @@ public class DialogOrders extends Dialog {
         }else{
             Toast.makeText(view.getContext(),"No tickets booked till date", Toast.LENGTH_SHORT).show();
         }
+
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 }
